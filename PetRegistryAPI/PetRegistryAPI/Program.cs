@@ -23,16 +23,6 @@ namespace PetRegistryAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddCors(options =>           // -------------- for local angular v
-            {
-                options.AddPolicy("AllowAngularDevClient",
-                    policy =>
-                    {
-                        policy.WithOrigins("http://localhost:4200") // Angular dev server
-                              .AllowAnyHeader()
-                              .AllowAnyMethod();
-                    });
-            });                   // -------------- for local angular  /\
 
             var app = builder.Build();
 
@@ -45,9 +35,15 @@ namespace PetRegistryAPI
 
             app.UseHttpsRedirection();
 
-            app.UseCors("AllowAngularDevClient");  // -------------- for local angular
-
             app.UseAuthorization();
+
+            app.UseCors(builder =>
+            {
+                builder
+                    .WithOrigins(app.Configuration["AllowedOrigins"]!)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
 
             app.MapControllers();
 

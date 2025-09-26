@@ -6,6 +6,7 @@
     }
   },
   "AllowedHosts": "*",
+  "AllowedOrigins": "http://localhost:4200",
   "ConnectionStrings": {
     "PetRegistryAPIContext": "Server=.\\SQLEXPRESS; Database=PerRegistry; Trusted_Connection=True; Encrypt=false" //db connection string
   }

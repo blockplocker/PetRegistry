@@ -19,6 +19,7 @@ namespace PetRegistryAPI.Controllers
 
         // GET: api/Pet
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PetDto>>> GetPet()
         {
             var pets = await _petService.GetAllPetsAsync();
@@ -27,6 +28,7 @@ namespace PetRegistryAPI.Controllers
 
         // GET: api/Pet/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PetDto>> GetPet(int id)
         {
             var petDto = await _petService.GetPetAsync(id);
@@ -39,6 +41,7 @@ namespace PetRegistryAPI.Controllers
 
         // PUT: api/Pet/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutPet(int id, PetDto petDto)
         {
             if (id != petDto.Id)
@@ -57,6 +60,7 @@ namespace PetRegistryAPI.Controllers
 
         // POST: api/Pet
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<PetDto>> PostPet(PetDto petDto)
         {
             var created = await _petService.CreatePetAsync(petDto);
@@ -64,7 +68,9 @@ namespace PetRegistryAPI.Controllers
         }
 
         // DELETE: api/Pet/5
+
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeletePet(int id)
         {
             var deleted = await _petService.DeletePetAsync(id);

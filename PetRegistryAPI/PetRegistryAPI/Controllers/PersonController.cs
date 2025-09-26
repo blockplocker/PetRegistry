@@ -19,6 +19,7 @@ namespace PetRegistryAPI.Controllers
 
         // GET: api/Person
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PersonDto>>> GetPerson()
         {
             var people = await _personService.GetAllPeopleAsync();
@@ -27,6 +28,7 @@ namespace PetRegistryAPI.Controllers
 
         // GET: api/Person/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PersonDto>> GetPerson(int id)
         {
             var personDto = await _personService.GetPersonAsync(id);
@@ -39,6 +41,7 @@ namespace PetRegistryAPI.Controllers
 
         // PUT: api/Person/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutPerson(int id, PersonDto personDto)
         {
             if (id != personDto.Id)
@@ -57,6 +60,7 @@ namespace PetRegistryAPI.Controllers
 
         // POST: api/Person
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<PersonDto>> PostPerson(PersonDto personDto)
         {
             var created = await _personService.CreatePersonAsync(personDto);
@@ -65,6 +69,7 @@ namespace PetRegistryAPI.Controllers
 
         // DELETE: api/Person/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeletePerson(int id)
         {
             var deleted = await _personService.DeletePersonAsync(id);
