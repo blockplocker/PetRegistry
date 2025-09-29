@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Client } from '../domain/client';
+import { Client, PetDto } from '../domain/client';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,11 @@ export class PetService {
     return this.client.petGET(id);
   }
 
-  savePet(pet: any) {
+  savePet(pet: PetDto) {
     return this.client.petPOST(pet);
   }
 
-  updatePet(id: number, pet: any) {
+  updatePet(id: number, pet: PetDto) {
     return this.client.petPUT(id, pet);
   }
 

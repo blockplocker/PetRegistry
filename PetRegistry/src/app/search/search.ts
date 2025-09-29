@@ -10,10 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { PetService } from '../Services/pet-service';
 import { PersonService } from '../Services/person-service';
 import { Subject, takeUntil, forkJoin } from 'rxjs';
+import { PetDto, PersonDto } from '../domain/client';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './search.html',
   styleUrl: './search.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,10 +25,10 @@ export class Search implements OnInit, OnDestroy {
   private personService = inject(PersonService);
   private destroy$ = new Subject<void>();
 
-  pets = signal<any[]>([]);
-  persons = signal<any[]>([]);
-  filteredPets = signal<any[]>([]);
-  filteredPersons = signal<any[]>([]);
+  pets = signal<PetDto[]>([]);
+  persons = signal<PersonDto[]>([]);
+  filteredPets = signal<PetDto[]>([]);
+  filteredPersons = signal<PersonDto[]>([]);
   isLoading = signal(false);
   error = signal<string | null>(null);
   searchTerm = signal<string>('');
@@ -56,21 +58,28 @@ export class Search implements OnInit, OnDestroy {
           this.filteredPets.set(pets);
           this.filteredPersons.set(persons);
           this.isLoading.set(false);
-          console.log('Data loaded successfully');
-          console.log('Pets:', pets);
-          console.log('Persons:', persons[0]);
         },
         error: (error) => {
-          console.error('Error loading data:', error);
           this.error.set('Failed to load data. Please try again.');
           this.isLoading.set(false);
         },
       });
   }
 
-  getPetOwnerName(id: number): string {
-    const owner = this.persons().find((person) => person.id === id);
+  getPetOwnerName(personId: number): string {
+    const owner = this.persons().find((person) => person.id === personId);
     return owner ? owner.firstName : 'Unknown';
+  }
+
+  calculateAge(birthDate: string): number {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
   }
 
   onSearchChange(searchTerm: string): void {
@@ -87,7 +96,9 @@ export class Search implements OnInit, OnDestroy {
 
     // Filter pets by name or breed
     const filteredPets = this.pets().filter(
-      (pet) => pet.name.toLowerCase().includes(term) || pet.breed.toLowerCase().includes(term)
+      (pet) => 
+        pet.name.toLowerCase().includes(term) || 
+        (pet.breed && pet.breed.toLowerCase().includes(term))
     );
 
     // Filter persons by first name or last name
