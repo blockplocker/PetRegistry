@@ -31,7 +31,7 @@ export class Persons {
     });
   }
 
-  save() {
+  savePerson() {
     if (this.personForm.valid) {
       const dto = this.personForm.value as PersonDto;
 
