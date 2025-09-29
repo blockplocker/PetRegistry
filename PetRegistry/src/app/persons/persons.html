@@ -1,31 +1,79 @@
 <div class="container mt-3">
   <h5 class="text-center">Här kan du lägga till folk i registret</h5>
-  <form class="mx-auto w-50">
+  <form class="mx-auto w-50" [formGroup]="personForm" (ngSubmit)="save()">
     <div class="mb-3">
-      <div class="mb-3">
-        <label for="firstName" class="form-label">Förnamn</label>
-        <input id="firstName" type="text" class="form-control" placeholder="Förnamn" />
-      </div>
+      <label for="firstName" class="form-label">Förnamn</label>
+      <input
+        id="firstName"
+        type="text"
+        class="form-control"
+        formControlName="firstName"
+        [class.is-invalid]="
+          personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched
+        "
+      />
+      <div class="invalid-feedback">Förnamn är obligatoriskt.</div>
     </div>
     <div class="mb-3">
-      <label for="firstName" class="form-label">Efternamn</label>
-      <input type="text" class="form-control" placeholder="Efternamn" />
+      <label for="lastName" class="form-label">Efternamn</label>
+      <input
+        id="lastName"
+        type="text"
+        class="form-control"
+        formControlName="lastName"
+        [class.is-invalid]="
+          personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched
+        "
+      />
+      <div class="invalid-feedback">Efternamn är obligatoriskt.</div>
     </div>
     <div class="mb-3">
-      <label for="firstName" class="form-label">Adress</label>
-      <input type="text" class="form-control" placeholder="Adress" />
+      <label for="adress" class="form-label">Adress</label>
+      <input
+        id="adress"
+        type="text"
+        class="form-control"
+        formControlName="address"
+        [class.is-invalid]="
+          personForm.get('address')?.invalid && personForm.get('address')?.touched
+        "
+      />
+      <div class="invalid-feedback">Adress är obligatoriskt.</div>
     </div>
     <div class="mb-3">
-      <label for="firstName" class="form-label">Stad</label>
-      <input type="text" class="form-control" placeholder="Stad" />
+      <label for="city" class="form-label">Stad</label>
+      <input
+        id="city"
+        type="text"
+        class="form-control"
+        formControlName="city"
+        [class.is-invalid]="personForm.get('city')?.invalid && personForm.get('city')?.touched"
+      />
+      <div class="invalid-feedback">Stad är obligatoriskt.</div>
     </div>
     <div class="mb-3">
-      <label for="firstName" class="form-label">Mobil</label>
-      <input type="tel" class="form-control" placeholder="Mobil" />
+      <label for="phoneNumber" class="form-label">Mobil</label>
+      <input
+        id="phoneNumber"
+        type="tel"
+        class="form-control"
+        formControlName="phoneNumber"
+        [class.is-invalid]="
+          personForm.get('phoneNumber')?.invalid && personForm.get('phoneNumber')?.touched
+        "
+      />
+      <div class="invalid-feedback">Mobil nr är obligatoriskt.</div>
     </div>
     <div class="mb-3">
-      <label for="firstName" class="form-label">Email</label>
-      <input type="email" class="form-control" placeholder="Email" />
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        class="form-control"
+        formControlName="email"
+        [class.is-invalid]="personForm.get('email')?.invalid && personForm.get('email')?.touched"
+      />
+      <div class="invalid-feedback">Email är obligatoriskt.</div>
     </div>
     <div class="mb-3">
       <button type="submit" class="btn btn-primary">Lägg till</button>
