@@ -16,8 +16,10 @@
             }
             @else if (person(); as currentPerson) {
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title mb-0">{{ currentPerson.firstName }} {{ currentPerson.lastName }}</h3>
+                    <button class="btn btn-primary btn-sm float-end"
+                        [routerLink]="['/persons', currentPerson.id]">Edit</button>
                 </div>
                 <div class="card-body">
                     <p><strong>Email:</strong> {{ currentPerson.email }}</p>
@@ -27,14 +29,21 @@
                 </div>
             </div>
             }
-            @if (pets().length > 0) {
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Pets</h4>
-                    <small class="text-muted">{{ pets().length }} pets found</small>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title mb-0">Pets</h4>
+                        <small class="text-muted">{{ pets().length }} pets found</small>
+                    </div>
+                    @if (person(); as person) {
+
+                        <button class="btn btn-primary btn-sm float-end" [routerLink]="['/pets', person.id]">Add
+                            Pet</button>
+                        }
                 </div>
                 <div class="card-body">
                     <div class="list-group list-group-flush">
+                        @if (pets().length > 0) {
                         @for (pet of this.pets(); track pet.id) {
                         <div class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer"
                             [routerLink]="['/pet-details', pet.id]">
@@ -53,10 +62,10 @@
                             </div>
                         </div>
                         }
+                        }
                     </div>
                 </div>
             </div>
-            }
         </div>
     </div>
 </div>
