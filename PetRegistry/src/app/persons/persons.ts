@@ -6,6 +6,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
+import { StringUtils } from '../components/utility/string-utils';
 
 @Component({
   selector: 'app-persons',
@@ -26,29 +27,37 @@ export class Persons {
       lastName: ['', Validators.required],
       address: ['', Validators.required],
       city: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{8,15}$/)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
       email: ['', [Validators.required, Validators.email]],
     });
   }
 
   savePerson() {
-    if (this.personForm.valid) {
-      const dto = this.personForm.value as PersonDto;
+    if (this.personForm.invalid) return;
 
-      this.personService.savePerson(dto).subscribe({
-        next: (res) => {
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Sparat!', message: 'Personen har sparats!' },
-          });
+    const v = this.personForm.getRawValue();
 
-          this.personForm.reset();
-        },
-        error: (err) => {
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid sparning', message: 'Kunde inte spara person' },
-          });
-        },
-      });
-    }
+    const dto: PersonDto = {
+      ...v,
+      firstName: StringUtils.capitalizeFirst(v.firstName),
+      lastName: StringUtils.capitalizeFirst(v.lastName),
+      city: StringUtils.capitalizeFirst(v.city),
+      address: StringUtils.capitalizeFirst(v.address),
+      email: StringUtils.capitalizeFirst(v.email),
+    };
+
+    this.personService.savePerson(dto).subscribe({
+      next: () => {
+        this.dialog.open(AppDialogComponent, {
+          data: { title: 'Sparat!', message: 'Personen har sparats!' },
+        });
+        this.personForm.reset();
+      },
+      error: () => {
+        this.dialog.open(AppDialogComponent, {
+          data: { title: 'Fel vid sparning', message: 'Kunde inte spara person' },
+        });
+      },
+    });
   }
 }

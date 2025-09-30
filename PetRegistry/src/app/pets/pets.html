@@ -1,24 +1,36 @@
 <div class="container mt-3">
   <h5 class="text-center">Här kan du lägga till djur</h5>
+
   <form class="mx-auto w-50" [formGroup]="petForm" (ngSubmit)="savePet()">
     <div class="mb-3">
       <label for="animalName" class="form-label">Namn på djuret</label>
-      <input id="animalName" type="text" class="form-control" placeholder="Namn på djuret" />
+      <input
+        id="animalName"
+        type="text"
+        class="form-control"
+        placeholder="Namn på djuret"
+        formControlName="Name"
+      />
     </div>
 
     <div class="mb-3">
       <label for="species" class="form-label">Art</label>
-      <input id="species" type="text" class="form-control" formControlName="Art" />
+      <input id="species" type="text" class="form-control" formControlName="Species" />
     </div>
 
     <div class="mb-3">
       <label for="breed" class="form-label">Ras</label>
-      <input id="breed" type="text" class="form-control" formControlName="Ras" />
+      <input id="breed" type="text" class="form-control" formControlName="Breed" />
     </div>
 
     <div class="mb-3">
       <label for="color" class="form-label">Färg</label>
-      <input id="color" type="text" class="form-control" formControlName="Färg" />
+      <input id="color" type="text" class="form-control" formControlName="Color" />
+    </div>
+
+    <div class="mb-3">
+      <label for="dob" class="form-label">Födelsedatum</label>
+      <input id="dob" type="date" class="form-control" formControlName="DateOfBirth" />
     </div>
 
     <div class="mb-3">
@@ -27,10 +39,10 @@
         <input
           class="form-check-input"
           type="radio"
-          name="gender"
           id="hona"
+          name="gender"
+          formControlName="Gender"
           value="Hona"
-          formControlName="gender"
         />
         <label class="form-check-label" for="hona">Hona</label>
       </div>
@@ -38,10 +50,10 @@
         <input
           class="form-check-input"
           type="radio"
-          name="gender"
           id="hane"
+          name="gender"
+          formControlName="Gender"
           value="Hane"
-          formControlName="gender"
         />
         <label class="form-check-label" for="hane">Hane</label>
       </div>
@@ -50,11 +62,25 @@
     <div class="mb-3">
       <label class="form-label d-block">Är ditt djur chipat?</label>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="chipJa" formControlName="IsMicrochip" />
+        <input
+          class="form-check-input"
+          type="radio"
+          id="chipJa"
+          name="isMicrochip"
+          formControlName="IsMicrochip"
+          [value]="true"
+        />
         <label class="form-check-label" for="chipJa">Ja</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="chipNej" formControlName="IsMicrochip" />
+        <input
+          class="form-check-input"
+          type="radio"
+          id="chipNej"
+          name="isMicrochip"
+          formControlName="IsMicrochip"
+          [value]="false"
+        />
         <label class="form-check-label" for="chipNej">Nej</label>
       </div>
     </div>
@@ -62,7 +88,14 @@
     <div class="mb-3">
       <label class="form-label d-block">Är ditt djur kastrerat?</label>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="neuteredJa" formControlName="IsNeutered" />
+        <input
+          class="form-check-input"
+          type="radio"
+          id="neuteredJa"
+          name="isNeutered"
+          formControlName="IsNeutered"
+          [value]="true"
+        />
         <label class="form-check-label" for="neuteredJa">Ja</label>
       </div>
       <div class="form-check form-check-inline">
@@ -70,7 +103,9 @@
           class="form-check-input"
           type="radio"
           id="neuteredNej"
+          name="isNeutered"
           formControlName="IsNeutered"
+          [value]="false"
         />
         <label class="form-check-label" for="neuteredNej">Nej</label>
       </div>
