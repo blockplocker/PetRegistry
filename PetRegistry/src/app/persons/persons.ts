@@ -6,7 +6,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
-import { StringUtils } from '../components/utility/string-utils';
+import { StringUtils } from '../Services/string-utils';
 
 @Component({
   selector: 'app-persons',
