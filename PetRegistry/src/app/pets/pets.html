@@ -30,7 +30,13 @@
 
     <div class="mb-3">
       <label for="dob" class="form-label">Födelsedatum</label>
-      <input id="dob" type="date" class="form-control" formControlName="DateOfBirth" />
+      <input
+        id="dob"
+        type="date"
+        class="form-control"
+        formControlName="DateOfBirth"
+        [attr.max]="today"
+      />
     </div>
 
     <div class="mb-3">
