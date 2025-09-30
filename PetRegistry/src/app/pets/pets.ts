@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PetDto } from '../domain/client';
 
+const todayStr = new Date().toISOString().split('T')[0];
+
 @Component({
   selector: 'app-pets',
 
@@ -20,21 +22,21 @@ import { PetDto } from '../domain/client';
 })
 export class Pets {
   private route = inject(ActivatedRoute);
-  personId = Number(this.route.snapshot.paramMap.get('personId'));
+  personId = Number(this.route.snapshot.paramMap.get('id'));
 
   today = new Date().toISOString().substring(0, 10);
 
   petForm!: FormGroup;
   constructor(private fb: FormBuilder, private petService: PetService, private dialog: Dialog) {
     this.petForm = this.fb.group({
-      Name: ['', Validators.required],
-      Species: ['', Validators.required],
-      Breed: [''],
-      DateOfBirth: [''],
-      Color: [''],
-      Gender: ['', Validators.required],
-      IsMicrochip: [null, Validators.required],
-      IsNeutered: [null, Validators.required],
+      name: ['', Validators.required],
+      species: ['', Validators.required],
+      breed: [''],
+      dateOfBirth: [''],
+      color: [''],
+      gender: ['Female', Validators.required],
+      isMicrochip: [false, Validators.required],
+      isNeutered: [false, Validators.required],
       personId: [this.personId, Validators.required],
     });
   }
@@ -46,10 +48,16 @@ export class Pets {
 
     const dto: PetDto = {
       ...v,
-      Name: StringUtils.capitalizeFirst(v.Name),
-      Species: StringUtils.capitalizeFirst(v.Species),
-      Breed: StringUtils.capitalizeFirst(v.Breed),
-      Color: StringUtils.capitalizeFirst(v.Color),
+      name: v.name,
+      gender: v.gender,
+      species: v.species,
+      breed: v.breed || null,
+      dateOfBirth: v.dateOfBirth.toString() || null,
+      color: v.color || null,
+      isMicrochip: v.isMicrochip === true,
+      isNeutered: v.isNeutered === true,
+      registrationDate: new Date(todayStr),
+      personId: this.personId,
     };
     this.petService.savePet(dto).subscribe({
       next: () => {
