@@ -44,10 +44,10 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold">{{ pet.name }}</div>
-                                        <small class="text-muted">{{ pet.breed }}</small>
+                                        <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) Age: {{ pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : 'unknown' }} years</small>
                                     </div>
                                     <span class="badge bg-primary rounded-pill">
-                                        Owner: {{ this.getPetOwnerName(pet.ownerId) }}
+                                        Owner: {{ this.getPetOwnerName(pet.personId) }}
                                     </span>
                                 </li>
                                 }
@@ -70,7 +70,7 @@
                             } @else {
                             <ul class="list-group list-group-flush">
                                 @for (person of this.filteredPersons(); track person.id) {
-                                <li class="list-group-item">
+                                <li class="list-group-item" [routerLink]="['/person-details', person.id]" style="cursor: pointer;">
                                     <div class="fw-bold">{{ person.firstName }} {{ person.lastName }}</div>
                                 </li>
                                 }
