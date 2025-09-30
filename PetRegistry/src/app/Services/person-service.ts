@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Client } from '../domain/client';
+import { Client, PersonDto } from '../domain/client';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class PersonService {
   getPersonById(id: number) {
     return this.client.personGET(id);
   }
-  savePerson(person: any) {
+  savePerson(person: PersonDto) {
     return this.client.personPOST(person);
   }
-  updatePerson(id: number, person: any) {
+  updatePerson(id: number, person: PersonDto) {
     return this.client.personPUT(id, person);
   }
   deletePerson(id: number) {

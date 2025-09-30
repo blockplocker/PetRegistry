@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { Client } from '../domain/client';
+import { Client, PetDto } from '../domain/client';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PetService {
   private client = inject(Client);
@@ -15,11 +16,17 @@ export class PetService {
     return this.client.petGET(id);
   }
 
-  savePet(pet: any) {
+  getPetsByPersonId(personId: number) {
+    return this.client
+      .petAll()
+      .pipe(map((pets) => pets.filter((pet) => pet.personId === personId)));
+  }
+
+  savePet(pet: PetDto) {
     return this.client.petPOST(pet);
   }
 
-  updatePet(id: number, pet: any) {
+  updatePet(id: number, pet: PetDto) {
     return this.client.petPUT(id, pet);
   }
 
