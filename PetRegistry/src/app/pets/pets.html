@@ -9,23 +9,23 @@
         type="text"
         class="form-control"
         placeholder="Namn på djuret"
-        formControlName="Name"
+        formControlName="name"
       />
     </div>
 
     <div class="mb-3">
       <label for="species" class="form-label">Art</label>
-      <input id="species" type="text" class="form-control" formControlName="Species" />
+      <input id="species" type="text" class="form-control" formControlName="species" />
     </div>
 
     <div class="mb-3">
       <label for="breed" class="form-label">Ras</label>
-      <input id="breed" type="text" class="form-control" formControlName="Breed" />
+      <input id="breed" type="text" class="form-control" formControlName="breed" />
     </div>
 
     <div class="mb-3">
       <label for="color" class="form-label">Färg</label>
-      <input id="color" type="text" class="form-control" formControlName="Color" />
+      <input id="color" type="text" class="form-control" formControlName="color" />
     </div>
 
     <div class="mb-3">
@@ -34,86 +34,86 @@
         id="dob"
         type="date"
         class="form-control"
-        formControlName="DateOfBirth"
+        formControlName="dateOfBirth"
         [attr.max]="today"
       />
     </div>
 
     <div class="mb-3">
       <label class="form-label d-block">Kön</label>
-      <div class="form-check form-check-inline">
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="hona"
-          name="gender"
-          formControlName="Gender"
-          value="Hona"
+          id="genderFemale"
+          formControlName="gender"
+          [value]="'Female'"
         />
-        <label class="form-check-label" for="hona">Hona</label>
+        <label class="form-check-label" for="genderFemale">Hona</label>
       </div>
-      <div class="form-check form-check-inline">
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="hane"
-          name="gender"
-          formControlName="Gender"
-          value="Hane"
+          id="genderMale"
+          formControlName="gender"
+          [value]="'Male'"
         />
-        <label class="form-check-label" for="hane">Hane</label>
+        <label class="form-check-label" for="genderMale">Hane</label>
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label d-block">Är ditt djur chipat?</label>
-      <div class="form-check form-check-inline">
+      <label class="form-label d-block">Är ditt djur chippat?</label>
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="chipJa"
-          name="isMicrochip"
-          formControlName="IsMicrochip"
+          id="chipYes"
+          formControlName="isMicrochip"
           [value]="true"
         />
-        <label class="form-check-label" for="chipJa">Ja</label>
+        <label class="form-check-label" for="chipYes">Ja</label>
       </div>
-      <div class="form-check form-check-inline">
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="chipNej"
-          name="isMicrochip"
-          formControlName="IsMicrochip"
+          id="chipNo"
+          formControlName="isMicrochip"
           [value]="false"
         />
-        <label class="form-check-label" for="chipNej">Nej</label>
+        <label class="form-check-label" for="chipNo">Nej</label>
       </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label d-block">Är ditt djur kastrerat?</label>
-      <div class="form-check form-check-inline">
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="neuteredJa"
-          name="isNeutered"
-          formControlName="IsNeutered"
+          id="neuteredYes"
+          formControlName="isNeutered"
           [value]="true"
         />
-        <label class="form-check-label" for="neuteredJa">Ja</label>
+        <label class="form-check-label" for="neuteredYes">Ja</label>
       </div>
-      <div class="form-check form-check-inline">
+
+      <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          id="neuteredNej"
-          name="isNeutered"
-          formControlName="IsNeutered"
+          id="neuteredNo"
+          formControlName="isNeutered"
           [value]="false"
         />
-        <label class="form-check-label" for="neuteredNej">Nej</label>
+        <label class="form-check-label" for="neuteredNo">Nej</label>
       </div>
     </div>
 
