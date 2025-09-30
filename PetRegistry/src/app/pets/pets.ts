@@ -20,21 +20,21 @@ import { PetDto } from '../domain/client';
 })
 export class Pets {
   private route = inject(ActivatedRoute);
-  personId = Number(this.route.snapshot.paramMap.get('personId'));
+  personId = Number(this.route.snapshot.paramMap.get('id'));
 
   today = new Date().toISOString().substring(0, 10);
 
   petForm!: FormGroup;
   constructor(private fb: FormBuilder, private petService: PetService, private dialog: Dialog) {
     this.petForm = this.fb.group({
-      Name: ['', Validators.required],
-      Species: ['', Validators.required],
-      Breed: [''],
-      DateOfBirth: [''],
-      Color: [''],
-      Gender: ['', Validators.required],
-      IsMicrochip: [null, Validators.required],
-      IsNeutered: [null, Validators.required],
+      name: ['', Validators.required],
+      species: ['', Validators.required],
+      breed: [''],
+      dateOfBirth: [''],
+      color: [''],
+      gender: ['', Validators.required],
+      isMicrochip: [null, Validators.required],
+      isNeutered: [null, Validators.required],
       personId: [this.personId, Validators.required],
     });
   }
