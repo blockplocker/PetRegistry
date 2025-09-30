@@ -61,7 +61,7 @@ namespace PetRegistryAPI.Controllers
         // POST: api/Pet
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<PetDto>> PostPet(PetDto petDto)
+        public async Task<ActionResult<PetDto>> PostPet([FromBody]PetDto petDto)
         {
             var created = await _petService.CreatePetAsync(petDto);
             return CreatedAtAction(nameof(GetPet), new { id = created.Id }, created);

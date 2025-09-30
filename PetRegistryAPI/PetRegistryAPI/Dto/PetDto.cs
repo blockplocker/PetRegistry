@@ -24,7 +24,7 @@ namespace PetRegistryAPI.Dto
         public bool? IsNeutered { get; set; }
 
         [Required]
-        public DateOnly RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
 
         [Required]
         public int PersonId { get; set; }

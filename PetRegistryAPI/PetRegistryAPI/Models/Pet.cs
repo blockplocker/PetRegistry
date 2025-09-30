@@ -11,7 +11,7 @@
         public string? Color { get; set; }
         public bool? IsMicrochip { get; set; }
         public bool? IsNeutered { get; set; }
-        public DateOnly RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public int PersonId { get; set; }
 
         public virtual Person Person { get; set; }
