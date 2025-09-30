@@ -16,7 +16,12 @@ export const routes: Routes = [
   {
     path: 'persons',
     component: Persons,
-    title: 'Persons - PetRegistry',
+    title: 'Add Person - PetRegistry',
+  },
+  {
+    path: 'persons/:id',
+    component: Persons,
+    title: 'Edit Person - PetRegistry',
   },
   {
     path: 'pets',
@@ -27,16 +32,15 @@ export const routes: Routes = [
     path: 'search',
     component: Search,
     title: 'Search - PetRegistry',
-  },  
-{
+  },
+  {
     path: 'person-details/:id',
     component: PersonDetails,
     title: 'Person Details - PetRegistry',
   },
-{
+  {
     path: 'pet-details/:id',
     component: PetDetails,
     title: 'Pet Details - PetRegistry',
   },
-
 ];

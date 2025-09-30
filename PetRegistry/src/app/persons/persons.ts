@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,9 @@ import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/string-utils';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-persons',
@@ -15,13 +18,37 @@ import { StringUtils } from '../Services/string-utils';
   standalone: true,
   styleUrls: ['./persons.css'],
 })
-export class Persons {
+export class Persons implements OnInit, OnDestroy {
+  private fb = inject(FormBuilder);
+  private dialog = inject(Dialog);
+  private personService = inject(PersonService);
+  private destroy$ = new Subject<void>();
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  readonly personId = computed(() => this.route.snapshot.paramMap.get('id') ?? '');
+
+  person = signal<PersonDto | null>(null);
+  isEditing = signal(false);
+  isLoading = signal(false);
+  error = signal<string | null>(null);
+
   personForm!: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private personService: PersonService,
-    private dialog: Dialog
-  ) {
+
+  ngOnInit() {
+    this.initializeForm();  
+    const id = this.personId();
+    if (id) {
+      this.isEditing.set(true);
+      this.loadPerson(Number(id));
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeForm() {
     this.personForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -32,31 +59,109 @@ export class Persons {
     });
   }
 
-  savePerson() {
-    if (this.personForm.invalid) return;
+  private loadPerson(personId: number) {
+    this.isLoading.set(true);
+    this.error.set(null);
 
-    const v = this.personForm.getRawValue();
+    this.personService
+      .getPersonById(personId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (person) => {
+          if (person) {
+            this.person.set(person);
+            this.populateForm(person);
+          }
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          this.error.set('Failed to load person details');
+          this.isLoading.set(false);
+        },
+      });
+  }
 
-    const dto: PersonDto = {
-      ...v,
-      firstName: StringUtils.capitalizeFirst(v.firstName),
-      lastName: StringUtils.capitalizeFirst(v.lastName),
-      city: StringUtils.capitalizeFirst(v.city),
-      address: StringUtils.capitalizeFirst(v.address),
-    };
-
-    this.personService.savePerson(dto).subscribe({
-      next: () => {
-        this.dialog.open(AppDialogComponent, {
-          data: { title: 'Sparat!', message: 'Personen har sparats!' },
-        });
-        this.personForm.reset();
-      },
-      error: () => {
-        this.dialog.open(AppDialogComponent, {
-          data: { title: 'Fel vid sparning', message: 'Kunde inte spara person' },
-        });
-      },
+  private populateForm(person: PersonDto) {
+    this.personForm.setValue({
+      firstName: person.firstName || '',
+      lastName: person.lastName || '',
+      address: person.address || '',
+      city: person.city || '',
+      phoneNumber: person.phoneNumber || '',
+      email: person.email || '',
     });
   }
+
+  savePerson() {
+    if (this.personForm.invalid) {
+      this.personForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.personForm.value;
+    
+    const person = new PersonDto({
+      id: this.isEditing() ? Number(this.personId()) : undefined,
+      firstName: StringUtils.capitalizeFirst(formValue.firstName),
+      lastName: StringUtils.capitalizeFirst(formValue.lastName),
+      address: StringUtils.capitalizeFirst(formValue.address),
+      city: StringUtils.capitalizeFirst(formValue.city),
+      phoneNumber: formValue.phoneNumber,
+      email: formValue.email,
+    });
+
+    if (this.isEditing()) {
+      this.updatePerson(person);
+    } else {
+      this.createPerson(person);
+    }
+  }
+
+  createPerson(person: PersonDto) {
+    this.isLoading.set(true);
+    
+    this.personService
+      .savePerson(person)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (createdPerson) => {
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Sparat!', message: 'Personen har sparats!' },
+          });
+          this.personForm.reset();
+        },
+        error: (error) => {
+          this.isLoading.set(false);
+          console.error('Error creating person:', error);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Fel vid sparning', message: 'Kunde inte spara person. Försök igen.' },
+          });
+        },
+      });
+  }
+
+  updatePerson(person: PersonDto) {
+    if (!this.personId()) return;
+
+    const personIdNum = Number(this.personId());
+    this.isLoading.set(true);
+
+    this.personService
+      .updatePerson(personIdNum, person)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.router.navigate(['/person-details', personIdNum]);
+        },
+        error: (error) => {
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera person. Försök igen.' },
+          });
+        },
+      });
+  }
+
 }
