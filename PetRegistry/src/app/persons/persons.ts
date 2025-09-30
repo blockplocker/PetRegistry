@@ -43,7 +43,6 @@ export class Persons {
       lastName: StringUtils.capitalizeFirst(v.lastName),
       city: StringUtils.capitalizeFirst(v.city),
       address: StringUtils.capitalizeFirst(v.address),
-      email: StringUtils.capitalizeFirst(v.email),
     };
 
     this.personService.savePerson(dto).subscribe({
