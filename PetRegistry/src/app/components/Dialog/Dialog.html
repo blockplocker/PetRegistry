@@ -1,0 +1,13 @@
+<app-modal>
+  <div slot="header">
+    <h5 class="modal-title">{{ data.title || 'Meddelande' }}</h5>
+  </div>
+
+  <div slot="body">
+    <p class="mb-0">{{ data.message }}</p>
+  </div>
+
+  <div slot="footer">
+    <button type="button" class="btn btn-primary" (click)="close()">OK</button>
+  </div>
+</app-modal>
