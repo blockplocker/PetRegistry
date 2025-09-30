@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PetDto } from '../domain/client';
 
+const todayStr = new Date().toISOString().split('T')[0];
+
 @Component({
   selector: 'app-pets',
 
@@ -32,9 +34,9 @@ export class Pets {
       breed: [''],
       dateOfBirth: [''],
       color: [''],
-      gender: ['', Validators.required],
-      isMicrochip: [null, Validators.required],
-      isNeutered: [null, Validators.required],
+      gender: ['Female', Validators.required],
+      isMicrochip: [false, Validators.required],
+      isNeutered: [false, Validators.required],
       personId: [this.personId, Validators.required],
     });
   }
@@ -46,10 +48,16 @@ export class Pets {
 
     const dto: PetDto = {
       ...v,
-      Name: StringUtils.capitalizeFirst(v.Name),
-      Species: StringUtils.capitalizeFirst(v.Species),
-      Breed: StringUtils.capitalizeFirst(v.Breed),
-      Color: StringUtils.capitalizeFirst(v.Color),
+      name: v.name,
+      gender: v.gender,
+      species: v.species,
+      breed: v.breed || null,
+      dateOfBirth: v.dateOfBirth.toString() || null,
+      color: v.color || null,
+      isMicrochip: v.isMicrochip === true,
+      isNeutered: v.isNeutered === true,
+      registrationDate: new Date(todayStr),
+      personId: this.personId,
     };
     this.petService.savePet(dto).subscribe({
       next: () => {
