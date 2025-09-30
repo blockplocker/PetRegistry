@@ -24,7 +24,7 @@ export const routes: Routes = [
     title: 'Edit Person - PetRegistry',
   },
   {
-    path: 'pets',
+    path: 'pets/:id',
     component: Pets,
     title: 'Pets - PetRegistry',
   },
