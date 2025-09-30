@@ -4,6 +4,7 @@ import { Persons } from './persons/persons';
 import { Pets } from './pets/pets';
 import { Search } from './search/search';
 import { PersonDetails } from './person-details/person-details';
+import { PetDetails } from './pet-details/pet-details';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,11 @@ export const routes: Routes = [
     path: 'person-details/:id',
     component: PersonDetails,
     title: 'Person Details - PetRegistry',
+  },
+{
+    path: 'pet-details/:id',
+    component: PetDetails,
+    title: 'Pet Details - PetRegistry',
   },
 
 ];

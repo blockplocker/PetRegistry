@@ -3,17 +3,19 @@ import { PersonDto, PetDto } from '../domain/client';
 import { Subject } from 'rxjs/internal/Subject';
 import { PersonService } from '../Services/person-service';
 import { PetService } from '../Services/pet-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { forkJoin } from 'rxjs';
+import { AgeService } from '../Services/Utils/age-service';
 
 @Component({
   selector: 'app-person-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './person-details.html',
   styleUrl: './person-details.css',
 })
 export class PersonDetails implements OnInit, OnDestroy {
+  private ageService = inject(AgeService);
   private petService = inject(PetService);
   private personService = inject(PersonService);
   private destroy$ = new Subject<void>();
@@ -56,23 +58,7 @@ export class PersonDetails implements OnInit, OnDestroy {
         },
       });
   }
-
   calculateAge(birthDate: string): number {
-    if (!birthDate) return 0;
-
-    try {
-      const birth = new Date(birthDate);
-      if (isNaN(birth.getTime())) return 0;
-
-      const today = new Date();
-      let age = today.getFullYear() - birth.getFullYear();
-      const monthDiff = today.getMonth() - birth.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-        age--;
-      }
-      return Math.max(0, age);
-    } catch {
-      return 0;
-    }
+    return this.ageService.calculateAge(birthDate);
   }
 }
