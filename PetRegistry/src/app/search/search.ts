@@ -72,14 +72,22 @@ export class Search implements OnInit, OnDestroy {
   }
 
   calculateAge(birthDate: string): number {
-    const birth = new Date(birthDate);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
+    if (!birthDate) return 0;
+
+    try {
+      const birth = new Date(birthDate);
+      if (isNaN(birth.getTime())) return 0;
+
+      const today = new Date();
+      let age = today.getFullYear() - birth.getFullYear();
+      const monthDiff = today.getMonth() - birth.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+      }
+      return Math.max(0, age);
+    } catch {
+      return 0;
     }
-    return age;
   }
 
   onSearchChange(searchTerm: string): void {
@@ -96,8 +104,8 @@ export class Search implements OnInit, OnDestroy {
 
     // Filter pets by name or breed
     const filteredPets = this.pets().filter(
-      (pet) => 
-        pet.name.toLowerCase().includes(term) || 
+      (pet) =>
+        pet.name.toLowerCase().includes(term) ||
         (pet.breed && pet.breed.toLowerCase().includes(term))
     );
 

@@ -34,22 +34,25 @@
                     <small class="text-muted">{{ pets().length }} pets found</small>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled">
+                    <div class="list-group list-group-flush">
                         @for (pet of this.pets(); track pet.id) {
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                        <div class="fw-bold">{{ pet.name }}</div>
-                                        <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) Age: {{ pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : 'unknown' }} years</small>
-                                    </div>
-                            @if (pet.isMicrochip) {
+                                <div class="fw-bold">{{ pet.name }}</div>
+                                <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) Age: {{ pet.dateOfBirth ?
+                                    this.calculateAge(pet.dateOfBirth) : 'unknown' }} years</small>
+                            </div>
+                            <div class="d-flex gap-1">
+                                @if (pet.isMicrochip) {
                                 <span class="badge bg-info rounded-pill">Microchipped</span>
-                            } 
-                            @if (pet.isNeutered) {
-                                <span class="badge bg-info rounded-pill">Neutered</span>
-                            }
-                        </li>
+                                }
+                                @if (pet.isNeutered) {
+                                <span class="badge bg-success rounded-pill">Neutered</span>
+                                }
+                            </div>
+                        </div>
                         }
-                    </ul>
+                    </div>
                 </div>
             </div>
             }
