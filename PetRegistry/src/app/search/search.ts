@@ -1,17 +1,11 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  OnDestroy,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../Services/pet-service';
 import { PersonService } from '../Services/person-service';
 import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { PetDto, PersonDto } from '../domain/client';
 import { RouterLink } from '@angular/router';
+import { AgeService } from '../Services/Utils/age-service';
 
 @Component({
   selector: 'app-search',
@@ -21,6 +15,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Search implements OnInit, OnDestroy {
+  private ageService = inject(AgeService);
   private petService = inject(PetService);
   private personService = inject(PersonService);
   private destroy$ = new Subject<void>();
@@ -68,26 +63,11 @@ export class Search implements OnInit, OnDestroy {
 
   getPetOwnerName(personId: number): string {
     const owner = this.persons().find((person) => person.id === personId);
-    return owner ? owner.firstName : 'Unknown';
+    return owner ? owner.firstName + ' ' + owner.lastName : 'Unknown';
   }
 
-  calculateAge(birthDate: string): number {
-    if (!birthDate) return 0;
-
-    try {
-      const birth = new Date(birthDate);
-      if (isNaN(birth.getTime())) return 0;
-
-      const today = new Date();
-      let age = today.getFullYear() - birth.getFullYear();
-      const monthDiff = today.getMonth() - birth.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-        age--;
-      }
-      return Math.max(0, age);
-    } catch {
-      return 0;
-    }
+    calculateAge(birthDate: string): number {
+    return this.ageService.calculateAge(birthDate);
   }
 
   onSearchChange(searchTerm: string): void {
@@ -102,11 +82,12 @@ export class Search implements OnInit, OnDestroy {
 
     const term = searchTerm.toLowerCase().trim();
 
-    // Filter pets by name or breed
+    // Filter pets by name, species or breed
     const filteredPets = this.pets().filter(
       (pet) =>
         pet.name.toLowerCase().includes(term) ||
-        (pet.breed && pet.breed.toLowerCase().includes(term))
+        (pet.breed && pet.breed.toLowerCase().includes(term)) ||
+        (pet.species && pet.species.toLowerCase().includes(term))
     );
 
     // Filter persons by first name or last name

@@ -1,0 +1,53 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Pet Details</h2>
+
+            @if (isLoading()) {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            } @else if (error()) {
+            <div class="alert alert-danger" role="alert">
+                Error: {{ error() }}
+            </div>
+            }
+            @else if (pet(); as currentPet) {
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
+                    <small class="text-muted">{{ currentPet.dateOfBirth ? calculateAge(currentPet.dateOfBirth) :
+                        'unknown' }} years</small>
+                </div>
+                <div class="card-body">
+                    <p><strong>Species:</strong> {{ currentPet.species }}</p>
+                    <p><strong>Breed:</strong> {{ currentPet.breed }}</p>
+                    <p><strong>Date of Birth:</strong> {{ currentPet.dateOfBirth | date:'longDate' }}</p>
+                    <p>
+                        <strong>Microchipped:</strong>
+                        @if (currentPet.isMicrochip) {
+                        <span class="badge bg-info">Yes</span>
+                        } @else {
+                        <span class="badge bg-secondary">No</span>
+                        }
+                    </p>
+                    <p>
+                        <strong>Neutered:</strong>
+                        @if (currentPet.isNeutered) {
+                        <span class="badge bg-success">Yes</span>
+                        } @else {
+                        <span class="badge bg-secondary">No</span>
+                        }
+                    </p>
+                    <p>
+                        <a class="btn btn-outline-primary" [routerLink]="['/person-details', currentPet.personId]">Owner details
+                        </a>
+                    </p>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
