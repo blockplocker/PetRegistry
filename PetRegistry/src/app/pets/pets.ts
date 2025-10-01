@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
-import { StringUtils } from '../Services/string-utils';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,34 +8,53 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PetDto } from '../domain/client';
+
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { RouteParamService } from '../Services/Utils/route-param-service';
+import { Subject, takeUntil } from 'rxjs';
 
-const todayStr = new Date().toISOString().split('T')[0];
 
 @Component({
   selector: 'app-pets',
-
-  imports: [CommonModule, ReactiveFormsModule, DialogModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule],
   templateUrl: './pets.html',
   styleUrl: './pets.css',
-  standalone: true,
 })
-export class Pets {
+export class Pets implements OnInit, OnDestroy {
+  private fb = inject(FormBuilder);
+  private petService = inject(PetService);
+  private dialog = inject(Dialog);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private routeParamService = inject(RouteParamService);
+  private toastr = inject(ToastrService);
+  private destroy$ = new Subject<void>();
 
-  personId = Number(this.route.snapshot.paramMap.get('id'));
+
+  isEditMode = signal(false);
+  personId = signal<number>(0);
+  petId = signal<number>(0);
+  isLoading = signal(false);
+  error = signal<string | null>(null);
 
   today = new Date().toISOString().substring(0, 10);
-
   petForm!: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private petService: PetService,
-    private dialog: Dialog,
-    private toastr: ToastrService
-  ) {
+
+  ngOnInit() {
+    this.initializeForm();
+    this.determineMode();
+    if (this.isEditMode()) {
+      this.loadPetForEdit();
+    }
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeForm() {
+
     this.petForm = this.fb.group({
       name: ['', Validators.required],
       species: ['', Validators.required],
@@ -46,46 +64,126 @@ export class Pets {
       gender: ['Female', Validators.required],
       isMicrochip: [false, Validators.required],
       isNeutered: [false, Validators.required],
-      personId: [this.personId, Validators.required],
+      personId: [0, Validators.required],
+    });
+  }
+
+  private determineMode() {
+    const routeData = this.route.snapshot.data;
+    const mode = routeData['mode'];
+
+    if (mode === 'edit') {
+      this.isEditMode.set(true);
+      const petId = this.routeParamService.getIdParam(this.route);
+      if (petId !== null) {
+        this.petId.set(petId);
+      } else {
+        this.error.set('Invalid pet ID');
+      }
+    } else {
+      this.isEditMode.set(false);
+      const personId = this.routeParamService.getIdParam(this.route);
+      if (personId !== null) {
+        this.personId.set(personId);
+        this.petForm.patchValue({ personId });
+      } else {
+        this.error.set('Invalid person ID');
+      }
+    }
+  }
+
+  private loadPetForEdit() {
+    this.isLoading.set(true);
+    this.petService
+      .getPetById(this.petId())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (pet) => {
+          this.personId.set(pet.personId);
+          this.populateForm(pet);
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.isLoading.set(false);
+          this.error.set('Kunde inte ladda djurdata. Försök igen.');
+        },
+      });
+  }
+
+  populateForm(pet: PetDto) {
+    this.petForm.patchValue({
+      name: pet.name,
+      species: pet.species,
+      breed: pet.breed,
+      dateOfBirth: pet.dateOfBirth ? pet.dateOfBirth.split('T')[0] : '',
+      color: pet.color,
+      gender: pet.gender,
+      isMicrochip: pet.isMicrochip,
+      isNeutered: pet.isNeutered,
+      personId: pet.personId,
     });
   }
 
   savePet() {
     if (this.petForm.invalid) return;
 
-    const v = this.petForm.getRawValue();
+    const formValue = this.petForm.value;
 
-    const dto: PetDto = {
-      ...v,
-      name: v.name,
-      gender: v.gender,
-      species: v.species,
-      breed: v.breed || null,
-      dateOfBirth: v.dateOfBirth.toString() || null,
-      color: v.color || null,
-      isMicrochip: v.isMicrochip === true,
-      isNeutered: v.isNeutered === true,
-      registrationDate: new Date(todayStr),
-      personId: this.personId,
-    };
-    this.petService.savePet(dto).subscribe({
-      // next: () => {
-      //   this.dialog.open(AppDialogComponent, {
-      //     data: { title: 'Sparat!', message: 'Djuret har sparats!' },
-      //   });
-      //   this.petForm.reset({ personId: this.personId });
-      // },
-      // error: () => {
-      //   this.dialog.open(AppDialogComponent, {
-      //     data: { title: 'Fel vid sparning', message: 'Kunde inte spara djur' },
-      //   });
-      next: () => {
-        this.toastr.success('Sparat!', 'Djuret har sparats!');
-        this.router.navigate(['/search']);
-      },
-      error: () => {
-        this.toastr.error('Fel vid sparning. Försök igen senare.', 'Fel');
-      },
+    const pet = new PetDto({
+      id: this.isEditMode() ? this.petId() : undefined,
+      name: formValue.name,
+      gender: formValue.gender,
+      species: formValue.species,
+      breed: formValue.breed || null,
+      dateOfBirth: formValue.dateOfBirth || null,
+      color: formValue.color || null,
+      isMicrochip: formValue.isMicrochip,
+      isNeutered: formValue.isNeutered,
+      registrationDate: new Date(this.today),
+      personId: this.isEditMode() ? this.personId() : formValue.personId,
     });
+
+    if (this.isEditMode()) {
+      this.updatePet(pet);
+    } else {
+      this.createPet(pet);
+    }
+  }
+
+  createPet(pet: PetDto) {
+    this.isLoading.set(true);
+
+    this.petService
+      .savePet(pet)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.petForm.reset({ personId: this.personId() });
+          this.isLoading.set(false);
+          this.toastr.success('Sparat!', 'Djuret har sparats!');
+        },
+        error: () => {
+          this.isLoading.set(false);
+          this.toastr.error('Fel vid sparning. Försök igen senare.', 'Fel');
+        },
+      });
+  }
+
+  updatePet(pet: PetDto) {
+    this.isLoading.set(true);
+
+    this.petService
+      .updatePet(this.petId(), pet)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.toastr.success('Updaterat!', 'Updateringen har sparats!');
+        },
+        error: () => {
+          this.isLoading.set(false);
+          this.toastr.error('Fel vid updatering. Försök igen senare.', 'Fel');
+        },
+      });
   }
 }

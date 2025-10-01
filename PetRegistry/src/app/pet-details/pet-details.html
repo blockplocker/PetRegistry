@@ -16,11 +16,17 @@
             }
             @else if (pet(); as currentPet) {
             <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
-                    <small class="text-muted">{{ currentPet.dateOfBirth ? calculateAge(currentPet.dateOfBirth) :
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
+                        <small class="text-muted">{{ currentPet.dateOfBirth ? calculateAge(currentPet.dateOfBirth) :
                         'unknown' }} years</small>
-                </div>
+                        </div>
+                        <div class="gap-2 d-flex">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-primary btn-sm" [routerLink]="['/pets/edit', currentPet.id]">Edit</button>
+                        </div>
+                        </div>
                 <div class="card-body">
                     <p><strong>Species:</strong> {{ currentPet.species }}</p>
                     <p><strong>Breed:</strong> {{ currentPet.breed }}</p>

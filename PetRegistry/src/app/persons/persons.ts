@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { ToastrService } from 'ngx-toastr';
+import { RouteParamService } from '../Services/Utils/route-param-service';
+
 
 @Component({
   selector: 'app-persons',
@@ -23,12 +25,13 @@ export class Persons implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private dialog = inject(Dialog);
   private personService = inject(PersonService);
-  private destroy$ = new Subject<void>();
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  readonly personId = computed(() => this.route.snapshot.paramMap.get('id') ?? '');
+  private routeParamService = inject(RouteParamService);
+  private destroy$ = new Subject<void>();
+  private toastr = inject(ToastrService);
 
-  constructor(private toastr: ToastrService) {}
+  personId = signal<number>(0);
 
   person = signal<PersonDto | null>(null);
   isEditing = signal(false);
@@ -38,12 +41,15 @@ export class Persons implements OnInit, OnDestroy {
   personForm!: FormGroup;
 
   ngOnInit() {
-    this.initializeForm();
-    const id = this.personId();
-    if (id) {
-      this.isEditing.set(true);
-      this.loadPerson(Number(id));
-    }
+
+    this.initializeForm();  
+
+    const personId = this.routeParamService.getIdParam(this.route);
+      if (personId !== null) {
+        this.personId.set(personId);
+        this.isEditing.set(true);
+        this.loadPerson(Number(personId));
+      }
   }
 
   ngOnDestroy() {
@@ -77,7 +83,7 @@ export class Persons implements OnInit, OnDestroy {
           }
           this.isLoading.set(false);
         },
-        error: (err) => {
+        error: () => {
           this.error.set('Failed to load person details');
           this.isLoading.set(false);
         },
@@ -127,14 +133,15 @@ export class Persons implements OnInit, OnDestroy {
       .savePerson(person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (createdPerson) => {
+        next: () => {
           this.isLoading.set(false);
           this.toastr.success('Personen har skapats', 'Lyckat');
           this.personForm.reset();
         },
-        error: (error) => {
+        error: () => {
           this.isLoading.set(false);
           this.toastr.error('Kunde inte skapa person. Försök igen senare.', 'Fel');
+
         },
       });
   }
@@ -153,7 +160,7 @@ export class Persons implements OnInit, OnDestroy {
           this.isLoading.set(false);
           this.router.navigate(['/person-details', personIdNum]);
         },
-        error: (error) => {
+        error: () => {
           this.isLoading.set(false);
           this.dialog.open(AppDialogComponent, {
             data: {
