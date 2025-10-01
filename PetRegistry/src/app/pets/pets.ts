@@ -9,6 +9,8 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PetDto } from '../domain/client';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 const todayStr = new Date().toISOString().split('T')[0];
 
@@ -22,12 +24,19 @@ const todayStr = new Date().toISOString().split('T')[0];
 })
 export class Pets {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   personId = Number(this.route.snapshot.paramMap.get('id'));
 
   today = new Date().toISOString().substring(0, 10);
 
   petForm!: FormGroup;
-  constructor(private fb: FormBuilder, private petService: PetService, private dialog: Dialog) {
+  constructor(
+    private fb: FormBuilder,
+    private petService: PetService,
+    private dialog: Dialog,
+    private toastr: ToastrService
+  ) {
     this.petForm = this.fb.group({
       name: ['', Validators.required],
       species: ['', Validators.required],
@@ -60,16 +69,22 @@ export class Pets {
       personId: this.personId,
     };
     this.petService.savePet(dto).subscribe({
+      // next: () => {
+      //   this.dialog.open(AppDialogComponent, {
+      //     data: { title: 'Sparat!', message: 'Djuret har sparats!' },
+      //   });
+      //   this.petForm.reset({ personId: this.personId });
+      // },
+      // error: () => {
+      //   this.dialog.open(AppDialogComponent, {
+      //     data: { title: 'Fel vid sparning', message: 'Kunde inte spara djur' },
+      //   });
       next: () => {
-        this.dialog.open(AppDialogComponent, {
-          data: { title: 'Sparat!', message: 'Djuret har sparats!' },
-        });
-        this.petForm.reset({ personId: this.personId });
+        this.toastr.success('Sparat!', 'Djuret har sparats!');
+        this.router.navigate(['/search']);
       },
       error: () => {
-        this.dialog.open(AppDialogComponent, {
-          data: { title: 'Fel vid sparning', message: 'Kunde inte spara djur' },
-        });
+        this.toastr.error('Fel vid sparning. Försök igen senare.', 'Fel');
       },
     });
   }

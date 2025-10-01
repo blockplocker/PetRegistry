@@ -10,6 +10,7 @@ import { StringUtils } from '../Services/string-utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-persons',
@@ -27,6 +28,8 @@ export class Persons implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   readonly personId = computed(() => this.route.snapshot.paramMap.get('id') ?? '');
 
+  constructor(private toastr: ToastrService) {}
+
   person = signal<PersonDto | null>(null);
   isEditing = signal(false);
   isLoading = signal(false);
@@ -35,7 +38,7 @@ export class Persons implements OnInit, OnDestroy {
   personForm!: FormGroup;
 
   ngOnInit() {
-    this.initializeForm();  
+    this.initializeForm();
     const id = this.personId();
     if (id) {
       this.isEditing.set(true);
@@ -99,7 +102,7 @@ export class Persons implements OnInit, OnDestroy {
     }
 
     const formValue = this.personForm.value;
-    
+
     const person = new PersonDto({
       id: this.isEditing() ? Number(this.personId()) : undefined,
       firstName: StringUtils.capitalizeFirst(formValue.firstName),
@@ -119,24 +122,19 @@ export class Persons implements OnInit, OnDestroy {
 
   createPerson(person: PersonDto) {
     this.isLoading.set(true);
-    
+
     this.personService
       .savePerson(person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (createdPerson) => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Sparat!', message: 'Personen har sparats!' },
-          });
+          this.toastr.success('Personen har skapats', 'Lyckat');
           this.personForm.reset();
         },
         error: (error) => {
           this.isLoading.set(false);
-          console.error('Error creating person:', error);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid sparning', message: 'Kunde inte spara person. Försök igen.' },
-          });
+          this.toastr.error('Kunde inte skapa person. Försök igen senare.', 'Fel');
         },
       });
   }
@@ -158,10 +156,12 @@ export class Persons implements OnInit, OnDestroy {
         error: (error) => {
           this.isLoading.set(false);
           this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera person. Försök igen.' },
+            data: {
+              title: 'Fel vid uppdatering',
+              message: 'Kunde inte uppdatera person. Försök igen.',
+            },
           });
         },
       });
   }
-
 }

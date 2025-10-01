@@ -9,7 +9,7 @@ import { forkJoin } from 'rxjs';
 import { AgeService } from '../Services/Utils/age-service';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
-import { AppDialogComponent } from '../components/Dialog/Dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-person-details',
@@ -26,6 +26,8 @@ export class PersonDetails implements OnInit, OnDestroy {
   private router = inject(Router);
   private dialog = inject(Dialog);
   readonly personId = computed(() => this.route.snapshot.paramMap.get('id') ?? '');
+
+  constructor(private toastr: ToastrService) {}
 
   person = signal<PersonDto | null>(null);
   pets = signal<PetDto[]>([]);
@@ -71,7 +73,7 @@ export class PersonDetails implements OnInit, OnDestroy {
     const person = this.person();
     const personId = Number(this.personId());
 
-    if (!Number.isFinite(personId) || !person) return;
+    if (!person) return;
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
@@ -97,22 +99,12 @@ export class PersonDetails implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: {
-              title: 'Raderad!',
-              message: 'Personen har raderats',
-            },
-          });
+          this.toastr.success('Personen har raderats', 'Raderad!');
           this.router.navigate(['/search']);
         },
-        error: (error) => {
+        error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: {
-              title: 'Fel',
-              message: `Kunde inte radera person. Försök igen senare.`,
-            },
-          });
+          this.toastr.error('Kunde inte radera person. Försök igen senare.', 'Fel');
         },
       });
   }
