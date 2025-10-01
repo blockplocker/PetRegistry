@@ -82,7 +82,6 @@ export class PersonDetails implements OnInit, OnDestroy {
       },
     });
     ref.closed.subscribe((confirmed) => {
-      console.log('Confirm result:', confirmed);
       if (confirmed) {
         this.performDelete(personId);
       }
@@ -100,18 +99,18 @@ export class PersonDetails implements OnInit, OnDestroy {
           this.isLoading.set(false);
           this.dialog.open(AppDialogComponent, {
             data: {
-              title: 'Raderat!',
+              title: 'Raderad!',
               message: 'Personen har raderats',
             },
           });
-          this.router.navigate(['/persons']);
+          this.router.navigate(['/search']);
         },
         error: (error) => {
           this.isLoading.set(false);
           this.dialog.open(AppDialogComponent, {
             data: {
               title: 'Fel',
-              message: `Kunde inte radera personen. Försök igen senare.`,
+              message: `Kunde inte radera person. Försök igen senare.`,
             },
           });
         },
