@@ -8,8 +8,12 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PetDto } from '../domain/client';
+
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
+
 
 @Component({
   selector: 'app-pets',
@@ -22,8 +26,11 @@ export class Pets implements OnInit, OnDestroy {
   private petService = inject(PetService);
   private dialog = inject(Dialog);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private routeParamService = inject(RouteParamService);
+  private toastr = inject(ToastrService);
   private destroy$ = new Subject<void>();
+
 
   isEditMode = signal(false);
   personId = signal<number>(0);
@@ -47,6 +54,7 @@ export class Pets implements OnInit, OnDestroy {
   }
 
   private initializeForm() {
+
     this.petForm = this.fb.group({
       name: ['', Validators.required],
       species: ['', Validators.required],
@@ -152,15 +160,11 @@ export class Pets implements OnInit, OnDestroy {
         next: () => {
           this.petForm.reset({ personId: this.personId() });
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Sparning lyckades', message: 'Djuret har sparats!' },
-          });
+          this.toastr.success('Sparat!', 'Djuret har sparats!');
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid sparning', message: 'Kunde inte spara djuret. Försök igen.' },
-          });
+          this.toastr.error('Fel vid sparning. Försök igen senare.', 'Fel');
         },
       });
   }
@@ -174,15 +178,11 @@ export class Pets implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Uppdatering lyckades', message: 'Djuret har uppdaterats!' },
-          });
+          this.toastr.success('Updaterat!', 'Updateringen har sparats!');
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera djuret. Försök igen.' },
-          });
+          this.toastr.error('Fel vid updatering. Försök igen senare.', 'Fel');
         },
       });
   }
