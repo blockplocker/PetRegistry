@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { AppDialogComponent } from '../components/Dialog/Dialog';
+import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,14 @@ export class Home {
       data: {
         title: 'Fel',
         message: 'Det gick inte att spara.',
+      },
+    });
+  }
+  showConfirm() {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Ta bort',
+        message: 'Är du säker på att du vill ta bort?.',
       },
     });
   }
