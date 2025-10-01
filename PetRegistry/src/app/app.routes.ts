@@ -10,7 +10,6 @@ export const routes: Routes = [
   {
     path: '',
     component: Home,
-    // canActivate: [AuthGuard],
     title: 'Home - PetRegistry',
   },
   {
@@ -26,7 +25,12 @@ export const routes: Routes = [
   {
     path: 'pets/:id',
     component: Pets,
-    title: 'Pets - PetRegistry',
+    title: 'Add Pet - PetRegistry',
+  },
+  {
+    path: 'pets/edit/:id',
+    component: Pets,
+    title: 'Edit Pet - PetRegistry',
   },
   {
     path: 'search',

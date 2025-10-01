@@ -1,6 +1,16 @@
 <div class="container mt-3">
   <h5 class="text-center">Här kan du lägga till djur</h5>
-
+@if(isLoading()) {
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-danger" role="alert">
+      Error: {{ error() }}
+    </div>
+  } 
   <form class="mx-auto w-50" [formGroup]="petForm" (ngSubmit)="savePet()">
     <div class="mb-3">
       <label for="animalName" class="form-label">Namn på djuret</label>
@@ -118,7 +128,7 @@
     </div>
 
     <div class="mb-3 text-center">
-      <button type="submit" class="btn btn-primary">Lägg till</button>
+      <button type="submit" class="btn btn-primary">{{ isEditMode() ? 'Spara' : 'Lägg till' }}</button>
     </div>
   </form>
 </div>
