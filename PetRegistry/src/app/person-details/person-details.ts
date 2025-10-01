@@ -61,4 +61,6 @@ export class PersonDetails implements OnInit, OnDestroy {
   calculateAge(birthDate: string): number {
     return this.ageService.calculateAge(birthDate);
   }
+
+  deletePerson() {}
 }
