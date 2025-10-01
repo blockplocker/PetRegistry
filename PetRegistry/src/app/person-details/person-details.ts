@@ -9,8 +9,8 @@ import { forkJoin } from 'rxjs';
 import { AgeService } from '../Services/Utils/age-service';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
-import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { RouteParamService } from '../Services/Utils/route-param-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-person-details',
@@ -26,6 +26,7 @@ export class PersonDetails implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private routeParamService = inject(RouteParamService);
+  private toastr = inject(ToastrService);
   private destroy$ = new Subject<void>();
 
   personId = signal<number>(0);
@@ -105,22 +106,12 @@ export class PersonDetails implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: {
-              title: 'Raderad!',
-              message: 'Personen har raderats',
-            },
-          });
+          this.toastr.success('Personen har raderats', 'Raderad!');
           this.router.navigate(['/search']);
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: {
-              title: 'Fel',
-              message: `Kunde inte radera person. Försök igen senare.`,
-            },
-          });
+          this.toastr.error('Kunde inte radera person. Försök igen senare.', 'Fel');
         },
       });
   }

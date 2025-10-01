@@ -8,7 +8,9 @@ import { StringUtils } from '../Services/string-utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
+
 
 @Component({
   selector: 'app-persons',
@@ -24,8 +26,10 @@ export class Persons implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private routeParamService = inject(RouteParamService);
   private destroy$ = new Subject<void>();
+  private toastr = inject(ToastrService);
 
   personId = signal<number>(0);
+
   person = signal<PersonDto | null>(null);
   isEditing = signal(false);
   isLoading = signal(false);
@@ -34,6 +38,7 @@ export class Persons implements OnInit, OnDestroy {
   personForm!: FormGroup;
 
   ngOnInit() {
+
     this.initializeForm();  
 
     const personId = this.routeParamService.getIdParam(this.route);
@@ -100,7 +105,7 @@ export class Persons implements OnInit, OnDestroy {
     }
 
     const formValue = this.personForm.value;
-    
+
     const person = new PersonDto({
       id: this.isEditing() ? Number(this.personId()) : undefined,
       firstName: StringUtils.capitalizeFirst(formValue.firstName),
@@ -120,41 +125,39 @@ export class Persons implements OnInit, OnDestroy {
 
   createPerson(person: PersonDto) {
     this.isLoading.set(true);
-    
+
     this.personService
       .savePerson(person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isLoading.set(false);
+          this.toastr.success('Personen har skapats', 'Lyckat');
           this.personForm.reset();
         },
         error: () => {
           this.isLoading.set(false);
-          this.error.set('Kunde inte spara person. Försök igen.');
+          this.toastr.error('Kunde inte skapa person. Försök igen senare.', 'Fel');
         },
       });
   }
 
   updatePerson(person: PersonDto) {
-    if (!this.personId()) return;
-
-    const personIdNum = Number(this.personId());
     this.isLoading.set(true);
 
     this.personService
-      .updatePerson(personIdNum, person)
+      .updatePerson(this.personId(), person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.router.navigate(['/person-details', personIdNum]);
+          this.toastr.success('Personen har updaterats', 'Lyckat');
+          this.router.navigate(['/person-details', this.personId()]);
         },
         error: () => {
           this.isLoading.set(false);
-          this.error.set('Kunde inte uppdatera person. Försök igen.');
+          this.toastr.error('Kunde inte updatera person. Försök igen senare.', 'Fel');
         },
       });
   }
-
 }
