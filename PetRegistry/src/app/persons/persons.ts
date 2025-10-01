@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Dialog } from '@angular/cdk/dialog';
-import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/string-utils';
@@ -21,7 +19,6 @@ import { RouteParamService } from '../Services/Utils/route-param-service';
 })
 export class Persons implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
-  private dialog = inject(Dialog);
   private personService = inject(PersonService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -130,16 +127,11 @@ export class Persons implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Sparat!', message: 'Personen har sparats!' },
-          });
           this.personForm.reset();
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid sparning', message: 'Kunde inte spara person. Försök igen.' },
-          });
+          this.error.set('Kunde inte spara person. Försök igen.');
         },
       });
   }
@@ -160,9 +152,7 @@ export class Persons implements OnInit, OnDestroy {
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera person. Försök igen.' },
-          });
+          this.error.set('Kunde inte uppdatera person. Försök igen.');
         },
       });
   }

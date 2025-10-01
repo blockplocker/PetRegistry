@@ -19,23 +19,29 @@
         type="text"
         class="form-control"
         placeholder="Namn på djuret"
-        formControlName="name"
+        formControlName="name" [class.is-invalid]="
+          petForm.get('name')?.invalid && petForm.get('name')?.touched
+        "
       />
+      <div class="invalid-feedback">Namn på djuret är obligatoriskt.</div>
     </div>
 
     <div class="mb-3">
       <label for="species" class="form-label">Art</label>
-      <input id="species" type="text" class="form-control" formControlName="species" />
+      <input id="species" type="text" class="form-control" formControlName="species" placeholder="Art" [class.is-invalid]="
+          petForm.get('species')?.invalid && petForm.get('species')?.touched
+        "/>
+      <div class="invalid-feedback">Art är obligatoriskt.</div>
     </div>
 
     <div class="mb-3">
       <label for="breed" class="form-label">Ras</label>
-      <input id="breed" type="text" class="form-control" formControlName="breed" />
+      <input id="breed" type="text" class="form-control" formControlName="breed" placeholder="Ras" />
     </div>
 
     <div class="mb-3">
       <label for="color" class="form-label">Färg</label>
-      <input id="color" type="text" class="form-control" formControlName="color" />
+      <input id="color" type="text" class="form-control" formControlName="color" placeholder="Färg" />
     </div>
 
     <div class="mb-3">
@@ -59,6 +65,9 @@
           id="genderFemale"
           formControlName="gender"
           [value]="'Female'"
+          [class.is-invalid]="
+            petForm.get('gender')?.invalid && petForm.get('gender')?.touched
+          "
         />
         <label class="form-check-label" for="genderFemale">Hona</label>
       </div>
@@ -70,9 +79,16 @@
           id="genderMale"
           formControlName="gender"
           [value]="'Male'"
+          [class.is-invalid]="
+            petForm.get('gender')?.invalid && petForm.get('gender')?.touched
+          "
         />
         <label class="form-check-label" for="genderMale">Hane</label>
       </div>
+      
+      @if(petForm.get('gender')?.invalid && petForm.get('gender')?.touched) {
+        <div class="invalid-feedback d-block">Kön är obligatoriskt.</div>
+      }
     </div>
 
     <div class="mb-3">
@@ -85,6 +101,9 @@
           id="chipYes"
           formControlName="isMicrochip"
           [value]="true"
+          [class.is-invalid]="
+            petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched
+          "
         />
         <label class="form-check-label" for="chipYes">Ja</label>
       </div>
@@ -96,9 +115,16 @@
           id="chipNo"
           formControlName="isMicrochip"
           [value]="false"
+          [class.is-invalid]="
+            petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched
+          "
         />
         <label class="form-check-label" for="chipNo">Nej</label>
       </div>
+      
+      @if(petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched) {
+        <div class="invalid-feedback d-block">Du måste ange om djuret är chippat.</div>
+      }
     </div>
 
     <div class="mb-3">
@@ -111,6 +137,9 @@
           id="neuteredYes"
           formControlName="isNeutered"
           [value]="true"
+          [class.is-invalid]="
+            petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched
+          "
         />
         <label class="form-check-label" for="neuteredYes">Ja</label>
       </div>
@@ -122,9 +151,16 @@
           id="neuteredNo"
           formControlName="isNeutered"
           [value]="false"
+          [class.is-invalid]="
+            petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched
+          "
         />
         <label class="form-check-label" for="neuteredNo">Nej</label>
       </div>
+      
+      @if(petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched) {
+        <div class="invalid-feedback d-block">Du måste ange om djuret är kastrerat.</div>
+      }
     </div>
 
     <div class="mb-3 text-center">

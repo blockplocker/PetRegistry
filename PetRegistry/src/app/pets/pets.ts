@@ -6,7 +6,7 @@ import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PetDto } from '../domain/client';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
@@ -22,6 +22,7 @@ export class Pets implements OnInit, OnDestroy {
   private petService = inject(PetService);
   private dialog = inject(Dialog);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private routeParamService = inject(RouteParamService);
   private destroy$ = new Subject<void>();
 
@@ -65,15 +66,24 @@ export class Pets implements OnInit, OnDestroy {
     const mode = routeData['mode'];
 
     if (mode === 'edit') {
-      this.isEditMode.set(true);
+      this.getPetId();
+    } else {
+      this.getPersonId();
+    }
+  }
+
+  getPetId() {
+    this.isEditMode.set(true);
       const petId = this.routeParamService.getIdParam(this.route);
       if (petId !== null) {
         this.petId.set(petId);
       } else {
         this.error.set('Invalid pet ID');
       }
-    } else {
-      this.isEditMode.set(false);
+  }
+
+  getPersonId() {
+    this.isEditMode.set(false);
       const personId = this.routeParamService.getIdParam(this.route);
       if (personId !== null) {
         this.personId.set(personId);
@@ -82,7 +92,6 @@ export class Pets implements OnInit, OnDestroy {
         this.error.set('Invalid person ID');
       }
     }
-  }
 
   private loadPetForEdit() {
     this.isLoading.set(true);
@@ -117,7 +126,10 @@ export class Pets implements OnInit, OnDestroy {
   }
 
   savePet() {
-    if (this.petForm.invalid) return;
+    if (this.petForm.invalid) {
+      this.petForm.markAllAsTouched();
+      return;
+    }
 
     const formValue = this.petForm.value;
 
@@ -150,7 +162,8 @@ export class Pets implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.petForm.reset({ personId: this.personId() });
+          this.initializeForm();
+          this.petForm.patchValue({ personId: this.personId() });
           this.isLoading.set(false);
           this.dialog.open(AppDialogComponent, {
             data: { title: 'Sparning lyckades', message: 'Djuret har sparats!' },
@@ -158,9 +171,7 @@ export class Pets implements OnInit, OnDestroy {
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid sparning', message: 'Kunde inte spara djuret. Försök igen.' },
-          });
+          this.error.set('Kunde inte spara djuret. Försök igen.');
         },
       });
   }
@@ -177,12 +188,11 @@ export class Pets implements OnInit, OnDestroy {
           this.dialog.open(AppDialogComponent, {
             data: { title: 'Uppdatering lyckades', message: 'Djuret har uppdaterats!' },
           });
+          this.router.navigate(['/pet-details', this.petId()]);
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera djuret. Försök igen.' },
-          });
+          this.error.set('Kunde inte uppdatera djuret. Försök igen.');
         },
       });
   }
