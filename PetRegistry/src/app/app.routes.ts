@@ -26,11 +26,13 @@ export const routes: Routes = [
     path: 'pets/:id',
     component: Pets,
     title: 'Add Pet - PetRegistry',
+    data: { mode: 'add' }
   },
   {
     path: 'pets/edit/:id',
     component: Pets,
     title: 'Edit Pet - PetRegistry',
+    data: { mode: 'edit' }
   },
   {
     path: 'search',

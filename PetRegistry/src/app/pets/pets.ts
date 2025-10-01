@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,19 +11,18 @@ import { PetDto } from '../domain/client';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
 
-const todayStr = new Date().toISOString().split('T')[0];
-
 @Component({
   selector: 'app-pets',
-  imports: [CommonModule, ReactiveFormsModule, DialogModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule],
   templateUrl: './pets.html',
   styleUrl: './pets.css',
 })
-export class Pets implements OnInit {
-  private route = inject(ActivatedRoute);
-  private routeParamService = inject(RouteParamService);
+export class Pets implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private petService = inject(PetService);
+  private dialog = inject(Dialog);
+  private route = inject(ActivatedRoute);
+  private routeParamService = inject(RouteParamService);
   private destroy$ = new Subject<void>();
 
   isEditMode = signal(false);
@@ -62,10 +61,10 @@ export class Pets implements OnInit {
   }
 
   private determineMode() {
-    const url = this.route.snapshot.url.map((segment) => segment.path).join('/');
+    const routeData = this.route.snapshot.data;
+    const mode = routeData['mode'];
 
-    if (url.includes('edit')) {
-      // Edit mode: pets/edit/:id (id is petId)
+    if (mode === 'edit') {
       this.isEditMode.set(true);
       const petId = this.routeParamService.getIdParam(this.route);
       if (petId !== null) {
@@ -74,7 +73,6 @@ export class Pets implements OnInit {
         this.error.set('Invalid pet ID');
       }
     } else {
-      // Add mode: pets/:id (id is personId)
       this.isEditMode.set(false);
       const personId = this.routeParamService.getIdParam(this.route);
       if (personId !== null) {
@@ -99,10 +97,11 @@ export class Pets implements OnInit {
         },
         error: () => {
           this.isLoading.set(false);
+          this.error.set('Kunde inte ladda djurdata. Försök igen.');
         },
       });
   }
-  
+
   populateForm(pet: PetDto) {
     this.petForm.patchValue({
       name: pet.name,
@@ -128,11 +127,11 @@ export class Pets implements OnInit {
       gender: formValue.gender,
       species: formValue.species,
       breed: formValue.breed || null,
-      dateOfBirth: formValue.dateOfBirth.toString() || null,
+      dateOfBirth: formValue.dateOfBirth || null,
       color: formValue.color || null,
-      isMicrochip: formValue.isMicrochip === true,
-      isNeutered: formValue.isNeutered === true,
-      registrationDate: new Date(todayStr),
+      isMicrochip: formValue.isMicrochip,
+      isNeutered: formValue.isNeutered,
+      registrationDate: new Date(this.today),
       personId: this.isEditMode() ? this.personId() : formValue.personId,
     });
 
@@ -144,24 +143,47 @@ export class Pets implements OnInit {
   }
 
   createPet(pet: PetDto) {
+    this.isLoading.set(true);
+
     this.petService
       .savePet(pet)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.petForm.reset({ personId: this.personId() });
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Sparning lyckades', message: 'Djuret har sparats!' },
+          });
         },
-        error: () => {},
+        error: () => {
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Fel vid sparning', message: 'Kunde inte spara djuret. Försök igen.' },
+          });
+        },
       });
   }
 
   updatePet(pet: PetDto) {
+    this.isLoading.set(true);
+
     this.petService
       .updatePet(this.petId(), pet)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {},
-        error: () => {},
+        next: () => {
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Uppdatering lyckades', message: 'Djuret har uppdaterats!' },
+          });
+        },
+        error: () => {
+          this.isLoading.set(false);
+          this.dialog.open(AppDialogComponent, {
+            data: { title: 'Fel vid uppdatering', message: 'Kunde inte uppdatera djuret. Försök igen.' },
+          });
+        },
       });
   }
 }
