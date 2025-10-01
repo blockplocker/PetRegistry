@@ -1,0 +1,14 @@
+<app-modal>
+  <div slot="header">
+    <h5 class="modal-title">{{ data.title || 'Meddelande' }}</h5>
+  </div>
+
+  <div slot="body">
+    <p class="mb-0">{{ data.message }}</p>
+  </div>
+
+  <div class="d-grid gap-2 d-flex justify-content-end" slot="footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="confirm()">Confirm</button>
+  </div>
+</app-modal>
