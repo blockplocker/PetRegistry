@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Dialog } from '@angular/cdk/dialog';
-import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/string-utils';
@@ -23,7 +21,6 @@ import { RouteParamService } from '../Services/Utils/route-param-service';
 })
 export class Persons implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
-  private dialog = inject(Dialog);
   private personService = inject(PersonService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -141,33 +138,25 @@ export class Persons implements OnInit, OnDestroy {
         error: () => {
           this.isLoading.set(false);
           this.toastr.error('Kunde inte skapa person. Försök igen senare.', 'Fel');
-
         },
       });
   }
 
   updatePerson(person: PersonDto) {
-    if (!this.personId()) return;
-
-    const personIdNum = Number(this.personId());
     this.isLoading.set(true);
 
     this.personService
-      .updatePerson(personIdNum, person)
+      .updatePerson(this.personId(), person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.router.navigate(['/person-details', personIdNum]);
+          this.toastr.success('Personen har updaterats', 'Lyckat');
+          this.router.navigate(['/person-details', this.personId()]);
         },
         error: () => {
           this.isLoading.set(false);
-          this.dialog.open(AppDialogComponent, {
-            data: {
-              title: 'Fel vid uppdatering',
-              message: 'Kunde inte uppdatera person. Försök igen.',
-            },
-          });
+          this.toastr.error('Kunde inte updatera person. Försök igen senare.', 'Fel');
         },
       });
   }

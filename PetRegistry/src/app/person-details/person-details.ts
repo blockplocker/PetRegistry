@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { AgeService } from '../Services/Utils/age-service';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
+import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,21 +22,30 @@ export class PersonDetails implements OnInit, OnDestroy {
   private ageService = inject(AgeService);
   private petService = inject(PetService);
   private personService = inject(PersonService);
-  private destroy$ = new Subject<void>();
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dialog = inject(Dialog);
-  readonly personId = computed(() => this.route.snapshot.paramMap.get('id') ?? '');
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private routeParamService = inject(RouteParamService);
+  private toastr = inject(ToastrService);
+  private destroy$ = new Subject<void>();
 
-  constructor(private toastr: ToastrService) {}
-
+  personId = signal<number>(0);
   person = signal<PersonDto | null>(null);
   pets = signal<PetDto[]>([]);
   isLoading = signal(false);
   error = signal<string | null>(null);
 
   ngOnInit() {
-    this.loadPersonDetails();
+    this.isLoading.set(true);
+    const personId = this.routeParamService.getIdParam(this.route);
+
+    if (personId !== null) {
+      this.personId.set(personId);
+      this.loadPersonDetails();
+    } else {
+      this.error.set('Invalid person ID.');
+      this.isLoading.set(false);
+    }
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -46,11 +56,9 @@ export class PersonDetails implements OnInit, OnDestroy {
     this.isLoading.set(true);
     this.error.set(null);
 
-    const personIdNum = Number(this.personId());
-
     forkJoin({
-      pets: this.petService.getPetsByPersonId(personIdNum),
-      person: this.personService.getPersonById(personIdNum),
+      pets: this.petService.getPetsByPersonId(this.personId()),
+      person: this.personService.getPersonById(this.personId()),
     })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -59,7 +67,7 @@ export class PersonDetails implements OnInit, OnDestroy {
           this.person.set(person);
           this.isLoading.set(false);
         },
-        error: (err) => {
+        error: () => {
           this.error.set('Failed to load person details');
           this.isLoading.set(false);
         },
@@ -71,7 +79,6 @@ export class PersonDetails implements OnInit, OnDestroy {
 
   deletePerson() {
     const person = this.person();
-    const personId = Number(this.personId());
 
     if (!person) return;
 
@@ -85,7 +92,7 @@ export class PersonDetails implements OnInit, OnDestroy {
     });
     ref.closed.subscribe((confirmed) => {
       if (confirmed) {
-        this.performDelete(personId);
+        this.performDelete(this.personId());
       }
     });
   }

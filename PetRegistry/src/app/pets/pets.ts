@@ -6,7 +6,7 @@ import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PetDto } from '../domain/client';
 
 import { ToastrService } from 'ngx-toastr';
@@ -73,15 +73,24 @@ export class Pets implements OnInit, OnDestroy {
     const mode = routeData['mode'];
 
     if (mode === 'edit') {
-      this.isEditMode.set(true);
+      this.getPetId();
+    } else {
+      this.getPersonId();
+    }
+  }
+
+  getPetId() {
+    this.isEditMode.set(true);
       const petId = this.routeParamService.getIdParam(this.route);
       if (petId !== null) {
         this.petId.set(petId);
       } else {
         this.error.set('Invalid pet ID');
       }
-    } else {
-      this.isEditMode.set(false);
+  }
+
+  getPersonId() {
+    this.isEditMode.set(false);
       const personId = this.routeParamService.getIdParam(this.route);
       if (personId !== null) {
         this.personId.set(personId);
@@ -90,7 +99,6 @@ export class Pets implements OnInit, OnDestroy {
         this.error.set('Invalid person ID');
       }
     }
-  }
 
   private loadPetForEdit() {
     this.isLoading.set(true);
@@ -125,7 +133,10 @@ export class Pets implements OnInit, OnDestroy {
   }
 
   savePet() {
-    if (this.petForm.invalid) return;
+    if (this.petForm.invalid) {
+      this.petForm.markAllAsTouched();
+      return;
+    }
 
     const formValue = this.petForm.value;
 
@@ -158,7 +169,8 @@ export class Pets implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.petForm.reset({ personId: this.personId() });
+          this.initializeForm();
+          this.petForm.patchValue({ personId: this.personId() });
           this.isLoading.set(false);
           this.toastr.success('Sparat!', 'Djuret har sparats!');
         },
@@ -179,10 +191,12 @@ export class Pets implements OnInit, OnDestroy {
         next: () => {
           this.isLoading.set(false);
           this.toastr.success('Updaterat!', 'Updateringen har sparats!');
+          this.router.navigate(['/pet-details', this.petId()]);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error('Fel vid updatering. Försök igen senare.', 'Fel');
+
         },
       });
   }
