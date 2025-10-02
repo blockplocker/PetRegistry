@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { PersonDto, PetDto } from '../domain/client';
 import { Subject } from 'rxjs/internal/Subject';
 import { PersonService } from '../Services/person-service';
@@ -23,10 +23,10 @@ export class PersonDetails implements OnInit, OnDestroy {
   private petService = inject(PetService);
   private personService = inject(PersonService);
   private dialog = inject(Dialog);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private routeParamService = inject(RouteParamService);
   private toastr = inject(ToastrService);
+  private routeParamService = inject(RouteParamService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private destroy$ = new Subject<void>();
 
   personId = signal<number>(0);
