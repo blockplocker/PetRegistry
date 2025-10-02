@@ -104,16 +104,15 @@ export class Persons implements OnInit, OnDestroy {
       return;
     }
 
-    const formValue = this.personForm.value;
-
+    // Direct form control access - clean and type-safe
     const person = new PersonDto({
       id: this.isEditing() ? Number(this.personId()) : undefined,
-      firstName: StringUtils.capitalizeFirst(formValue.firstName),
-      lastName: StringUtils.capitalizeFirst(formValue.lastName),
-      address: StringUtils.capitalizeFirst(formValue.address),
-      city: StringUtils.capitalizeFirst(formValue.city),
-      phoneNumber: formValue.phoneNumber,
-      email: formValue.email,
+      firstName: StringUtils.capitalizeFirst(this.personForm.get('firstName')!.value),
+      lastName: StringUtils.capitalizeFirst(this.personForm.get('lastName')!.value),
+      address: StringUtils.capitalizeFirst(this.personForm.get('address')!.value),
+      city: StringUtils.capitalizeFirst(this.personForm.get('city')!.value),
+      phoneNumber: this.personForm.get('phoneNumber')!.value,
+      email: this.personForm.get('email')!.value,
     });
 
     if (this.isEditing()) {

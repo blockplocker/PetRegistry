@@ -132,20 +132,18 @@ export class Pets implements OnInit, OnDestroy {
       return;
     }
 
-    const formValue = this.petForm.value;
-
     const pet = new PetDto({
       id: this.isEditMode() ? this.petId() : undefined,
-      name: formValue.name,
-      gender: formValue.gender,
-      species: formValue.species,
-      breed: formValue.breed || null,
-      dateOfBirth: formValue.dateOfBirth || null,
-      color: formValue.color || null,
-      isMicrochip: formValue.isMicrochip,
-      isNeutered: formValue.isNeutered,
+      name: this.petForm.get('name')!.value,
+      gender: this.petForm.get('gender')!.value,
+      species: this.petForm.get('species')!.value,
+      breed: this.petForm.get('breed')!.value || null,
+      dateOfBirth: this.petForm.get('dateOfBirth')!.value || null,
+      color: this.petForm.get('color')!.value || null,
+      isMicrochip: this.petForm.get('isMicrochip')!.value,
+      isNeutered: this.petForm.get('isNeutered')!.value,
       registrationDate: new Date(this.today),
-      personId: this.isEditMode() ? this.personId() : formValue.personId,
+      personId: this.isEditMode() ? this.personId() : this.petForm.get('personId')!.value,
     });
 
     if (this.isEditMode()) {
