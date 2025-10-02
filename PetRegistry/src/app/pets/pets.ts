@@ -79,7 +79,7 @@ export class Pets implements OnInit, OnDestroy {
     if (petId !== null) {
       this.petId.set(petId);
     } else {
-      this.error.set(this.translateService.instant('INVALID_ID'));
+      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
     }
   }
 
@@ -90,7 +90,7 @@ export class Pets implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.petForm.patchValue({ personId });
     } else {
-      this.error.set(this.translateService.instant('INVALID_ID'));
+      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
     }
   }
 
@@ -107,7 +107,7 @@ export class Pets implements OnInit, OnDestroy {
         },
         error: () => {
           this.isLoading.set(false);
-          this.error.set(this.translateService.instant('PET_LOAD_ERROR'));
+          this.error.set(this.translateService.instant('COMMON.PET_LOAD_ERROR'));
         },
       });
   }
@@ -162,20 +162,21 @@ export class Pets implements OnInit, OnDestroy {
       .savePet(pet)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (createdPet) => {
           this.initializeForm();
           this.petForm.patchValue({ personId: this.personId() });
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PET_SAVED'),
-            this.translateService.instant('SAVED')
+            this.translateService.instant('COMMON.PET_SAVED'),
+            this.translateService.instant('COMMON.SAVED')
           );
+          this.router.navigate(['/pet-details', createdPet.id]);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PET_SAVE_ERROR'),
-            this.translateService.instant('ERROR')
+            this.translateService.instant('COMMON.PET_SAVE_ERROR'),
+            this.translateService.instant('COMMON.ERROR')
           );
         },
       });
@@ -191,16 +192,16 @@ export class Pets implements OnInit, OnDestroy {
         next: () => {
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PET_UPDATED'),
-            this.translateService.instant('UPDATED')
+            this.translateService.instant('COMMON.PET_UPDATED'),
+            this.translateService.instant('COMMON.UPDATED')
           );
           this.router.navigate(['/pet-details', this.petId()]);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PET_UPDATE_ERROR'),
-            this.translateService.instant('ERROR')
+            this.translateService.instant('COMMON.PET_UPDATE_ERROR'),
+            this.translateService.instant('COMMON.ERROR')
           );
         },
       });

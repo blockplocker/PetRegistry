@@ -81,7 +81,7 @@ export class Persons implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: () => {
-          this.error.set(this.translateService.instant('PERSON_LOAD_ERROR'));
+          this.error.set(this.translateService.instant('COMMON.PERSON_LOAD_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -130,19 +130,19 @@ export class Persons implements OnInit, OnDestroy {
       .savePerson(person)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (createdPerson) => {
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PERSON_CREATED'),
-            this.translateService.instant('SUCCESS')
+            this.translateService.instant('COMMON.PERSON_CREATED'),
+            this.translateService.instant('COMMON.SUCCESS')
           );
-          this.personForm.reset();
+          this.router.navigate(['/person-details', createdPerson.id]);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PERSON_CREATE_ERROR'),
-            this.translateService.instant('ERROR')
+            this.translateService.instant('COMMON.PERSON_CREATE_ERROR'),
+            this.translateService.instant('COMMON.ERROR')
           );
         },
       });
@@ -158,16 +158,16 @@ export class Persons implements OnInit, OnDestroy {
         next: () => {
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PERSON_UPDATED'),
-            this.translateService.instant('SUCCESS')
+            this.translateService.instant('COMMON.PERSON_UPDATED'),
+            this.translateService.instant('COMMON.SUCCESS')
           );
           this.router.navigate(['/person-details', this.personId()]);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PERSON_UPDATE_ERROR'),
-            this.translateService.instant('ERROR')
+            this.translateService.instant('COMMON.PERSON_UPDATE_ERROR'),
+            this.translateService.instant('COMMON.ERROR')
           );
         },
       });

@@ -21,11 +21,11 @@
                         {{ 'COMMON.LANGUAGE' | translate }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('en')">English</a></li>
-                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('es')">Español</a></li>
-                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('fr')">Français</a></li>
-                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('sv')">Svenska</a></li>
-                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('de')">Deutsch</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('en'); $event.preventDefault()">English</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('es'); $event.preventDefault()">Español</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('fr'); $event.preventDefault()">Français</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('sv'); $event.preventDefault()">Svenska</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="changeLanguage('de'); $event.preventDefault()">Deutsch</a></li>
                     </ul>
                 </div>
             </div>

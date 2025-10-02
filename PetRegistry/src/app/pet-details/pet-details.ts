@@ -42,7 +42,7 @@ export class PetDetails implements OnInit, OnDestroy {
       this.petId.set(petId);
       this.loadPetDetails();
     } else {
-      this.error.set(this.translateService.instant('INVALID_ID'));
+      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
       this.isLoading.set(false);
     }
   }
@@ -63,7 +63,7 @@ export class PetDetails implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: (error) => {
-          this.error.set(this.translateService.instant('PET_LOAD_DETAILS_ERROR'));
+          this.error.set(this.translateService.instant('COMMON.PET_LOAD_DETAILS_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -78,10 +78,10 @@ export class PetDetails implements OnInit, OnDestroy {
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: this.translateService.instant('CONFIRM_DELETION'),
-        message: this.translateService.instant('DELETE_CONFIRMATION_MESSAGE', { name: pet.name }),
-        confirmText: this.translateService.instant('DELETE'),
-        cancelText: this.translateService.instant('CANCEL'),
+        title: this.translateService.instant('COMMON.CONFIRM_DELETION'),
+        message: this.translateService.instant('COMMON.DELETE_CONFIRMATION_MESSAGE', { name: pet.name }),
+        confirmText: this.translateService.instant('COMMON.DELETE'),
+        cancelText: this.translateService.instant('COMMON.CANCEL'),
       },
     });
     ref.closed.subscribe((confirmed) => {
@@ -101,16 +101,16 @@ export class PetDetails implements OnInit, OnDestroy {
         next: () => {
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PET_DELETED'),
-            this.translateService.instant('DELETE_SUCCESS')
+            this.translateService.instant('COMMON.PET_DELETED'),
+            this.translateService.instant('COMMON.DELETE_SUCCESS')
           );
           this.router.navigate(['/search']);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PET_DELETE_ERROR'),
-            this.translateService.instant('DELETE_ERROR')
+            this.translateService.instant('COMMON.PET_DELETE_ERROR'),
+            this.translateService.instant('COMMON.DELETE_ERROR')
           );
         },
       });

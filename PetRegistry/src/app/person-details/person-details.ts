@@ -45,7 +45,7 @@ export class PersonDetails implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.loadPersonDetails();
     } else {
-      this.error.set(this.translateService.instant('INVALID_ID'));
+      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
       this.isLoading.set(false);
     }
   }
@@ -70,7 +70,7 @@ export class PersonDetails implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: () => {
-          this.error.set(this.translateService.instant('PERSON_LOAD_ERROR'));
+          this.error.set(this.translateService.instant('COMMON.PERSON_LOAD_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -86,13 +86,13 @@ export class PersonDetails implements OnInit, OnDestroy {
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: this.translateService.instant('CONFIRM_DELETION'),
-        message: this.translateService.instant('PERSON_DELETE_CONFIRMATION_MESSAGE', {
+        title: this.translateService.instant('COMMON.CONFIRM_DELETION'),
+        message: this.translateService.instant('COMMON.PERSON_DELETE_CONFIRMATION_MESSAGE', {
           firstName: person.firstName,
           lastName: person.lastName,
         }),
-        confirmText: this.translateService.instant('DELETE'),
-        cancelText: this.translateService.instant('CANCEL'),
+        confirmText: this.translateService.instant('COMMON.DELETE'),
+        cancelText: this.translateService.instant('COMMON.CANCEL'),
       },
     });
     ref.closed.subscribe((confirmed) => {
@@ -112,16 +112,16 @@ export class PersonDetails implements OnInit, OnDestroy {
         next: () => {
           this.isLoading.set(false);
           this.toastr.success(
-            this.translateService.instant('PERSON_DELETED'),
-            this.translateService.instant('DELETE_SUCCESS')
+            this.translateService.instant('COMMON.PERSON_DELETED'),
+            this.translateService.instant('COMMON.DELETE_SUCCESS')
           );
           this.router.navigate(['/search']);
         },
         error: () => {
           this.isLoading.set(false);
           this.toastr.error(
-            this.translateService.instant('PERSON_DELETE_ERROR'),
-            this.translateService.instant('DELETE_ERROR')
+            this.translateService.instant('COMMON.PERSON_DELETE_ERROR'),
+            this.translateService.instant('COMMON.DELETE_ERROR')
           );
         },
       });
