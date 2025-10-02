@@ -11,6 +11,7 @@ import { routes } from './app.routes';
 import { API_BASE_URL_PETREGISTRY, Client } from './domain/client';
 import { environment } from '../environments/environment';
 import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideAnimations(),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
