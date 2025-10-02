@@ -57,6 +57,7 @@
     "NO_RESULTS": "Inga resultat hittades",
     "RESULTS_FOUND": "{{count}} resultat hittades",
     "LOADING_MESSAGE": "Laddar data, vänligen vänta...",
+    "LOAD_ERROR": "Misslyckades med att ladda data. Vänligen försök igen.",
     "PETS_TITLE": "Husdjur",
     "PETS_FOUND": "{{count}} husdjur hittades",
     "PERSONS_TITLE": "Personer",
@@ -143,6 +144,16 @@
     "ADD": "Lägg till",
     "UPDATE": "Uppdatera"
   },
+  "ROUTES": {
+    "HOME_TITLE": "Hem - Husdjursregister",
+    "ADD_PERSON_TITLE": "Lägg till Person - Husdjursregister",
+    "EDIT_PERSON_TITLE": "Redigera Person - Husdjursregister",
+    "ADD_PET_TITLE": "Lägg till Husdjur - Husdjursregister",
+    "EDIT_PET_TITLE": "Redigera Husdjur - Husdjursregister",
+    "SEARCH_TITLE": "Sök - Husdjursregister",
+    "PERSON_DETAILS_TITLE": "Persondetaljer - Husdjursregister",
+    "PET_DETAILS_TITLE": "Husdjursdetaljer - Husdjursregister"
+  },
   "COMMON": {
     "SAVE": "Spara",
     "CANCEL": "Avbryt",
@@ -150,6 +161,30 @@
     "LOADING": "Laddar...",
     "ERROR": "Ett fel uppstod",
     "SUCCESS": "Åtgärden lyckades",
-    "LANGUAGE": "Språk"
+    "LANGUAGE": "Språk",
+    "DELETE_SUCCESS": "Raderad!",
+    "DELETE_ERROR": "Fel",
+    "PET_DELETED": "Husdjur har raderats",
+    "PET_DELETE_ERROR": "Kunde inte radera husdjur. Försök igen senare.",
+    "PET_SAVED": "Djuret har sparats!",
+    "PET_UPDATED": "Updateringen har sparats!",
+    "PET_LOAD_ERROR": "Kunde inte ladda djurdata. Försök igen.",
+    "PET_SAVE_ERROR": "Fel vid sparning. Försök igen senare.",
+    "PET_UPDATE_ERROR": "Fel vid updatering. Försök igen senare.",
+    "SAVED": "Sparat!",
+    "UPDATED": "Updaterat!",
+    "CONFIRM_DELETION": "Bekräfta Radering",
+    "DELETE_CONFIRMATION_MESSAGE": "Är du säker på att du vill radera {{name}}?",
+    "DELETE": "Radera",
+    "PERSON_DELETE_CONFIRMATION_MESSAGE": "Är du säker på att du vill radera {{firstName}} {{lastName}}?",
+    "PET_LOAD_DETAILS_ERROR": "Kunde inte ladda djurdetaljer. Försök igen.",
+    "PERSON_CREATED": "Personen har skapats",
+    "PERSON_UPDATED": "Personen har updaterats",
+    "PERSON_LOAD_ERROR": "Kunde inte ladda persondetaljer",
+    "PERSON_CREATE_ERROR": "Kunde inte skapa person. Försök igen senare.",
+    "PERSON_UPDATE_ERROR": "Kunde inte updatera person. Försök igen senare.",
+    "PERSON_DELETED": "Person har raderats",
+    "PERSON_DELETE_ERROR": "Kunde inte radera person. Försök igen senare.",
+    "INVALID_ID": "Ogiltigt ID"
   }
 }

@@ -10,8 +10,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
-import { TranslateModule } from '@ngx-translate/core';
-
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-persons',
@@ -28,6 +27,7 @@ export class Persons implements OnInit, OnDestroy {
   private routeParamService = inject(RouteParamService);
   private destroy$ = new Subject<void>();
   private toastr = inject(ToastrService);
+  private translateService = inject(TranslateService);
 
   personId = signal<number>(0);
 
@@ -39,15 +39,14 @@ export class Persons implements OnInit, OnDestroy {
   personForm!: FormGroup;
 
   ngOnInit() {
-
-    this.initializeForm();  
+    this.initializeForm();
 
     const personId = this.routeParamService.getIdParam(this.route);
-      if (personId !== null) {
-        this.personId.set(personId);
-        this.isEditing.set(true);
-        this.loadPerson(Number(personId));
-      }
+    if (personId !== null) {
+      this.personId.set(personId);
+      this.isEditing.set(true);
+      this.loadPerson(Number(personId));
+    }
   }
 
   ngOnDestroy() {
@@ -82,7 +81,7 @@ export class Persons implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: () => {
-          this.error.set('Failed to load person details');
+          this.error.set(this.translateService.instant('PERSON_LOAD_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -133,12 +132,18 @@ export class Persons implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Personen har skapats', 'Lyckat');
+          this.toastr.success(
+            this.translateService.instant('PERSON_CREATED'),
+            this.translateService.instant('SUCCESS')
+          );
           this.personForm.reset();
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Kunde inte skapa person. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PERSON_CREATE_ERROR'),
+            this.translateService.instant('ERROR')
+          );
         },
       });
   }
@@ -152,12 +157,18 @@ export class Persons implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Personen har updaterats', 'Lyckat');
+          this.toastr.success(
+            this.translateService.instant('PERSON_UPDATED'),
+            this.translateService.instant('SUCCESS')
+          );
           this.router.navigate(['/person-details', this.personId()]);
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Kunde inte updatera person. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PERSON_UPDATE_ERROR'),
+            this.translateService.instant('ERROR')
+          );
         },
       });
   }

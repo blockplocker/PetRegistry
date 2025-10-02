@@ -57,6 +57,7 @@
     "NO_RESULTS": "Aucun résultat trouvé",
     "RESULTS_FOUND": "{{count}} résultats trouvés",
     "LOADING_MESSAGE": "Chargement des données, veuillez patienter...",
+    "LOAD_ERROR": "Échec du chargement des données. Veuillez réessayer.",
     "PETS_TITLE": "Animaux",
     "PETS_FOUND": "{{count}} animaux trouvés",
     "PERSONS_TITLE": "Personnes",
@@ -143,6 +144,16 @@
     "ADD": "Ajouter",
     "UPDATE": "Mettre à jour"
   },
+  "ROUTES": {
+    "HOME_TITLE": "Accueil - Registre des Animaux",
+    "ADD_PERSON_TITLE": "Ajouter une Personne - Registre des Animaux",
+    "EDIT_PERSON_TITLE": "Modifier une Personne - Registre des Animaux",
+    "ADD_PET_TITLE": "Ajouter un Animal - Registre des Animaux",
+    "EDIT_PET_TITLE": "Modifier un Animal - Registre des Animaux",
+    "SEARCH_TITLE": "Rechercher - Registre des Animaux",
+    "PERSON_DETAILS_TITLE": "Détails de la Personne - Registre des Animaux",
+    "PET_DETAILS_TITLE": "Détails de l'Animal - Registre des Animaux"
+  },
   "COMMON": {
     "SAVE": "Sauvegarder",
     "CANCEL": "Annuler",
@@ -150,6 +161,26 @@
     "LOADING": "Chargement...",
     "ERROR": "Une erreur s'est produite",
     "SUCCESS": "Opération réussie",
-    "LANGUAGE": "Langue"
+    "LANGUAGE": "Langue",
+    "DELETE_SUCCESS": "Supprimé!",
+    "DELETE_ERROR": "Erreur",
+    "PET_SAVED": "L'animal a été sauvegardé!",
+    "PET_UPDATED": "L'animal a été mis à jour!",
+    "PET_LOAD_ERROR": "Impossible de charger les données de l'animal. Veuillez réessayer.",
+    "PET_SAVE_ERROR": "Erreur lors de la sauvegarde de l'animal. Veuillez réessayer plus tard.",
+    "PET_UPDATE_ERROR": "Erreur lors de la mise à jour de l'animal. Veuillez réessayer plus tard.",
+    "SAVED": "Sauvegardé!",
+    "UPDATED": "Mis à jour!",
+    "CONFIRM_DELETION": "Confirmer la Suppression",
+    "DELETE_CONFIRMATION_MESSAGE": "Êtes-vous sûr de vouloir supprimer {{name}}?",
+    "DELETE": "Supprimer",
+    "PERSON_DELETE_CONFIRMATION_MESSAGE": "Êtes-vous sûr de vouloir supprimer {{firstName}} {{lastName}}?",
+    "PET_LOAD_DETAILS_ERROR": "Impossible de charger les détails de l'animal. Veuillez réessayer.",
+    "PERSON_CREATED": "La personne a été créée",
+    "PERSON_UPDATED": "La personne a été mise à jour",
+    "PERSON_LOAD_ERROR": "Impossible de charger les détails de la personne",
+    "PERSON_CREATE_ERROR": "Impossible de créer la personne. Veuillez réessayer plus tard.",
+    "PERSON_UPDATE_ERROR": "Impossible de mettre à jour la personne. Veuillez réessayer plus tard.",
+    "INVALID_ID": "ID invalide"
   }
 }

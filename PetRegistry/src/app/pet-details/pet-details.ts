@@ -10,7 +10,7 @@ import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ToastrService } from 'ngx-toastr';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pet-details',
@@ -26,6 +26,7 @@ export class PetDetails implements OnInit, OnDestroy {
   private routeParamService = inject(RouteParamService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
   petId = signal(0);
@@ -41,7 +42,7 @@ export class PetDetails implements OnInit, OnDestroy {
       this.petId.set(petId);
       this.loadPetDetails();
     } else {
-      this.error.set('Invalid pet ID.');
+      this.error.set(this.translateService.instant('INVALID_ID'));
       this.isLoading.set(false);
     }
   }
@@ -62,7 +63,7 @@ export class PetDetails implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: (error) => {
-          this.error.set('Failed to load pet details. Please try again.');
+          this.error.set(this.translateService.instant('PET_LOAD_DETAILS_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -77,10 +78,10 @@ export class PetDetails implements OnInit, OnDestroy {
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Confirm Deletion',
-        message: `Are you sure you want to delete ${pet.name}?`,
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
+        title: this.translateService.instant('CONFIRM_DELETION'),
+        message: this.translateService.instant('DELETE_CONFIRMATION_MESSAGE', { name: pet.name }),
+        confirmText: this.translateService.instant('DELETE'),
+        cancelText: this.translateService.instant('CANCEL'),
       },
     });
     ref.closed.subscribe((confirmed) => {
@@ -99,12 +100,18 @@ export class PetDetails implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Husdjur har raderats', 'Raderad!');
+          this.toastr.success(
+            this.translateService.instant('PET_DELETED'),
+            this.translateService.instant('DELETE_SUCCESS')
+          );
           this.router.navigate(['/search']);
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Kunde inte radera husdjur. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PET_DELETE_ERROR'),
+            this.translateService.instant('DELETE_ERROR')
+          );
         },
       });
   }
