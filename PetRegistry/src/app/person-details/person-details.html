@@ -1,16 +1,16 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <h2 class="mb-4">Person Details</h2>
+      <h2 class="mb-4">{{ 'PERSON_DETAILS.TITLE' | translate }}</h2>
 
       @if (isLoading()) {
       <div class="text-center my-5">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
         </div>
       </div>
       } @else if (error()) {
-      <div class="alert alert-danger" role="alert">Error: {{ error() }}</div>
+      <div class="alert alert-danger" role="alert">{{ 'COMMON.ERROR' | translate }}: {{ error() }}</div>
       } @else if (person(); as currentPerson) {
       <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -18,62 +18,51 @@
             {{ currentPerson.firstName }} {{ currentPerson.lastName }}
           </h3>
           <div class="d-grid gap-2 d-flex justify-content-end">
-            <button
-              class="btn btn-danger btn-sm float-end"
-              (click)="deletePerson()"
-              [disabled]="isLoading()"
-            >
-              Delete
+            <button class="btn btn-danger btn-sm float-end" (click)="deletePerson()" [disabled]="isLoading()">
+              {{ 'PERSON_DETAILS.DELETE' | translate }}
             </button>
-            <button
-              class="btn btn-primary btn-sm float-end"
-              [routerLink]="['/persons', currentPerson.id]"
-            >
-              Edit
+            <button class="btn btn-primary btn-sm float-end" [routerLink]="['/persons', currentPerson.id]">
+              {{ 'PERSON_DETAILS.EDIT' | translate }}
             </button>
           </div>
         </div>
         <div class="card-body">
-          <p><strong>Email:</strong> {{ currentPerson.email }}</p>
-          <p><strong>Phone:</strong> {{ currentPerson.phoneNumber }}</p>
-          <p><strong>Address:</strong> {{ currentPerson.address }}</p>
-          <p><strong>City:</strong> {{ currentPerson.city }}</p>
+          <p><strong>{{ 'PERSON_DETAILS.EMAIL' | translate }}:</strong> {{ currentPerson.email }}</p>
+          <p><strong>{{ 'PERSON_DETAILS.PHONE' | translate }}:</strong> {{ currentPerson.phoneNumber }}</p>
+          <p><strong>{{ 'PERSON_DETAILS.ADDRESS' | translate }}:</strong> {{ currentPerson.address }}</p>
+          <p><strong>{{ 'PERSON_DETAILS.CITY' | translate }}:</strong> {{ currentPerson.city }}</p>
         </div>
       </div>
       }
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <div>
-            <h4 class="card-title mb-0">Pets</h4>
-            <small class="text-muted">{{ pets().length }} pets found</small>
+            <h4 class="card-title mb-0">{{ 'PERSON_DETAILS.PETS_TITLE' | translate }}</h4>
+            <small class="text-muted">{{ 'PERSON_DETAILS.PETS_FOUND' | translate:{ count: pets().length } }}</small>
           </div>
           @if (person(); as person) {
 
           <button class="btn btn-primary btn-sm float-end" [routerLink]="['/pets', person.id]">
-            Add Pet
+            {{ 'PERSON_DETAILS.ADD_PET' | translate }}
           </button>
           }
         </div>
         <div class="card-body">
           <div class="list-group list-group-flush">
             @if (pets().length > 0) { @for (pet of this.pets(); track pet.id) {
-            <div
-              class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer"
-              [routerLink]="['/pet-details', pet.id]"
-            >
+            <div class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer"
+              [routerLink]="['/pet-details', pet.id]">
               <div class="ms-2 me-auto">
                 <div class="fw-bold">{{ pet.name }}</div>
-                <small class="text-muted"
-                  >{{ pet.species }} ({{ pet.breed }}) Age:
-                  {{ pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : 'unknown' }}
-                  years</small
-                >
+                <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) {{ 'PERSON_DETAILS.AGE' | translate }}:
+                  {{ pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : ('PERSON_DETAILS.UNKNOWN' | translate) }}
+                  {{ 'PERSON_DETAILS.YEARS' | translate }}</small>
               </div>
               <div class="d-flex gap-1">
                 @if (pet.isMicrochip) {
-                <span class="badge bg-info rounded-pill">Microchipped</span>
+                <span class="badge bg-info rounded-pill">{{ 'PERSON_DETAILS.MICROCHIPPED' | translate }}</span>
                 } @if (pet.isNeutered) {
-                <span class="badge bg-success rounded-pill">Neutered</span>
+                <span class="badge bg-success rounded-pill">{{ 'PERSON_DETAILS.NEUTERED' | translate }}</span>
                 }
               </div>
             </div>

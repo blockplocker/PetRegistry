@@ -1,93 +1,60 @@
 <div class="container mt-3">
-  <h5 class="text-center">Här kan du lägga till folk i registret</h5>
+  <h5 class="text-center">{{ 'PERSONS_FORM.TITLE' | translate }}</h5>
   @if(isLoading()) {
-    <div class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+  <div class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
     </div>
+  </div>
   } @else if (error()) {
-    <div class="alert alert-danger" role="alert">
-      Error: {{ error() }}
-    </div>
-  } 
+  <div class="alert alert-danger" role="alert">
+    {{ 'COMMON.ERROR' | translate }}: {{ error() }}
+  </div>
+  }
   <form class="mx-auto w-50" [formGroup]="personForm" (ngSubmit)="savePerson()">
     <div class="mb-3">
-      <label for="firstName" class="form-label">Förnamn</label>
-      <input
-        id="firstName"
-        type="text"
-        class="form-control"
-        formControlName="firstName"
-        [class.is-invalid]="
+      <label for="firstName" class="form-label">{{ 'PERSONS_FORM.FIRST_NAME' | translate }}</label>
+      <input id="firstName" type="text" class="form-control" formControlName="firstName" [class.is-invalid]="
           personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched
-        "
-      />
-      <div class="invalid-feedback">Förnamn är obligatoriskt.</div>
+        " />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.FIRST_NAME_REQUIRED' | translate }}</div>
     </div>
     <div class="mb-3">
-      <label for="lastName" class="form-label">Efternamn</label>
-      <input
-        id="lastName"
-        type="text"
-        class="form-control"
-        formControlName="lastName"
-        [class.is-invalid]="
+      <label for="lastName" class="form-label">{{ 'PERSONS_FORM.LAST_NAME' | translate }}</label>
+      <input id="lastName" type="text" class="form-control" formControlName="lastName" [class.is-invalid]="
           personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched
-        "
-      />
-      <div class="invalid-feedback">Efternamn är obligatoriskt.</div>
+        " />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.LAST_NAME_REQUIRED' | translate }}</div>
     </div>
     <div class="mb-3">
-      <label for="adress" class="form-label">Adress</label>
-      <input
-        id="adress"
-        type="text"
-        class="form-control"
-        formControlName="address"
-        [class.is-invalid]="
+      <label for="adress" class="form-label">{{ 'PERSONS_FORM.ADDRESS' | translate }}</label>
+      <input id="adress" type="text" class="form-control" formControlName="address" [class.is-invalid]="
           personForm.get('address')?.invalid && personForm.get('address')?.touched
-        "
-      />
-      <div class="invalid-feedback">Adress är obligatoriskt.</div>
+        " />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.ADDRESS_REQUIRED' | translate }}</div>
     </div>
     <div class="mb-3">
-      <label for="city" class="form-label">Stad</label>
-      <input
-        id="city"
-        type="text"
-        class="form-control"
-        formControlName="city"
-        [class.is-invalid]="personForm.get('city')?.invalid && personForm.get('city')?.touched"
-      />
-      <div class="invalid-feedback">Stad är obligatoriskt.</div>
+      <label for="city" class="form-label">{{ 'PERSONS_FORM.CITY' | translate }}</label>
+      <input id="city" type="text" class="form-control" formControlName="city"
+        [class.is-invalid]="personForm.get('city')?.invalid && personForm.get('city')?.touched" />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.CITY_REQUIRED' | translate }}</div>
     </div>
     <div class="mb-3">
-      <label for="phoneNumber" class="form-label">Mobil</label>
-      <input
-        id="phoneNumber"
-        type="tel"
-        class="form-control"
-        formControlName="phoneNumber"
-        [class.is-invalid]="
+      <label for="phoneNumber" class="form-label">{{ 'PERSONS_FORM.PHONE' | translate }}</label>
+      <input id="phoneNumber" type="tel" class="form-control" formControlName="phoneNumber" [class.is-invalid]="
           personForm.get('phoneNumber')?.invalid && personForm.get('phoneNumber')?.touched
-        "
-      />
-      <div class="invalid-feedback">Mobil nr är obligatoriskt.</div>
+        " />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.PHONE_REQUIRED' | translate }}</div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input
-        id="email"
-        type="email"
-        class="form-control"
-        formControlName="email"
-        [class.is-invalid]="personForm.get('email')?.invalid && personForm.get('email')?.touched"
-      />
-      <div class="invalid-feedback">Felaktig email.</div>
+      <label for="email" class="form-label">{{ 'PERSONS_FORM.EMAIL' | translate }}</label>
+      <input id="email" type="email" class="form-control" formControlName="email"
+        [class.is-invalid]="personForm.get('email')?.invalid && personForm.get('email')?.touched" />
+      <div class="invalid-feedback">{{ 'PERSONS_FORM.EMAIL_INVALID' | translate }}</div>
     </div>
     <div class="mb-3">
-      <button type="submit" class="btn btn-primary">{{ isEditing() ? 'Uppdatera' : 'Lägg till' }}</button>
+      <button type="submit" class="btn btn-primary">{{ isEditing() ? ('PERSONS_FORM.UPDATE' | translate) :
+        ('PERSONS_FORM.ADD' | translate) }}</button>
     </div>
   </form>
 </div>

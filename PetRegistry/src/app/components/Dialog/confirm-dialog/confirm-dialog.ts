@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { Modal } from '../../Modal/Modal';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type ConfirmData = {
   title?: string;
@@ -13,7 +14,7 @@ export type ConfirmData = {
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, DialogModule, Modal],
+  imports: [CommonModule, DialogModule, Modal, TranslateModule],
   templateUrl: './confirm-dialog.html',
 })
 export class ConfirmDialogComponent {
