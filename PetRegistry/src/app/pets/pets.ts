@@ -1,16 +1,12 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Dialog } from '@angular/cdk/dialog';
-import { AppDialogComponent } from '../components/Dialog/Dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PetDto } from '../domain/client';
-
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -24,7 +20,6 @@ import { Subject, takeUntil } from 'rxjs';
 export class Pets implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private petService = inject(PetService);
-  private dialog = inject(Dialog);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private routeParamService = inject(RouteParamService);
@@ -172,7 +167,7 @@ export class Pets implements OnInit, OnDestroy {
           this.initializeForm();
           this.petForm.patchValue({ personId: this.personId() });
           this.isLoading.set(false);
-          this.toastr.success('Sparat!', 'Djuret har sparats!');
+          this.toastr.success('Djuret har sparats!', 'Sparat!');
         },
         error: () => {
           this.isLoading.set(false);
@@ -190,7 +185,7 @@ export class Pets implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Updaterat!', 'Updateringen har sparats!');
+          this.toastr.success('Updateringen har sparats!', 'Updaterat!');
           this.router.navigate(['/pet-details', this.petId()]);
         },
         error: () => {
