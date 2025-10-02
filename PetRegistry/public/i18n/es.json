@@ -57,6 +57,7 @@
     "NO_RESULTS": "No se encontraron resultados",
     "RESULTS_FOUND": "{{count}} resultados encontrados",
     "LOADING_MESSAGE": "Cargando datos, por favor espere...",
+    "LOAD_ERROR": "Error al cargar los datos. Por favor, inténtelo de nuevo.",
     "PETS_TITLE": "Mascotas",
     "PETS_FOUND": "{{count}} mascotas encontradas",
     "PERSONS_TITLE": "Personas",
@@ -143,6 +144,16 @@
     "ADD": "Agregar",
     "UPDATE": "Actualizar"
   },
+  "ROUTES": {
+    "HOME_TITLE": "Inicio - Registro de Mascotas",
+    "ADD_PERSON_TITLE": "Agregar Persona - Registro de Mascotas",
+    "EDIT_PERSON_TITLE": "Editar Persona - Registro de Mascotas",
+    "ADD_PET_TITLE": "Agregar Mascota - Registro de Mascotas",
+    "EDIT_PET_TITLE": "Editar Mascota - Registro de Mascotas",
+    "SEARCH_TITLE": "Buscar - Registro de Mascotas",
+    "PERSON_DETAILS_TITLE": "Detalles de Persona - Registro de Mascotas",
+    "PET_DETAILS_TITLE": "Detalles de Mascota - Registro de Mascotas"
+  },
   "COMMON": {
     "SAVE": "Guardar",
     "CANCEL": "Cancelar",
@@ -150,6 +161,30 @@
     "LOADING": "Cargando...",
     "ERROR": "Ocurrió un error",
     "SUCCESS": "Operación exitosa",
-    "LANGUAGE": "Idioma"
+    "LANGUAGE": "Idioma",
+    "DELETE_SUCCESS": "¡Eliminado!",
+    "DELETE_ERROR": "Error",
+    "PET_DELETED": "La mascota ha sido eliminada",
+    "PET_DELETE_ERROR": "No se pudo eliminar la mascota. Por favor, inténtelo de nuevo más tarde.",
+    "PET_SAVED": "¡La mascota ha sido guardada!",
+    "PET_UPDATED": "¡La mascota ha sido actualizada!",
+    "PET_LOAD_ERROR": "No se pudieron cargar los datos de la mascota. Por favor, inténtelo de nuevo.",
+    "PET_SAVE_ERROR": "Error al guardar la mascota. Por favor, inténtelo de nuevo más tarde.",
+    "PET_UPDATE_ERROR": "Error al actualizar la mascota. Por favor, inténtelo de nuevo más tarde.",
+    "SAVED": "¡Guardado!",
+    "UPDATED": "¡Actualizado!",
+    "CONFIRM_DELETION": "Confirmar Eliminación",
+    "DELETE_CONFIRMATION_MESSAGE": "¿Está seguro de que desea eliminar {{name}}?",
+    "DELETE": "Eliminar",
+    "PERSON_DELETE_CONFIRMATION_MESSAGE": "¿Está seguro de que desea eliminar {{firstName}} {{lastName}}?",
+    "PET_LOAD_DETAILS_ERROR": "No se pudieron cargar los detalles de la mascota. Por favor, inténtelo de nuevo.",
+    "PERSON_CREATED": "La persona ha sido creada",
+    "PERSON_UPDATED": "La persona ha sido actualizada",
+    "PERSON_LOAD_ERROR": "No se pudieron cargar los detalles de la persona",
+    "PERSON_CREATE_ERROR": "No se pudo crear la persona. Por favor, inténtelo de nuevo más tarde.",
+    "PERSON_UPDATE_ERROR": "No se pudo actualizar la persona. Por favor, inténtelo de nuevo más tarde.",
+    "PERSON_DELETED": "La persona ha sido eliminada",
+    "PERSON_DELETE_ERROR": "No se pudo eliminar la persona. Por favor, inténtelo de nuevo más tarde.",
+    "INVALID_ID": "ID inválido"
   }
 }

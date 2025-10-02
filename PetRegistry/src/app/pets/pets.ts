@@ -9,7 +9,7 @@ import { PetDto } from '../domain/client';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pets',
@@ -24,6 +24,7 @@ export class Pets implements OnInit, OnDestroy {
   private router = inject(Router);
   private routeParamService = inject(RouteParamService);
   private toastr = inject(ToastrService);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
   isEditMode = signal(false);
@@ -78,7 +79,7 @@ export class Pets implements OnInit, OnDestroy {
     if (petId !== null) {
       this.petId.set(petId);
     } else {
-      this.error.set('Invalid pet ID');
+      this.error.set(this.translateService.instant('INVALID_ID'));
     }
   }
 
@@ -89,7 +90,7 @@ export class Pets implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.petForm.patchValue({ personId });
     } else {
-      this.error.set('Invalid person ID');
+      this.error.set(this.translateService.instant('INVALID_ID'));
     }
   }
 
@@ -106,7 +107,7 @@ export class Pets implements OnInit, OnDestroy {
         },
         error: () => {
           this.isLoading.set(false);
-          this.error.set('Kunde inte ladda djurdata. Försök igen.');
+          this.error.set(this.translateService.instant('PET_LOAD_ERROR'));
         },
       });
   }
@@ -165,11 +166,17 @@ export class Pets implements OnInit, OnDestroy {
           this.initializeForm();
           this.petForm.patchValue({ personId: this.personId() });
           this.isLoading.set(false);
-          this.toastr.success('Djuret har sparats!', 'Sparat!');
+          this.toastr.success(
+            this.translateService.instant('PET_SAVED'),
+            this.translateService.instant('SAVED')
+          );
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Fel vid sparning. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PET_SAVE_ERROR'),
+            this.translateService.instant('ERROR')
+          );
         },
       });
   }
@@ -183,12 +190,18 @@ export class Pets implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Updateringen har sparats!', 'Updaterat!');
+          this.toastr.success(
+            this.translateService.instant('PET_UPDATED'),
+            this.translateService.instant('UPDATED')
+          );
           this.router.navigate(['/pet-details', this.petId()]);
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Fel vid updatering. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PET_UPDATE_ERROR'),
+            this.translateService.instant('ERROR')
+          );
         },
       });
   }

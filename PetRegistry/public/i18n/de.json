@@ -57,6 +57,7 @@
     "NO_RESULTS": "Keine Ergebnisse gefunden",
     "RESULTS_FOUND": "{{count}} Ergebnisse gefunden",
     "LOADING_MESSAGE": "Daten werden geladen, bitte warten...",
+    "LOAD_ERROR": "Fehler beim Laden der Daten. Bitte versuchen Sie es erneut.",
     "PETS_TITLE": "Haustiere",
     "PETS_FOUND": "{{count}} Haustiere gefunden",
     "PERSONS_TITLE": "Personen",
@@ -143,6 +144,16 @@
     "ADD": "Hinzufügen",
     "UPDATE": "Aktualisieren"
   },
+  "ROUTES": {
+    "HOME_TITLE": "Startseite - Haustierregister",
+    "ADD_PERSON_TITLE": "Person hinzufügen - Haustierregister",
+    "EDIT_PERSON_TITLE": "Person bearbeiten - Haustierregister",
+    "ADD_PET_TITLE": "Haustier hinzufügen - Haustierregister",
+    "EDIT_PET_TITLE": "Haustier bearbeiten - Haustierregister",
+    "SEARCH_TITLE": "Suchen - Haustierregister",
+    "PERSON_DETAILS_TITLE": "Personendetails - Haustierregister",
+    "PET_DETAILS_TITLE": "Haustierdetails - Haustierregister"
+  },
   "COMMON": {
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
@@ -150,6 +161,30 @@
     "LOADING": "Laden...",
     "ERROR": "Ein Fehler ist aufgetreten",
     "SUCCESS": "Vorgang erfolgreich",
-    "LANGUAGE": "Sprache"
+    "LANGUAGE": "Sprache",
+    "DELETE_SUCCESS": "Gelöscht!",
+    "DELETE_ERROR": "Fehler",
+    "PET_DELETED": "Haustier wurde gelöscht",
+    "PET_DELETE_ERROR": "Haustier konnte nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
+    "PET_SAVED": "Haustier wurde gespeichert!",
+    "PET_UPDATED": "Haustier wurde aktualisiert!",
+    "PET_LOAD_ERROR": "Haustier-Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+    "PET_SAVE_ERROR": "Fehler beim Speichern des Haustiers. Bitte versuchen Sie es später erneut.",
+    "PET_UPDATE_ERROR": "Fehler beim Aktualisieren des Haustiers. Bitte versuchen Sie es später erneut.",
+    "SAVED": "Gespeichert!",
+    "UPDATED": "Aktualisiert!",
+    "CONFIRM_DELETION": "Löschung bestätigen",
+    "DELETE_CONFIRMATION_MESSAGE": "Sind Sie sicher, dass Sie {{name}} löschen möchten?",
+    "DELETE": "Löschen",
+    "PERSON_DELETE_CONFIRMATION_MESSAGE": "Sind Sie sicher, dass Sie {{firstName}} {{lastName}} löschen möchten?",
+    "PET_LOAD_DETAILS_ERROR": "Haustier-Details konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+    "PERSON_CREATED": "Person wurde erstellt",
+    "PERSON_UPDATED": "Person wurde aktualisiert",
+    "PERSON_LOAD_ERROR": "Person-Details konnten nicht geladen werden",
+    "PERSON_CREATE_ERROR": "Person konnte nicht erstellt werden. Bitte versuchen Sie es später erneut.",
+    "PERSON_UPDATE_ERROR": "Person konnte nicht aktualisiert werden. Bitte versuchen Sie es später erneut.",
+    "PERSON_DELETED": "Person wurde gelöscht",
+    "PERSON_DELETE_ERROR": "Person konnte nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
+    "INVALID_ID": "Ungültige ID"
   }
 }

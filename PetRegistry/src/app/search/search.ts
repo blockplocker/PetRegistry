@@ -13,7 +13,7 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { PetDto, PersonDto } from '../domain/client';
 import { RouterLink } from '@angular/router';
 import { AgeService } from '../Services/Utils/age-service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -26,6 +26,7 @@ export class Search implements OnInit, OnDestroy {
   private ageService = inject(AgeService);
   private petService = inject(PetService);
   private personService = inject(PersonService);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
   pets = signal<PetDto[]>([]);
@@ -63,7 +64,7 @@ export class Search implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: (error) => {
-          this.error.set('Failed to load data. Please try again.');
+          this.error.set(this.translateService.instant('SEARCH.LOAD_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -71,7 +72,9 @@ export class Search implements OnInit, OnDestroy {
 
   getPetOwnerName(personId: number): string {
     const owner = this.persons().find((person) => person.id === personId);
-    return owner ? owner.firstName + ' ' + owner.lastName : 'Unknown';
+    return owner
+      ? owner.firstName + ' ' + owner.lastName
+      : this.translateService.instant('SEARCH.UNKNOWN');
   }
 
   calculateAge(birthDate: string): number {

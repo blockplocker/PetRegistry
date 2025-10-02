@@ -11,7 +11,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-person-details',
@@ -28,6 +28,7 @@ export class PersonDetails implements OnInit, OnDestroy {
   private routeParamService = inject(RouteParamService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
   personId = signal<number>(0);
@@ -44,7 +45,7 @@ export class PersonDetails implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.loadPersonDetails();
     } else {
-      this.error.set('Invalid person ID.');
+      this.error.set(this.translateService.instant('INVALID_ID'));
       this.isLoading.set(false);
     }
   }
@@ -69,7 +70,7 @@ export class PersonDetails implements OnInit, OnDestroy {
           this.isLoading.set(false);
         },
         error: () => {
-          this.error.set('Failed to load person details');
+          this.error.set(this.translateService.instant('PERSON_LOAD_ERROR'));
           this.isLoading.set(false);
         },
       });
@@ -85,10 +86,13 @@ export class PersonDetails implements OnInit, OnDestroy {
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Bekräfta radering',
-        message: `Är du säker på att du vill radera ${person.firstName} ${person.lastName}?`,
-        confirmText: 'Radera',
-        cancelText: 'Avbryt',
+        title: this.translateService.instant('CONFIRM_DELETION'),
+        message: this.translateService.instant('PERSON_DELETE_CONFIRMATION_MESSAGE', {
+          firstName: person.firstName,
+          lastName: person.lastName,
+        }),
+        confirmText: this.translateService.instant('DELETE'),
+        cancelText: this.translateService.instant('CANCEL'),
       },
     });
     ref.closed.subscribe((confirmed) => {
@@ -107,12 +111,18 @@ export class PersonDetails implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.toastr.success('Personen har raderats', 'Raderad!');
+          this.toastr.success(
+            this.translateService.instant('PERSON_DELETED'),
+            this.translateService.instant('DELETE_SUCCESS')
+          );
           this.router.navigate(['/search']);
         },
         error: () => {
           this.isLoading.set(false);
-          this.toastr.error('Kunde inte radera person. Försök igen senare.', 'Fel');
+          this.toastr.error(
+            this.translateService.instant('PERSON_DELETE_ERROR'),
+            this.translateService.instant('DELETE_ERROR')
+          );
         },
       });
   }

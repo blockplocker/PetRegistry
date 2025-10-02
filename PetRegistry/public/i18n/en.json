@@ -57,6 +57,7 @@
     "NO_RESULTS": "No results found",
     "RESULTS_FOUND": "{{count}} results found",
     "LOADING_MESSAGE": "Loading data, please wait...",
+    "LOAD_ERROR": "Failed to load data. Please try again.",
     "PETS_TITLE": "Pets",
     "PETS_FOUND": "{{count}} pets found",
     "PERSONS_TITLE": "Persons",
@@ -143,6 +144,16 @@
     "ADD": "Add",
     "UPDATE": "Update"
   },
+  "ROUTES": {
+    "HOME_TITLE": "Home - Pet Registry",
+    "ADD_PERSON_TITLE": "Add Person - Pet Registry",
+    "EDIT_PERSON_TITLE": "Edit Person - Pet Registry",
+    "ADD_PET_TITLE": "Add Pet - Pet Registry",
+    "EDIT_PET_TITLE": "Edit Pet - Pet Registry",
+    "SEARCH_TITLE": "Search - Pet Registry",
+    "PERSON_DETAILS_TITLE": "Person Details - Pet Registry",
+    "PET_DETAILS_TITLE": "Pet Details - Pet Registry"
+  },
   "COMMON": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
@@ -150,6 +161,30 @@
     "LOADING": "Loading...",
     "ERROR": "An error occurred",
     "SUCCESS": "Operation successful",
-    "LANGUAGE": "Language"
+    "LANGUAGE": "Language",
+    "DELETE_SUCCESS": "Deleted!",
+    "DELETE_ERROR": "Error",
+    "PET_DELETED": "Pet has been deleted",
+    "PET_DELETE_ERROR": "Could not delete pet. Please try again later.",
+    "PET_SAVED": "Pet has been saved!",
+    "PET_UPDATED": "Pet has been updated!",
+    "PET_LOAD_ERROR": "Could not load pet data. Please try again.",
+    "PET_SAVE_ERROR": "Error saving pet. Please try again later.",
+    "PET_UPDATE_ERROR": "Error updating pet. Please try again later.",
+    "SAVED": "Saved!",
+    "UPDATED": "Updated!",
+    "CONFIRM_DELETION": "Confirm Deletion",
+    "DELETE_CONFIRMATION_MESSAGE": "Are you sure you want to delete {{name}}?",
+    "DELETE": "Delete",
+    "PERSON_DELETE_CONFIRMATION_MESSAGE": "Are you sure you want to delete {{firstName}} {{lastName}}?",
+    "PET_LOAD_DETAILS_ERROR": "Failed to load pet details. Please try again.",
+    "PERSON_CREATED": "Person has been created",
+    "PERSON_UPDATED": "Person has been updated",
+    "PERSON_LOAD_ERROR": "Failed to load person details",
+    "PERSON_CREATE_ERROR": "Could not create person. Please try again later.",
+    "PERSON_UPDATE_ERROR": "Could not update person. Please try again later.",
+    "PERSON_DELETED": "Person has been deleted",
+    "PERSON_DELETE_ERROR": "Could not delete person. Please try again later.",
+    "INVALID_ID": "Invalid ID"
   }
 }
