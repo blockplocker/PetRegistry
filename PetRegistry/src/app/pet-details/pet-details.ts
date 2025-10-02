@@ -10,10 +10,11 @@ import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ToastrService } from 'ngx-toastr';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pet-details',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, TranslateModule],
   templateUrl: './pet-details.html',
   styleUrl: './pet-details.css',
 })

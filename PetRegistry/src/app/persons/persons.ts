@@ -10,11 +10,12 @@ import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-persons',
-  imports: [ReactiveFormsModule, DialogModule],
+  imports: [ReactiveFormsModule, DialogModule, TranslateModule],
   templateUrl: './persons.html',
   standalone: true,
   styleUrls: ['./persons.css'],

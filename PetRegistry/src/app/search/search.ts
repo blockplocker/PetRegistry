@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy, } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../Services/pet-service';
 import { PersonService } from '../Services/person-service';
@@ -6,10 +13,11 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { PetDto, PersonDto } from '../domain/client';
 import { RouterLink } from '@angular/router';
 import { AgeService } from '../Services/Utils/age-service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, TranslateModule],
   templateUrl: './search.html',
   styleUrl: './search.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,7 +74,7 @@ export class Search implements OnInit, OnDestroy {
     return owner ? owner.firstName + ' ' + owner.lastName : 'Unknown';
   }
 
-    calculateAge(birthDate: string): number {
+  calculateAge(birthDate: string): number {
     return this.ageService.calculateAge(birthDate);
   }
 

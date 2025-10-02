@@ -9,11 +9,11 @@ import { PetDto } from '../domain/client';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { Subject, takeUntil } from 'rxjs';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pets',
-  imports: [CommonModule, ReactiveFormsModule, DialogModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, TranslateModule],
   templateUrl: './pets.html',
   styleUrl: './pets.css',
 })
@@ -25,7 +25,6 @@ export class Pets implements OnInit, OnDestroy {
   private routeParamService = inject(RouteParamService);
   private toastr = inject(ToastrService);
   private destroy$ = new Subject<void>();
-
 
   isEditMode = signal(false);
   personId = signal<number>(0);
@@ -49,7 +48,6 @@ export class Pets implements OnInit, OnDestroy {
   }
 
   private initializeForm() {
-
     this.petForm = this.fb.group({
       name: ['', Validators.required],
       species: ['', Validators.required],
@@ -76,24 +74,24 @@ export class Pets implements OnInit, OnDestroy {
 
   getPetId() {
     this.isEditMode.set(true);
-      const petId = this.routeParamService.getIdParam(this.route);
-      if (petId !== null) {
-        this.petId.set(petId);
-      } else {
-        this.error.set('Invalid pet ID');
-      }
+    const petId = this.routeParamService.getIdParam(this.route);
+    if (petId !== null) {
+      this.petId.set(petId);
+    } else {
+      this.error.set('Invalid pet ID');
+    }
   }
 
   getPersonId() {
     this.isEditMode.set(false);
-      const personId = this.routeParamService.getIdParam(this.route);
-      if (personId !== null) {
-        this.personId.set(personId);
-        this.petForm.patchValue({ personId });
-      } else {
-        this.error.set('Invalid person ID');
-      }
+    const personId = this.routeParamService.getIdParam(this.route);
+    if (personId !== null) {
+      this.personId.set(personId);
+      this.petForm.patchValue({ personId });
+    } else {
+      this.error.set('Invalid person ID');
     }
+  }
 
   private loadPetForEdit() {
     this.isLoading.set(true);
@@ -191,7 +189,6 @@ export class Pets implements OnInit, OnDestroy {
         error: () => {
           this.isLoading.set(false);
           this.toastr.error('Fel vid updatering. Försök igen senare.', 'Fel');
-
         },
       });
   }

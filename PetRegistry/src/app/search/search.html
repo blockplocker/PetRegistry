@@ -1,13 +1,12 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-4">Pet Registry Search</h1>
+            <h1 class="mb-4">{{ 'SEARCH.TITLE' | translate }}</h1>
 
             <!-- Search Form -->
             <form class="mb-4">
                 <div class="input-group">
-                    <input type="text" class="form-control"
-                        placeholder="Search pets by name, species, breed or search persons by name..."
+                    <input type="text" class="form-control" [placeholder]="'SEARCH.PLACEHOLDER' | translate"
                         [value]="searchTerm()" (input)="onSearchChange($any($event.target).value)" aria-label="Search"
                         aria-describedby="search-addon">
                     <span class="input-group-text" id="search-addon">
@@ -19,7 +18,7 @@
             @if (this.isLoading()) {
             <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading data, please wait...</span>
+                    <span class="visually-hidden">{{ 'SEARCH.LOADING_MESSAGE' | translate }}</span>
                 </div>
             </div>
             } @else if (this.error()) {
@@ -32,21 +31,25 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title mb-0">Pets</h3>
-                            <small class="text-muted">{{ filteredPets().length }} pets found</small>
+                            <h3 class="card-title mb-0">{{ 'SEARCH.PETS_TITLE' | translate }}</h3>
+                            <small class="text-muted">{{ 'SEARCH.PETS_FOUND' | translate:{ count: filteredPets().length
+                                } }}</small>
                         </div>
                         <div class="card-body">
                             @if (filteredPets().length === 0) {
-                            <p class="text-muted">No pets found matching your search.</p>
+                            <p class="text-muted">{{ 'SEARCH.NO_PETS_FOUND' | translate }}</p>
                             } @else {
                             <ul class="list-group list-group-flush">
                                 @for (pet of this.filteredPets(); track pet.id) {
-                                <li class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer">
                                     <div class="ms-2 me-auto" [routerLink]="['/pet-details', pet.id]">
                                         <div class="fw-bold">{{ pet.name }}</div>
-                                        <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) Age: {{
-                                            pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : 'unknown' }}
-                                            years</small>
+                                        <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) {{ 'SEARCH.AGE' |
+                                            translate }}: {{
+                                            pet.dateOfBirth ? this.calculateAge(pet.dateOfBirth) : ('SEARCH.UNKNOWN' |
+                                            translate) }}
+                                            {{ 'SEARCH.YEARS' | translate }}</small>
                                     </div>
                                     <span class="badge bg-primary rounded-pill hover-shadow pointer"
                                         [routerLink]="['/person-details', pet.personId]"
@@ -65,16 +68,18 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title mb-0">Persons</h3>
-                            <small class="text-muted">{{ filteredPersons().length }} persons found</small>
+                            <h3 class="card-title mb-0">{{ 'SEARCH.PERSONS_TITLE' | translate }}</h3>
+                            <small class="text-muted">{{ 'SEARCH.PERSONS_FOUND' | translate:{ count:
+                                filteredPersons().length } }}</small>
                         </div>
                         <div class="card-body">
                             @if (filteredPersons().length === 0) {
-                            <p class="text-muted">No persons found matching your search.</p>
+                            <p class="text-muted">{{ 'SEARCH.NO_PERSONS_FOUND' | translate }}</p>
                             } @else {
                             <ul class="list-group list-group-flush">
                                 @for (person of this.filteredPersons(); track person.id) {
-                                <li class="list-group-item hover-shadow pointer" [routerLink]="['/person-details', person.id]">
+                                <li class="list-group-item hover-shadow pointer"
+                                    [routerLink]="['/person-details', person.id]">
                                     <div class="fw-bold">{{ person.firstName }} {{ person.lastName }}</div>
                                 </li>
                                 }

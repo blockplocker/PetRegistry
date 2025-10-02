@@ -4,12 +4,14 @@
         <div class="col-12">
             <div class="jumbotron bg-primary text-white text-center py-5">
                 <div class="container">
-                    <h1 class="display-4">🐾 Pet Registry</h1>
-                    <p class="lead">Your Complete Pet Management Solution</p>
-                    <p>Welcome to Pet Registry - manage pet information and owner records easily.</p>
+                    <h1 class="display-4">{{ 'HOME.HERO_TITLE' | translate }}</h1>
+                    <p class="lead">{{ 'HOME.HERO_SUBTITLE' | translate }}</p>
+                    <p>{{ 'HOME.HERO_DESCRIPTION' | translate }}</p>
                     <div class="mt-4">
-                        <a routerLink="/persons" class="btn btn-light me-3 btn-lg">Register an Owner</a>
-                        <a routerLink="/search" class="btn btn-outline-light btn-lg ">Browse</a>
+                        <a routerLink="/persons" class="btn btn-light me-3 btn-lg">{{ 'HOME.REGISTER_OWNER' | translate
+                            }}</a>
+                        <a routerLink="/search" class="btn btn-outline-light btn-lg ">{{ 'HOME.BROWSE' | translate
+                            }}</a>
                     </div>
                 </div>
             </div>
@@ -20,14 +22,14 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="container">
-                <h2 class="text-center mb-5">Features</h2>
+                <h2 class="text-center mb-5">{{ 'HOME.FEATURES_TITLE' | translate }}</h2>
                 <div class="row">
                     <div class="col-md-6 col-lg-3 mb-4">
                         <div class="card h-100 text-center hover-shadow">
                             <div class="card-body">
                                 <div class="mb-3" style="font-size: 3rem;">🐕</div>
-                                <h5 class="card-title">Pet Management</h5>
-                                <p class="card-text">Register and manage pets with detailed profiles.</p>
+                                <h5 class="card-title">{{ 'HOME.PET_MANAGEMENT' | translate }}</h5>
+                                <p class="card-text">{{ 'HOME.PET_MANAGEMENT_DESC' | translate }}</p>
                             </div>
                         </div>
                     </div>
@@ -35,8 +37,8 @@
                         <div class="card h-100 text-center hover-shadow">
                             <div class="card-body">
                                 <div class="mb-3" style="font-size: 3rem;">👥</div>
-                                <h5 class="card-title">Owner Profiles</h5>
-                                <p class="card-text">Maintain comprehensive owner information.</p>
+                                <h5 class="card-title">{{ 'HOME.OWNER_PROFILES' | translate }}</h5>
+                                <p class="card-text">{{ 'HOME.OWNER_PROFILES_DESC' | translate }}</p>
                             </div>
                         </div>
                     </div>
@@ -44,8 +46,8 @@
                         <div class="card h-100 text-center hover-shadow">
                             <div class="card-body">
                                 <div class="mb-3" style="font-size: 3rem;">🔍</div>
-                                <h5 class="card-title">Smart Search</h5>
-                                <p class="card-text">Find pets and owners with powerful search.</p>
+                                <h5 class="card-title">{{ 'HOME.SMART_SEARCH' | translate }}</h5>
+                                <p class="card-text">{{ 'HOME.SMART_SEARCH_DESC' | translate }}</p>
                             </div>
                         </div>
                     </div>
@@ -53,8 +55,8 @@
                         <div class="card h-100 text-center hover-shadow">
                             <div class="card-body">
                                 <div class="mb-3" style="font-size: 3rem;">📊</div>
-                                <h5 class="card-title">Records</h5>
-                                <p class="card-text">Manage and view all pet and owner records.</p>
+                                <h5 class="card-title">{{ 'HOME.RECORDS' | translate }}</h5>
+                                <p class="card-text">{{ 'HOME.RECORDS_DESC' | translate }}</p>
                             </div>
                         </div>
                     </div>
@@ -63,5 +65,5 @@
         </div>
     </div>
 
-    
+
 </div>

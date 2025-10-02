@@ -11,10 +11,11 @@ import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from '../components/Dialog/confirm-dialog/confirm-dialog';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-person-details',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   templateUrl: './person-details.html',
   styleUrl: './person-details.css',
 })
