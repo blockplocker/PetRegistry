@@ -4,7 +4,7 @@ import { PersonDto } from '../domain/client';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
-import { StringUtils } from '../Services/string-utils';
+import { StringUtils } from '../Services/Utils/string-utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
