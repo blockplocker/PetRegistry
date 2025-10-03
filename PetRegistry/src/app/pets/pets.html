@@ -13,10 +13,11 @@
     <div class="mb-3">
       <label for="animalName" class="form-label">{{ 'PETS_FORM.ANIMAL_NAME' | translate }}</label>
       <input
+        #firstInput
         id="animalName"
         type="text"
         class="form-control"
-        maxlength="20"
+        maxlength="15"
         [placeholder]="'PETS_FORM.ANIMAL_NAME_PLACEHOLDER' | translate"
         formControlName="name"
         [class.is-invalid]="petForm.get('name')?.invalid && petForm.get('name')?.touched"
@@ -30,7 +31,7 @@
         id="species"
         type="text"
         class="form-control"
-        maxlength="25"
+        maxlength="15"
         formControlName="species"
         [placeholder]="'PETS_FORM.SPECIES_PLACEHOLDER' | translate"
         [class.is-invalid]="petForm.get('species')?.invalid && petForm.get('species')?.touched"
@@ -44,7 +45,7 @@
         id="breed"
         type="text"
         class="form-control"
-        maxlength="25"
+        maxlength="15"
         formControlName="breed"
         [placeholder]="'PETS_FORM.BREED_PLACEHOLDER' | translate"
       />
@@ -56,7 +57,7 @@
         id="color"
         type="text"
         class="form-control"
-        maxlength="20"
+        maxlength="15"
         formControlName="color"
         [placeholder]="'PETS_FORM.COLOR_PLACEHOLDER' | translate"
       />

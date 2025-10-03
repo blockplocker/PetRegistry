@@ -14,6 +14,7 @@
     <div class="mb-3">
       <label for="firstName" class="form-label">{{ 'PERSONS_FORM.FIRST_NAME' | translate }}</label>
       <input
+        #firstInput
         id="firstName"
         type="text"
         class="form-control"
@@ -32,7 +33,7 @@
         id="lastName"
         type="text"
         class="form-control"
-        maxlength="25"
+        maxlength="20"
         formControlName="lastName"
         [class.is-invalid]="
           personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched
