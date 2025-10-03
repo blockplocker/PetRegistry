@@ -1,64 +1,81 @@
 <div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="mb-4">{{ 'PET_DETAILS.TITLE' | translate }}</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="mb-4">{{ 'PET_DETAILS.TITLE' | translate }}</h2>
 
-            @if (isLoading()) {
-            <div class="text-center my-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
-                </div>
-            </div>
-            } @else if (error()) {
-            <div class="alert alert-danger" role="alert">
-                {{ 'COMMON.ERROR' | translate }}: {{ error() }}
-            </div>
-            }
-            @else if (pet(); as currentPet) {
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
-                        <small class="text-muted">{{ currentPet.dateOfBirth ? calculateAge(currentPet.dateOfBirth) :
-                            ('PET_DETAILS.UNKNOWN' | translate) }} {{ 'PET_DETAILS.AGE_YEARS' | translate }}</small>
-                    </div>
-                    <div class="gap-2 d-flex">
-                        <button class="btn btn-danger btn-sm" (click)="deletePet()" [disabled]="isLoading()">{{
-                            'PET_DETAILS.DELETE' | translate }}</button>
-                        <button class="btn btn-primary btn-sm" [routerLink]="['/pets/edit', currentPet.id]">{{
-                            'PET_DETAILS.EDIT' | translate }}</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p><strong>{{ 'PET_DETAILS.SPECIES' | translate }}:</strong> {{ currentPet.species }}</p>
-                    <p><strong>{{ 'PET_DETAILS.BREED' | translate }}:</strong> {{ currentPet.breed }}</p>
-                    <p><strong>{{ 'PET_DETAILS.GENDER' | translate }}:</strong> {{ currentPet.gender }}</p>
-                    <p><strong>{{ 'PET_DETAILS.DATE_OF_BIRTH' | translate }}:</strong> {{ currentPet.dateOfBirth |
-                        date:'longDate' }}</p>
-                    <p>
-                        <strong>{{ 'PET_DETAILS.MICROCHIPPED' | translate }}:</strong>
-                        @if (currentPet.isMicrochip) {
-                        <span class="badge bg-info">{{ 'PET_DETAILS.YES' | translate }}</span>
-                        } @else {
-                        <span class="badge bg-secondary">{{ 'PET_DETAILS.NO' | translate }}</span>
-                        }
-                    </p>
-                    <p>
-                        <strong>{{ 'PET_DETAILS.NEUTERED' | translate }}:</strong>
-                        @if (currentPet.isNeutered) {
-                        <span class="badge bg-success">{{ 'PET_DETAILS.YES' | translate }}</span>
-                        } @else {
-                        <span class="badge bg-secondary">{{ 'PET_DETAILS.NO' | translate }}</span>
-                        }
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-primary" [routerLink]="['/person-details', currentPet.personId]">{{
-                            'PET_DETAILS.OWNER_DETAILS' | translate }}
-                        </a>
-                    </p>
-                </div>
-            </div>
-            }
+      @if (isLoading()) {
+      <div class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
         </div>
+      </div>
+      } @else if (error()) {
+      <div class="alert alert-danger" role="alert">
+        {{ 'COMMON.ERROR' | translate }}: {{ error() }}
+      </div>
+      } @else if (pet(); as currentPet) {
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
+            <small class="text-muted"
+              >{{
+                currentPet.dateOfBirth
+                  ? calculateAge(currentPet.dateOfBirth)
+                  : ('PET_DETAILS.UNKNOWN' | translate)
+              }}
+              {{ 'PET_DETAILS.AGE_YEARS' | translate }}</small
+            >
+          </div>
+          <div class="gap-2 d-flex">
+            <button class="btn btn-danger btn-sm" (click)="deletePet()" [disabled]="isLoading()">
+              {{ 'PET_DETAILS.DELETE' | translate }}
+            </button>
+            <button class="btn btn-primary btn-sm" [routerLink]="['/pets/edit', currentPet.id]">
+              {{ 'PET_DETAILS.EDIT' | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>
+            <strong>{{ 'PET_DETAILS.SPECIES' | translate }}:</strong> {{ currentPet.species }}
+          </p>
+          <p>
+            <strong>{{ 'PET_DETAILS.BREED' | translate }}:</strong> {{ currentPet.breed }}
+          </p>
+          <p>
+            <strong>{{ 'PET_DETAILS.GENDER' | translate }}:</strong> {{ currentPet.gender }}
+          </p>
+          <p>
+            <strong>{{ 'PET_DETAILS.DATE_OF_BIRTH' | translate }}:</strong>
+            {{ currentPet.dateOfBirth | date : 'longDate' }}
+          </p>
+          <p>
+            <strong>{{ 'PET_DETAILS.MICROCHIPPED' | translate }}:</strong>
+            @if (currentPet.isMicrochip) {
+            <span class="badge bg-info">{{ 'PET_DETAILS.YES' | translate }}</span>
+            } @else {
+            <span class="badge bg-secondary">{{ 'PET_DETAILS.NO' | translate }}</span>
+            }
+          </p>
+          <p>
+            <strong>{{ 'PET_DETAILS.NEUTERED' | translate }}:</strong>
+            @if (currentPet.isNeutered) {
+            <span class="badge bg-success">{{ 'PET_DETAILS.YES' | translate }}</span>
+            } @else {
+            <span class="badge bg-secondary">{{ 'PET_DETAILS.NO' | translate }}</span>
+            }
+          </p>
+          <p>
+            <a
+              class="btn btn-outline-primary"
+              [routerLink]="['/person-details', currentPet.personId]"
+              >{{ 'PET_DETAILS.OWNER_DETAILS' | translate }}
+            </a>
+          </p>
+        </div>
+      </div>
+      }
     </div>
+  </div>
 </div>
