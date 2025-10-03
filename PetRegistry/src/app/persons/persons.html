@@ -17,6 +17,7 @@
         id="firstName"
         type="text"
         class="form-control"
+        maxlength="15"
         formControlName="firstName"
         [class.is-invalid]="
           personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched
@@ -31,6 +32,7 @@
         id="lastName"
         type="text"
         class="form-control"
+        maxlength="25"
         formControlName="lastName"
         [class.is-invalid]="
           personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched
@@ -45,6 +47,7 @@
         id="adress"
         type="text"
         class="form-control"
+        maxlength="25"
         formControlName="address"
         [class.is-invalid]="
           personForm.get('address')?.invalid && personForm.get('address')?.touched
@@ -59,6 +62,7 @@
         id="city"
         type="text"
         class="form-control"
+        maxlength="25"
         formControlName="city"
         [class.is-invalid]="personForm.get('city')?.invalid && personForm.get('city')?.touched"
       />
@@ -85,6 +89,7 @@
         id="email"
         type="email"
         class="form-control"
+        maxlength="50"
         formControlName="email"
         [class.is-invalid]="personForm.get('email')?.invalid && personForm.get('email')?.touched"
       />
