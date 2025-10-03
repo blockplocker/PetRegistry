@@ -3,6 +3,9 @@ import {
   inject,
   OnInit,
   OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -22,7 +25,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './search.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Search implements OnInit, OnDestroy {
+export class Search implements OnInit, OnDestroy, AfterViewInit {
   private ageService = inject(AgeService);
   private petService = inject(PetService);
   private personService = inject(PersonService);
@@ -37,6 +40,8 @@ export class Search implements OnInit, OnDestroy {
   error = signal<string | null>(null);
   searchTerm = signal<string>('');
 
+  @ViewChild('searchInput') searchInput!: ElementRef;
+
   ngOnInit() {
     this.loadData();
   }
@@ -44,6 +49,12 @@ export class Search implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit() {
+    if (this.searchInput) {
+      this.searchInput.nativeElement.focus();
+    }
   }
 
   private loadData() {

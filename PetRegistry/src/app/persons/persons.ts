@@ -1,4 +1,14 @@
-import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -19,7 +29,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   standalone: true,
   styleUrls: ['./persons.css'],
 })
-export class Persons implements OnInit, OnDestroy {
+export class Persons implements OnInit, OnDestroy, AfterViewInit {
   private personService = inject(PersonService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -34,6 +44,8 @@ export class Persons implements OnInit, OnDestroy {
   isEditing = signal(false);
   isLoading = signal(false);
   error = signal<string | null>(null);
+
+  @ViewChild('firstInput') firstInput!: ElementRef;
 
   personForm = new FormGroup({
     firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
@@ -63,6 +75,12 @@ export class Persons implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit() {
+    if (this.firstInput) {
+      this.firstInput.nativeElement.focus();
+    }
   }
 
   private loadPerson(personId: number) {

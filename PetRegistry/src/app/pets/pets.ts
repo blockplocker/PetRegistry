@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './pets.html',
   styleUrl: './pets.css',
 })
-export class Pets implements OnInit, OnDestroy {
+export class Pets implements OnInit, OnDestroy, AfterViewInit {
   private petService = inject(PetService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -31,6 +31,8 @@ export class Pets implements OnInit, OnDestroy {
   petId = signal<number>(0);
   isLoading = signal(false);
   error = signal<string | null>(null);
+
+  @ViewChild('firstInput') firstInput!: ElementRef;
 
   today = new Date().toISOString().substring(0, 10);
 
@@ -55,6 +57,12 @@ export class Pets implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit() {
+    if (this.firstInput) {
+      this.firstInput.nativeElement.focus();
+    }
   }
 
   private determineMode() {
