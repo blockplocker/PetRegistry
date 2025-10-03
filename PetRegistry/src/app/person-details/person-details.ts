@@ -45,8 +45,13 @@ export class PersonDetails implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.loadPersonDetails();
     } else {
-      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
-      this.isLoading.set(false);
+      this.translateService
+        .get('COMMON.INVALID_ID')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((translation) => {
+          this.error.set(translation);
+          this.isLoading.set(false);
+        });
     }
   }
   ngOnDestroy() {

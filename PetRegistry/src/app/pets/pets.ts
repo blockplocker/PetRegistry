@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './pets.css',
 })
 export class Pets implements OnInit, OnDestroy {
-  private fb = inject(FormBuilder);
   private petService = inject(PetService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -34,10 +33,20 @@ export class Pets implements OnInit, OnDestroy {
   error = signal<string | null>(null);
 
   today = new Date().toISOString().substring(0, 10);
-  petForm!: FormGroup;
+
+  petForm = new FormGroup({
+    name: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    species: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    breed: new FormControl('', { nonNullable: true }),
+    dateOfBirth: new FormControl('', { nonNullable: true }),
+    color: new FormControl('', { nonNullable: true }),
+    gender: new FormControl('Female', { validators: [Validators.required], nonNullable: true }),
+    isMicrochip: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
+    isNeutered: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
+    personId: new FormControl(0, { validators: [Validators.required], nonNullable: true }),
+  });
 
   ngOnInit() {
-    this.initializeForm();
     this.determineMode();
     if (this.isEditMode()) {
       this.loadPetForEdit();
@@ -46,20 +55,6 @@ export class Pets implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private initializeForm() {
-    this.petForm = this.fb.group({
-      name: ['', Validators.required],
-      species: ['', Validators.required],
-      breed: [''],
-      dateOfBirth: [''],
-      color: [''],
-      gender: ['Female', Validators.required],
-      isMicrochip: [false, Validators.required],
-      isNeutered: [false, Validators.required],
-      personId: [0, Validators.required],
-    });
   }
 
   private determineMode() {
@@ -79,7 +74,12 @@ export class Pets implements OnInit, OnDestroy {
     if (petId !== null) {
       this.petId.set(petId);
     } else {
-      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
+      this.translateService
+        .get('COMMON.INVALID_ID')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((translation) => {
+          this.error.set(translation);
+        });
     }
   }
 
@@ -90,7 +90,12 @@ export class Pets implements OnInit, OnDestroy {
       this.personId.set(personId);
       this.petForm.patchValue({ personId });
     } else {
-      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
+      this.translateService
+        .get('COMMON.INVALID_ID')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((translation) => {
+          this.error.set(translation);
+        });
     }
   }
 
@@ -134,16 +139,16 @@ export class Pets implements OnInit, OnDestroy {
 
     const pet = new PetDto({
       id: this.isEditMode() ? this.petId() : undefined,
-      name: this.petForm.get('name')!.value,
-      gender: this.petForm.get('gender')!.value,
-      species: this.petForm.get('species')!.value,
-      breed: this.petForm.get('breed')!.value || null,
-      dateOfBirth: this.petForm.get('dateOfBirth')!.value || null,
-      color: this.petForm.get('color')!.value || null,
-      isMicrochip: this.petForm.get('isMicrochip')!.value,
-      isNeutered: this.petForm.get('isNeutered')!.value,
+      name: this.petForm.controls.name.value,
+      gender: this.petForm.controls.gender.value,
+      species: this.petForm.controls.species.value,
+      breed: this.petForm.controls.breed.value,
+      dateOfBirth: this.petForm.controls.dateOfBirth.value,
+      color: this.petForm.controls.color.value,
+      isMicrochip: this.petForm.controls.isMicrochip.value,
+      isNeutered: this.petForm.controls.isNeutered.value,
       registrationDate: new Date(this.today),
-      personId: this.isEditMode() ? this.personId() : this.petForm.get('personId')!.value,
+      personId: this.isEditMode() ? this.personId() : this.petForm.controls.personId.value,
     });
 
     if (this.isEditMode()) {
@@ -161,9 +166,9 @@ export class Pets implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (createdPet) => {
-          this.initializeForm();
-          this.petForm.patchValue({ personId: this.personId() });
-          this.isLoading.set(false);
+          // this.petForm.reset();
+          // this.petForm.patchValue({ personId: this.personId() });
+          // this.isLoading.set(false);
           this.toastr.success(
             this.translateService.instant('COMMON.PET_SAVED'),
             this.translateService.instant('COMMON.SAVED')
