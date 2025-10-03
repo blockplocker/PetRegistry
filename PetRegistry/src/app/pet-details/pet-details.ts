@@ -42,8 +42,13 @@ export class PetDetails implements OnInit, OnDestroy {
       this.petId.set(petId);
       this.loadPetDetails();
     } else {
-      this.error.set(this.translateService.instant('COMMON.INVALID_ID'));
-      this.isLoading.set(false);
+      this.translateService
+        .get('COMMON.INVALID_ID')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((translation) => {
+          this.error.set(translation);
+          this.isLoading.set(false);
+        });
     }
   }
   ngOnDestroy() {

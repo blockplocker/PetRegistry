@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/string-utils';
@@ -20,7 +20,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrls: ['./persons.css'],
 })
 export class Persons implements OnInit, OnDestroy {
-  private fb = inject(FormBuilder);
   private personService = inject(PersonService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -36,11 +35,23 @@ export class Persons implements OnInit, OnDestroy {
   isLoading = signal(false);
   error = signal<string | null>(null);
 
-  personForm!: FormGroup;
+  personForm = new FormGroup({
+    firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    address: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    city: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+
+    phoneNumber: new FormControl('', {
+      validators: [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)],
+      nonNullable: true,
+    }),
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      nonNullable: true,
+    }),
+  });
 
   ngOnInit() {
-    this.initializeForm();
-
     const personId = this.routeParamService.getIdParam(this.route);
     if (personId !== null) {
       this.personId.set(personId);
@@ -52,17 +63,6 @@ export class Persons implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private initializeForm() {
-    this.personForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
-      email: ['', [Validators.required, Validators.email]],
-    });
   }
 
   private loadPerson(personId: number) {
@@ -104,15 +104,14 @@ export class Persons implements OnInit, OnDestroy {
       return;
     }
 
-    // Direct form control access - clean and type-safe
     const person = new PersonDto({
       id: this.isEditing() ? Number(this.personId()) : undefined,
-      firstName: StringUtils.capitalizeFirst(this.personForm.get('firstName')!.value),
-      lastName: StringUtils.capitalizeFirst(this.personForm.get('lastName')!.value),
-      address: StringUtils.capitalizeFirst(this.personForm.get('address')!.value),
-      city: StringUtils.capitalizeFirst(this.personForm.get('city')!.value),
-      phoneNumber: this.personForm.get('phoneNumber')!.value,
-      email: this.personForm.get('email')!.value,
+      firstName: StringUtils.capitalizeFirst(this.personForm.controls.firstName.value),
+      lastName: StringUtils.capitalizeFirst(this.personForm.controls.lastName.value),
+      address: StringUtils.capitalizeFirst(this.personForm.controls.address.value),
+      city: StringUtils.capitalizeFirst(this.personForm.controls.city.value),
+      phoneNumber: this.personForm.controls.phoneNumber.value,
+      email: this.personForm.controls.email.value,
     });
 
     if (this.isEditing()) {
