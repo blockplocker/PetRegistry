@@ -62,7 +62,7 @@ export class PetDetails implements OnInit, OnDestroy {
           this.pet.set(pet);
           this.isLoading.set(false);
         },
-        error: (error) => {
+        error: () => {
           this.error.set(this.translateService.instant('COMMON.PET_LOAD_DETAILS_ERROR'));
           this.isLoading.set(false);
         },
@@ -79,7 +79,9 @@ export class PetDetails implements OnInit, OnDestroy {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translateService.instant('COMMON.CONFIRM_DELETION'),
-        message: this.translateService.instant('COMMON.DELETE_CONFIRMATION_MESSAGE', { name: pet.name }),
+        message: this.translateService.instant('COMMON.DELETE_CONFIRMATION_MESSAGE', {
+          name: pet.name,
+        }),
         confirmText: this.translateService.instant('COMMON.DELETE'),
         cancelText: this.translateService.instant('COMMON.CANCEL'),
       },
