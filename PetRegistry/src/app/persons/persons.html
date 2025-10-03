@@ -75,6 +75,7 @@
         id="phoneNumber"
         type="tel"
         class="form-control"
+        maxlength="15"
         formControlName="phoneNumber"
         [class.is-invalid]="
           personForm.get('phoneNumber')?.invalid && personForm.get('phoneNumber')?.touched
