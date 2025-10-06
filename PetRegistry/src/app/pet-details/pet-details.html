@@ -2,30 +2,44 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h2 class="mb-4">{{ 'PET_DETAILS.TITLE' | translate }}</h2>
-
-      @if (isLoading()) {
-      <div class="text-center my-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
-        </div>
-      </div>
-      } @else if (error()) {
+      @if (error()) {
       <div class="alert alert-danger" role="alert">
         {{ 'COMMON.ERROR' | translate }}: {{ error() }}
       </div>
-      } @else if (pet(); as currentPet) {
+      }
       <div class="card mb-4">
+        @if (this.isLoading()) {
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class=" w-50">
+            <div class="skeleton skeleton-button w-50 mb-1"></div>
+            <div class="skeleton w-25 mb-2" style="height: 1rem;"></div>
+          </div>
+          <div class="d-grid gap-2 d-flex justify-content-end">
+            <div class="skeleton skeleton-button "></div>
+            <div class="skeleton skeleton-button "></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="skeleton-item">
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton skeleton-button "></div>
+          </div>
+        </div>
+        } @else if (pet(); as currentPet) {
         <div class="card-header d-flex justify-content-between align-items-center">
           <div>
             <h3 class="card-title mb-0">{{ currentPet.name }}</h3>
-            <small class="text-muted"
-              >{{
-                currentPet.dateOfBirth
-                  ? calculateAge(currentPet.dateOfBirth)
-                  : ('PET_DETAILS.UNKNOWN' | translate)
+            <small class="text-muted">{{
+              currentPet.dateOfBirth
+              ? calculateAge(currentPet.dateOfBirth)
+              : ('PET_DETAILS.UNKNOWN' | translate)
               }}
-              {{ 'PET_DETAILS.AGE_YEARS' | translate }}</small
-            >
+              {{ 'PET_DETAILS.AGE_YEARS' | translate }}</small>
           </div>
           <div class="gap-2 d-flex">
             <button class="btn btn-danger btn-sm" (click)="deletePet()" [disabled]="isLoading()">
@@ -67,15 +81,13 @@
             }
           </p>
           <p>
-            <a
-              class="btn btn-outline-primary"
-              [routerLink]="['/person-details', currentPet.personId]"
-              >{{ 'PET_DETAILS.OWNER_DETAILS' | translate }}
+            <a class="btn btn-outline-primary" [routerLink]="['/person-details', currentPet.personId]">{{
+              'PET_DETAILS.OWNER_DETAILS' | translate }}
             </a>
           </p>
         </div>
+        }
       </div>
-      }
     </div>
   </div>
 </div>

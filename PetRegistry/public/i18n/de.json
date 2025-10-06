@@ -54,6 +54,7 @@
   "SEARCH": {
     "TITLE": "Haustierregister Suche",
     "PLACEHOLDER": "Suchen Sie Haustiere nach Name, Art, Rasse oder suchen Sie Personen nach Namen...",
+    "BACK_TO_SEARCH": "Zurück zur Suche",
     "NO_RESULTS": "Keine Ergebnisse gefunden",
     "RESULTS_FOUND": "{{count}} Ergebnisse gefunden",
     "LOADING_MESSAGE": "Daten werden geladen, bitte warten...",
@@ -70,6 +71,7 @@
   },
   "PERSON_DETAILS": {
     "TITLE": "Personendetails",
+    "BACK_TO_PERSON_DETAILS": "Zurück zu Personendetails",
     "EMAIL": "E-Mail",
     "PHONE": "Telefon",
     "ADDRESS": "Adresse",

@@ -54,6 +54,7 @@
   "SEARCH": {
     "TITLE": "Búsqueda en Registro de Mascotas",
     "PLACEHOLDER": "Buscar mascotas por nombre, especie, raza o buscar personas por nombre...",
+    "BACK_TO_SEARCH": "Volver a la Búsqueda",
     "NO_RESULTS": "No se encontraron resultados",
     "RESULTS_FOUND": "{{count}} resultados encontrados",
     "LOADING_MESSAGE": "Cargando datos, por favor espere...",
@@ -70,6 +71,7 @@
   },
   "PERSON_DETAILS": {
     "TITLE": "Detalles de Persona",
+    "BACK_TO_PERSON_DETAILS": "Volver a Detalles de Persona",
     "EMAIL": "Correo",
     "PHONE": "Teléfono",
     "ADDRESS": "Dirección",

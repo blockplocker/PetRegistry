@@ -54,6 +54,7 @@
   "SEARCH": {
     "TITLE": "Husdjursregister Sökning",
     "PLACEHOLDER": "Sök husdjur efter namn, art, ras eller sök personer efter namn...",
+    "BACK_TO_SEARCH": "Tillbaka till Sökning",
     "NO_RESULTS": "Inga resultat hittades",
     "RESULTS_FOUND": "{{count}} resultat hittades",
     "LOADING_MESSAGE": "Laddar data, vänligen vänta...",
@@ -70,6 +71,7 @@
   },
   "PERSON_DETAILS": {
     "TITLE": "Persondetaljer",
+    "BACK_TO_PERSON_DETAILS": "Tillbaka till Persondetaljer",
     "EMAIL": "E-post",
     "PHONE": "Telefon",
     "ADDRESS": "Adress",

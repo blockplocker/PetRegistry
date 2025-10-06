@@ -54,6 +54,7 @@
   "SEARCH": {
     "TITLE": "Recherche dans le Registre des Animaux",
     "PLACEHOLDER": "Rechercher des animaux par nom, espèce, race ou rechercher des personnes par nom...",
+    "BACK_TO_SEARCH": "Retour à la Recherche",
     "NO_RESULTS": "Aucun résultat trouvé",
     "RESULTS_FOUND": "{{count}} résultats trouvés",
     "LOADING_MESSAGE": "Chargement des données, veuillez patienter...",
@@ -70,6 +71,7 @@
   },
   "PERSON_DETAILS": {
     "TITLE": "Détails de la Personne",
+    "BACK_TO_PERSON_DETAILS": "Retour aux Détails de la Personne",
     "EMAIL": "Email",
     "PHONE": "Téléphone",
     "ADDRESS": "Adresse",
