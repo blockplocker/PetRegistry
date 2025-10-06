@@ -3,61 +3,54 @@
     <div class="col-12">
       <h1 class="mb-4">{{ 'SEARCH.TITLE' | translate }}</h1>
 
-      <!-- Search Form -->
-      <form class="mb-4">
+      <form class="mb-4"> <!-- Search Form  -->
         <div class="input-group">
-          <input
-            #searchInput
-            type="text"
-            class="form-control"
-            [placeholder]="'SEARCH.PLACEHOLDER' | translate"
-            [value]="searchTerm()"
-            (input)="onSearchChange($any($event.target).value)"
-            aria-label="Search"
-            aria-describedby="search-addon"
-          />
+          <input #searchInput type="text" class="form-control" [placeholder]="'SEARCH.PLACEHOLDER' | translate"
+            [value]="searchTerm()" (input)="onSearchChange($any($event.target).value)" aria-label="Search"
+            aria-describedby="search-addon" />
           <span class="input-group-text" id="search-addon">
             <i class="bi bi-search" aria-hidden="true">🔍</i>
           </span>
         </div>
       </form>
-      @if (this.isLoading()) {
-      <div class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">{{ 'SEARCH.LOADING_MESSAGE' | translate }}</span>
-        </div>
-      </div>
-      } @else if (this.error()) {
+      @if (this.error()) {
       <div class="alert alert-danger" role="alert">
         {{ this.error() }}
       </div>
-      } @else {
+      }
       <div class="row">
         <div class="col-md-6">
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
               <div>
                 <h3 class="card-title mb-0">{{ 'SEARCH.PERSONS_TITLE' | translate }}</h3>
-                <small class="text-muted">{{ 'SEARCH.PERSONS_FOUND' | translate : { count: filteredPersons().length } }}</small>
+                <small class="text-muted">{{ 'SEARCH.PERSONS_FOUND' | translate : { count: filteredPersons().length }
+                  }}</small>
               </div>
-            <button class="btn btn-primary btn-sm float-end" [routerLink]="['/persons']"> 
-            {{ 'PERSONS.ADD_NEW' | translate }}
-          </button>
+              <button class="btn btn-primary btn-sm float-end" [routerLink]="['/persons']">
+                {{ 'PERSONS.ADD_NEW' | translate }}
+              </button>
             </div>
             <div class="card-body">
+              @if(this.isLoading()) {
+              @for (item of [1,2,3,4,5]; track item) {
+              <div class="skeleton-item">
+                <div class="skeleton w-75" style="height: 1.25rem;"></div>
+              </div>
+              }
+              } @else{
               @if (filteredPersons().length === 0) {
               <p class="text-muted">{{ 'SEARCH.NO_PERSONS_FOUND' | translate }}</p>
               } @else {
               <ul class="list-group list-group-flush">
                 @for (person of this.filteredPersons(); track person.id) {
-                <li
-                  class="list-group-item hover-shadow pointer"
-                  [routerLink]="['/person-details', person.id]"
-                >
+                <li class="list-group-item list-group-item-action pointer"
+                  [routerLink]="['/person-details', person.id]">
                   <div class="fw-bold">{{ person.firstName }} {{ person.lastName }}</div>
                 </li>
                 }
               </ul>
+              }
               }
             </div>
           </div>
@@ -68,45 +61,49 @@
               <h3 class="card-title mb-0">{{ 'SEARCH.PETS_TITLE' | translate }}</h3>
               <small class="text-muted">{{
                 'SEARCH.PETS_FOUND' | translate : { count: filteredPets().length }
-              }}</small>
+                }}</small>
             </div>
             <div class="card-body">
+              @if(this.isLoading()) {
+              @for (item of [1,2,3,4,5]; track item) {
+              <div class="skeleton-item d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <div class="skeleton mb-1 w-50" style="height: 1.25rem;"></div>
+                  <div class="skeleton w-75" style="height: 0.87rem;"></div>
+                </div>
+                <div class="skeleton skeleton-badge"></div>
+              </div>
+              } } @else{
               @if (filteredPets().length === 0) {
               <p class="text-muted">{{ 'SEARCH.NO_PETS_FOUND' | translate }}</p>
               } @else {
               <ul class="list-group list-group-flush">
                 @for (pet of this.filteredPets(); track pet.id) {
                 <li
-                  class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer"
-                >
+                  class="list-group-item d-flex justify-content-between align-items-start list-group-item-action pointer">
                   <div class="ms-2 me-auto" [routerLink]="['/pet-details', pet.id]">
                     <div class="fw-bold">{{ pet.name }}</div>
-                    <small class="text-muted"
-                      >{{ pet.species }} ({{ pet.breed }}) {{ 'SEARCH.AGE' | translate }}:
+                    <small class="text-muted">{{ pet.species }} ({{ pet.breed }}) {{ 'SEARCH.AGE' | translate }}:
                       {{
-                        pet.dateOfBirth
-                          ? this.calculateAge(pet.dateOfBirth)
-                          : ('SEARCH.UNKNOWN' | translate)
+                      pet.dateOfBirth
+                      ? this.calculateAge(pet.dateOfBirth)
+                      : ('SEARCH.UNKNOWN' | translate)
                       }}
-                      {{ 'SEARCH.YEARS' | translate }}</small
-                    >
+                      {{ 'SEARCH.YEARS' | translate }}</small>
                   </div>
-                  <span
-                    class="badge bg-primary rounded-pill hover-shadow pointer"
-                    [routerLink]="['/person-details', pet.personId]"
-                    (click)="$event.stopPropagation()"
-                  >
+                  <span class="badge bg-primary rounded-pill hover-shadow pointer"
+                    [routerLink]="['/person-details', pet.personId]" (click)="$event.stopPropagation()" role="button">
                     {{ this.getPetOwnerName(pet.personId) }}
                   </span>
                 </li>
                 }
               </ul>
               }
+              }
             </div>
           </div>
         </div>
       </div>
-      }
     </div>
   </div>
 </div>
