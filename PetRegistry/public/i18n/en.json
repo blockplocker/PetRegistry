@@ -54,6 +54,7 @@
   "SEARCH": {
     "TITLE": "Pet Registry Search",
     "PLACEHOLDER": "Search pets by name, species, breed or search persons by name...",
+    "BACK_TO_SEARCH": "Back to Search",
     "NO_RESULTS": "No results found",
     "RESULTS_FOUND": "{{count}} results found",
     "LOADING_MESSAGE": "Loading data, please wait...",
@@ -70,6 +71,7 @@
   },
   "PERSON_DETAILS": {
     "TITLE": "Person Details",
+    "BACK_TO_PERSON_DETAILS": "Back to Person Details",
     "EMAIL": "Email",
     "PHONE": "Phone",
     "ADDRESS": "Address",

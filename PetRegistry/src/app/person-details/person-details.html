@@ -2,17 +2,28 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <h2 class="mb-4">{{ 'PERSON_DETAILS.TITLE' | translate }}</h2>
-
-      @if (isLoading()) {
-      <div class="text-center my-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
-        </div>
-      </div>
-      } @else if (error()) {
+      @if (error()) {
       <div class="alert alert-danger" role="alert">{{ 'COMMON.ERROR' | translate }}: {{ error() }}</div>
-      } @else if (person(); as currentPerson) {
+      }
       <div class="card mb-4">
+        @if (this.isLoading()) {
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class="skeleton skeleton-button w-50"></div>
+          <div class="d-grid gap-2 d-flex justify-content-end">
+            <div class="skeleton skeleton-button "></div>
+            <div class="skeleton skeleton-button "></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="skeleton-item">
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+            <div class="skeleton mb-3 w-50" style="height: 1rem;"></div>
+          </div>
+        </div>
+        } @else if (person(); as currentPerson) {
         <div class="card-header d-flex justify-content-between align-items-center">
           <h3 class="card-title mb-0">
             {{ currentPerson.firstName }} {{ currentPerson.lastName }}
@@ -32,25 +43,39 @@
           <p><strong>{{ 'PERSON_DETAILS.ADDRESS' | translate }}:</strong> {{ currentPerson.address }}</p>
           <p><strong>{{ 'PERSON_DETAILS.CITY' | translate }}:</strong> {{ currentPerson.city }}</p>
         </div>
+        }
       </div>
-      }
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <div>
             <h4 class="card-title mb-0">{{ 'PERSON_DETAILS.PETS_TITLE' | translate }}</h4>
             <small class="text-muted">{{ 'PERSON_DETAILS.PETS_FOUND' | translate:{ count: pets().length } }}</small>
           </div>
-          @if (person(); as person) {
 
+          @if (this.isLoading()) {
+          <div class="skeleton skeleton-button "></div>
+          } @else if (person(); as person) {
           <button class="btn btn-primary btn-sm float-end" [routerLink]="['/pets', person.id]">
             {{ 'PERSON_DETAILS.ADD_PET' | translate }}
           </button>
           }
         </div>
         <div class="card-body">
+          @if (this.isLoading()) {
+          @for (item of [1,2,3,4,5]; track item) {
+          <div class="skeleton-item d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <div class="skeleton mb-1 w-25" style="height: 1.25rem;"></div>
+              <div class="skeleton mb-2 w-50" style="height: 0.87rem;"></div>
+            </div>
+            <div class="skeleton skeleton-badge"></div>
+            <div class="skeleton skeleton-badge"></div>
+          </div>
+          } } @else{
+
           <div class="list-group list-group-flush">
             @if (pets().length > 0) { @for (pet of this.pets(); track pet.id) {
-            <div class="list-group-item d-flex justify-content-between align-items-start hover-shadow pointer"
+            <div class="list-group-item d-flex justify-content-between align-items-start list-group-item-action pointer"
               [routerLink]="['/pet-details', pet.id]">
               <div class="ms-2 me-auto">
                 <div class="fw-bold">{{ pet.name }}</div>
@@ -68,6 +93,7 @@
             </div>
             } }
           </div>
+          }
         </div>
       </div>
     </div>

@@ -1,3 +1,58 @@
 @import 'ngx-toastr/toastr';
-.hover-shadow:hover {box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
-.pointer {cursor: pointer;}
+
+.pointer {
+  cursor: pointer;
+}
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-input {
+  height: 38px;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 0.375rem;
+}
+
+.skeleton-button {
+  height: 28px;
+  width: 100px;
+  border-radius: 0.375rem;
+}
+
+.skeleton-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.skeleton-item:last-child {
+  border-bottom: none;
+}
+
+.skeleton-badge {
+  height: 1.5rem;
+  width: 60px;
+  border-radius: 12px;
+}
+
+.skeleton-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
