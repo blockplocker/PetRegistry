@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, MaxLengthValidator } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/Utils/string-utils';
@@ -48,10 +48,22 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('firstInput') firstInput!: ElementRef;
 
   personForm = new FormGroup({
-    firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    address: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    city: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    firstName: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(15)],
+      nonNullable: true,
+    }),
+    lastName: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(20)],
+      nonNullable: true,
+    }),
+    address: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(25)],
+      nonNullable: true,
+    }),
+    city: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(25)],
+      nonNullable: true,
+    }),
 
     phoneNumber: new FormControl('', {
       validators: [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)],

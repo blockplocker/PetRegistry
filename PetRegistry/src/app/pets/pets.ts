@@ -46,11 +46,17 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
   today = new Date().toISOString().substring(0, 10);
 
   petForm = new FormGroup({
-    name: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    species: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    breed: new FormControl('', { nonNullable: true }),
+    name: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(15)],
+      nonNullable: true,
+    }),
+    species: new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(15)],
+      nonNullable: true,
+    }),
+    breed: new FormControl('', { validators: [Validators.maxLength(15)], nonNullable: true }),
     dateOfBirth: new FormControl('', { nonNullable: true }),
-    color: new FormControl('', { nonNullable: true }),
+    color: new FormControl('', { validators: [Validators.maxLength(15)], nonNullable: true }),
     gender: new FormControl('Female', { validators: [Validators.required], nonNullable: true }),
     isMicrochip: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
     isNeutered: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
