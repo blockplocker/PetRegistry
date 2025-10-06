@@ -169,6 +169,8 @@
     "PET_LOAD_ERROR": "Impossible de charger les données de l'animal. Veuillez réessayer.",
     "PET_SAVE_ERROR": "Erreur lors de la sauvegarde de l'animal. Veuillez réessayer plus tard.",
     "PET_UPDATE_ERROR": "Erreur lors de la mise à jour de l'animal. Veuillez réessayer plus tard.",
+    "PET_DELETED": "Les animaux domestiques ont été supprimés",
+    "PET_DELETE_ERROR": "Impossible de supprimer les animaux domestiques. Réessayez plus tard.",
     "SAVED": "Sauvegardé!",
     "UPDATED": "Mis à jour!",
     "CONFIRM_DELETION": "Confirmer la Suppression",
@@ -181,6 +183,8 @@
     "PERSON_LOAD_ERROR": "Impossible de charger les détails de la personne",
     "PERSON_CREATE_ERROR": "Impossible de créer la personne. Veuillez réessayer plus tard.",
     "PERSON_UPDATE_ERROR": "Impossible de mettre à jour la personne. Veuillez réessayer plus tard.",
+    "PERSON_DELETED": "Personne supprimée",
+    "PERSON_DELETE_ERROR": "Impossible de supprimer la personne. Veuillez réessayer plus tard.",
     "INVALID_ID": "ID invalide"
   }
 }

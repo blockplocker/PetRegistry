@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { Modal } from '../../Modal/Modal';
 import { TranslateModule } from '@ngx-translate/core';
+import { Modal } from '../../modal/modal';
 
 export type ConfirmData = {
   title?: string;

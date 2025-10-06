@@ -167,7 +167,7 @@
     "PET_DELETED": "Husdjur har raderats",
     "PET_DELETE_ERROR": "Kunde inte radera husdjur. Försök igen senare.",
     "PET_SAVED": "Djuret har sparats!",
-    "PET_UPDATED": "Updateringen har sparats!",
+    "PET_UPDATED": "Djuret har uppdaterats",
     "PET_LOAD_ERROR": "Kunde inte ladda djurdata. Försök igen.",
     "PET_SAVE_ERROR": "Fel vid sparning. Försök igen senare.",
     "PET_UPDATE_ERROR": "Fel vid updatering. Försök igen senare.",
