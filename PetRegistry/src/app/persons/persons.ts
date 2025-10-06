@@ -175,7 +175,7 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
           this.isLoading.set(false);
           this.toastr.success(
             this.translateService.instant('COMMON.PERSON_UPDATED'),
-            this.translateService.instant('COMMON.SUCCESS')
+            this.translateService.instant('COMMON.UPDATED')
           );
           this.router.navigate(['/person-details', this.personId()]);
         },

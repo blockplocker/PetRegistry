@@ -1,4 +1,13 @@
-import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  signal,
+} from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -129,9 +138,9 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
     this.petForm.patchValue({
       name: pet.name,
       species: pet.species,
-      breed: pet.breed,
+      breed: pet.breed || '',
       dateOfBirth: pet.dateOfBirth ? pet.dateOfBirth.split('T')[0] : '',
-      color: pet.color,
+      color: pet.color || '',
       gender: pet.gender,
       isMicrochip: pet.isMicrochip,
       isNeutered: pet.isNeutered,
@@ -150,9 +159,9 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
       name: this.petForm.controls.name.value,
       gender: this.petForm.controls.gender.value,
       species: this.petForm.controls.species.value,
-      breed: this.petForm.controls.breed.value,
-      dateOfBirth: this.petForm.controls.dateOfBirth.value,
-      color: this.petForm.controls.color.value,
+      breed: this.petForm.controls.breed.value || undefined,
+      dateOfBirth: this.petForm.controls.dateOfBirth.value || undefined,
+      color: this.petForm.controls.color.value || undefined,
       isMicrochip: this.petForm.controls.isMicrochip.value,
       isNeutered: this.petForm.controls.isNeutered.value,
       registrationDate: new Date(this.today),
@@ -174,9 +183,6 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (createdPet) => {
-          // this.petForm.reset();
-          // this.petForm.patchValue({ personId: this.personId() });
-          // this.isLoading.set(false);
           this.toastr.success(
             this.translateService.instant('COMMON.PET_SAVED'),
             this.translateService.instant('COMMON.SAVED')
