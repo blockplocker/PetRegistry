@@ -37,8 +37,8 @@
     </div>
 
     <div class="mb-3">
-      <label for="adress" class="form-label">{{ 'PERSONS_FORM.ADDRESS' | translate }}</label>
-      <input id="adress" type="text" class="form-control" maxlength="25" formControlName="address" [class.is-invalid]="
+      <label for="address" class="form-label">{{ 'PERSONS_FORM.ADDRESS' | translate }}</label>
+      <input id="address" type="text" class="form-control" maxlength="25" formControlName="address" [class.is-invalid]="
           personForm.get('address')?.invalid && personForm.get('address')?.touched
         " />
       <div class="invalid-feedback">{{ 'PERSONS_FORM.ADDRESS_REQUIRED' | translate }}</div>
