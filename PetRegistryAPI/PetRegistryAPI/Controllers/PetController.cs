@@ -17,7 +17,6 @@ namespace PetRegistryAPI.Controllers
             _petService = petService;
         }
 
-        // GET: api/Pet
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PetDto>>> GetPet()
@@ -26,7 +25,6 @@ namespace PetRegistryAPI.Controllers
             return Ok(pets);
         }
 
-        // GET: api/Pet/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PetDto>> GetPet(int id)
@@ -39,7 +37,6 @@ namespace PetRegistryAPI.Controllers
             return Ok(petDto);
         }
 
-        // PUT: api/Pet/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutPet(int id, PetDto petDto)
@@ -58,7 +55,6 @@ namespace PetRegistryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Pet
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<PetDto>> PostPet([FromBody]PetDto petDto)
@@ -66,8 +62,6 @@ namespace PetRegistryAPI.Controllers
             var created = await _petService.CreatePetAsync(petDto);
             return CreatedAtAction(nameof(GetPet), new { id = created.Id }, created);
         }
-
-        // DELETE: api/Pet/5
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
