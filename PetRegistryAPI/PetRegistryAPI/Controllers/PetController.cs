@@ -2,26 +2,18 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetRegistryAPI.Dto;
-using PetRegistryAPI.Services;
-
+using PetRegistryAPI.Interfaces;
 namespace PetRegistryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase
+    public class PetController (IPetService petService): ControllerBase
     {
-        private readonly PetService _petService;
-
-        public PetController(PetService petService)
-        {
-            _petService = petService;
-        }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PetDto>>> GetPet()
         {
-            var pets = await _petService.GetAllPetsAsync();
+            var pets = await petService.GetAllPetsAsync();
             return Ok(pets);
         }
 
@@ -29,7 +21,7 @@ namespace PetRegistryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PetDto>> GetPet(int id)
         {
-            var petDto = await _petService.GetPetAsync(id);
+            var petDto = await petService.GetPetAsync(id);
             if (petDto == null)
             {
                 return NotFound();
@@ -46,7 +38,7 @@ namespace PetRegistryAPI.Controllers
                 return BadRequest();
             }
 
-            var updated = await _petService.UpdatePetAsync(id, petDto);
+            var updated = await petService.UpdatePetAsync(id, petDto);
             if (!updated)
             {
                 return NotFound();
@@ -59,7 +51,7 @@ namespace PetRegistryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<PetDto>> PostPet([FromBody]PetDto petDto)
         {
-            var created = await _petService.CreatePetAsync(petDto);
+            var created = await petService.CreatePetAsync(petDto);
             return CreatedAtAction(nameof(GetPet), new { id = created.Id }, created);
         }
 
@@ -67,7 +59,7 @@ namespace PetRegistryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeletePet(int id)
         {
-            var deleted = await _petService.DeletePetAsync(id);
+            var deleted = await petService.DeletePetAsync(id);
             if (!deleted)
             {
                 return NotFound();
