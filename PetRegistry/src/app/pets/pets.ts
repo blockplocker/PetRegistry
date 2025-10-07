@@ -1,13 +1,4 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  signal,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef, signal } from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PetDto } from '../domain/client';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
+import { ValidationPatterns } from '../Services/Utils/validation-patterns-service';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -33,6 +25,7 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
   private routeParamService = inject(RouteParamService);
   private toastr = inject(ToastrService);
   private translateService = inject(TranslateService);
+  private validationPatterns = inject(ValidationPatterns);
   private destroy$ = new Subject<void>();
 
   isEditMode = signal(false);
@@ -47,16 +40,22 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
 
   petForm = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(15)],
+      validators: this.validationPatterns.name(15),
       nonNullable: true,
     }),
     species: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(15)],
+      validators: this.validationPatterns.name(15),
       nonNullable: true,
     }),
-    breed: new FormControl('', { validators: [Validators.maxLength(15)], nonNullable: true }),
+    breed: new FormControl('', { 
+      validators: this.validationPatterns.optionalName(15), 
+      nonNullable: true 
+    }),
     dateOfBirth: new FormControl('', { nonNullable: true }),
-    color: new FormControl('', { validators: [Validators.maxLength(15)], nonNullable: true }),
+    color: new FormControl('', { 
+      validators: this.validationPatterns.optionalName(15), 
+      nonNullable: true 
+    }),
     gender: new FormControl('Female', { validators: [Validators.required], nonNullable: true }),
     isMicrochip: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
     isNeutered: new FormControl(false, { validators: [Validators.required], nonNullable: true }),
@@ -228,5 +227,19 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
           );
         },
       });
+  }
+
+  getFieldErrorMessage(fieldName: string): string {
+    const control = this.petForm.get(fieldName);
+    if (control && control.errors && control.touched) {
+      const fieldDisplayName = this.validationPatterns.getFieldName(fieldName);
+      return this.validationPatterns.getValidationErrorMessage(fieldDisplayName, control.errors);
+    }
+    return '';
+  }
+
+  hasFieldError(fieldName: string): boolean {
+    const control = this.petForm.get(fieldName);
+    return !!(control && control.errors && control.touched);
   }
 }
