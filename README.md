@@ -46,6 +46,7 @@ This project consists of two main components:
 - **Search & Filter**: Advanced search capabilities for pets and owners
 - **Multilingual Support**: Available in 5 languages
 - **Responsive Design**: Mobile-friendly interface
+- **Skeleton Loading**: Smooth loading states with animated placeholders for enhanced UX
 - **REST API**: Full CRUD operations via RESTful endpoints
 - **Demo Mode**: Local storage fallback configured in environment settings
 

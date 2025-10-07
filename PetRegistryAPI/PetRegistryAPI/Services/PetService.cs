@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PetRegistryAPI.Data;
 using PetRegistryAPI.Dto;
+using PetRegistryAPI.Interfaces;
 using PetRegistryAPI.Mappers;
 using PetRegistryAPI.Models;
 
 namespace PetRegistryAPI.Services
 {
-    public class PetService
+    public class PetService : IPetService
     {
         private readonly PetRegistryAPIContext _context;
 

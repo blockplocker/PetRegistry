@@ -1,12 +1,13 @@
-﻿using PetRegistryAPI.Data;
+using PetRegistryAPI.Data;
 using PetRegistryAPI.Dto;
 using PetRegistryAPI.Mappers;
 using PetRegistryAPI.Models;
+using PetRegistryAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace PetRegistryAPI.Services
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private readonly PetRegistryAPIContext _context;
 

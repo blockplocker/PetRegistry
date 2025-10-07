@@ -9,20 +9,20 @@ namespace PetRegistryAPI.Dto
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(15)] 
-        public string Name { get; set; }
+        [MaxLength(15, ErrorMessage = "Name has a max lenght of 15")] 
+        public string Name { get; set; } 
 
         [Required]
         public string Gender { get; set; }
 
         [Required]
-        [MaxLength(15)] 
+        [MaxLength(15, ErrorMessage = "Species has a max lenght of 15")] 
         public string Species { get; set; }
 
-        [MaxLength(15)] 
+        [MaxLength(15, ErrorMessage = "Breed has a max lenght of 15")] 
         public string? Breed { get; set; }
         public string? DateOfBirth { get; set; }
-        [MaxLength(15)] 
+        [MaxLength(15, ErrorMessage = "Color has a max lenght of 15")] 
         public string? Color { get; set; }
         public bool? IsMicrochip { get; set; }
         public bool? IsNeutered { get; set; }
