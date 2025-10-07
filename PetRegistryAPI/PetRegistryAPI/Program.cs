@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PetRegistryAPI.Data;
 using PetRegistryAPI.Controllers;
 using PetRegistryAPI.Services;
+using PetRegistryAPI.Interfaces;
 
 namespace PetRegistryAPI
 {
@@ -15,8 +16,8 @@ namespace PetRegistryAPI
                 options.UseSqlServer(builder.Configuration.GetConnectionString("PetRegistryAPIContext") ?? throw new InvalidOperationException("Connection string 'PetRegistryAPIContext' not found.")));
 
             // Add services to the container.
-            builder.Services.AddScoped<PersonService>();
-            builder.Services.AddScoped<PetService>();
+            builder.Services.AddScoped<IPersonService, PersonService>();
+            builder.Services.AddScoped<IPetService, PetService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
