@@ -15,8 +15,8 @@ export class ValidationPatterns {
         // Address: alphanumeric, spaces, dots, commas, hyphens
         ADDRESS: /^[a-zA-Z\u00c0-\u00ff0-9\s.,-]+$/,
 
-        // Phone: flexible format with length validation (10-15 digits)
-        PHONE: /^[+]?[0-9\s()-]*[0-9][0-9\s()-]*$/,
+        // Phone: strict format with length validation (10-15 digits)
+        PHONE: /^[0-9]{10,15}$/,
 
         // Email: basic email pattern (used alongside Validators.email)
         EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,

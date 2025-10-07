@@ -95,6 +95,11 @@ export class Search implements OnInit, OnDestroy, AfterViewInit {
 
   onSearchChange(searchTerm: string): void {
     const sanitizedTerm = StringUtils.sanitizeInput(searchTerm);
+    
+    if (sanitizedTerm.length > 50) {
+      return;
+    }
+    
     this.searchTerm.set(sanitizedTerm);
 
     if (!sanitizedTerm.trim()) {

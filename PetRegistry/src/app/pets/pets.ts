@@ -18,6 +18,7 @@ import { PetDto } from '../domain/client';
 import { ToastrService } from 'ngx-toastr';
 import { RouteParamService } from '../Services/Utils/route-param-service';
 import { ValidationPatterns } from '../Services/Utils/validation-patterns-service';
+import { StringUtils } from '../Services/Utils/string-utils';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -168,14 +169,33 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    // Sanitize all string inputs
+    const sanitizedName = StringUtils.sanitizeInput(this.petForm.controls.name.value);
+    const sanitizedSpecies = StringUtils.sanitizeInput(this.petForm.controls.species.value);
+    const sanitizedBreed = this.petForm.controls.breed.value 
+      ? StringUtils.sanitizeInput(this.petForm.controls.breed.value) 
+      : undefined;
+    const sanitizedColor = this.petForm.controls.color.value 
+      ? StringUtils.sanitizeInput(this.petForm.controls.color.value) 
+      : undefined;
+
+    // Validate sanitized inputs
+    if (!sanitizedName || !sanitizedSpecies) {
+      this.toastr.error(
+        this.translateService.instant('COMMON.INVALID_INPUT_DATA'),
+        this.translateService.instant('COMMON.ERROR')
+      );
+      return;
+    }
+
     const pet = new PetDto({
       id: this.isEditMode() ? this.petId() : undefined,
-      name: this.petForm.controls.name.value,
+      name: StringUtils.capitalizeFirst(sanitizedName),
       gender: this.petForm.controls.gender.value,
-      species: this.petForm.controls.species.value,
-      breed: this.petForm.controls.breed.value || undefined,
+      species: StringUtils.capitalizeFirst(sanitizedSpecies),
+      breed: sanitizedBreed ? StringUtils.capitalizeFirst(sanitizedBreed) : undefined,
       dateOfBirth: this.petForm.controls.dateOfBirth.value || undefined,
-      color: this.petForm.controls.color.value || undefined,
+      color: sanitizedColor ? StringUtils.capitalizeFirst(sanitizedColor) : undefined,
       isMicrochip: this.petForm.controls.isMicrochip.value,
       isNeutered: this.petForm.controls.isNeutered.value,
       registrationDate: new Date(this.today),
