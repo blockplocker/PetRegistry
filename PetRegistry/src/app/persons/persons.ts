@@ -135,11 +135,15 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    const sanitizedFirstName = StringUtils.sanitizeInput(this.personForm.controls['firstName'].value);
+    const sanitizedFirstName = StringUtils.sanitizeInput(
+      this.personForm.controls['firstName'].value
+    );
     const sanitizedLastName = StringUtils.sanitizeInput(this.personForm.controls['lastName'].value);
     const sanitizedAddress = StringUtils.sanitizeInput(this.personForm.controls['address'].value);
     const sanitizedCity = StringUtils.sanitizeInput(this.personForm.controls['city'].value);
-    const sanitizedPhoneNumber = StringUtils.sanitizeInput(this.personForm.controls['phoneNumber'].value);
+    const sanitizedPhoneNumber = StringUtils.sanitizeInput(
+      this.personForm.controls['phoneNumber'].value
+    );
     const sanitizedEmail = StringUtils.sanitizeInput(this.personForm.controls['email'].value);
 
     if (

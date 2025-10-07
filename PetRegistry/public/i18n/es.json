@@ -195,5 +195,22 @@
     "EMAIL": "Por favor, introduzca una dirección de correo electrónico válida",
     "NUMBERS_ONLY": "Solo se permiten números",
     "ALPHANUMERIC_SPACES": "Solo se permiten letras, números y espacios"
+  },
+  "VALIDATION": {
+    "FIELD_REQUIRED": "{{field}} es obligatorio",
+    "FIELD_WHITESPACE_ONLY": "{{field}} no puede estar vacío o contener solo espacios",
+    "FIELD_MAX_LENGTH": "{{field}} no debe exceder {{maxLength}} caracteres",
+    "FIELD_MIN_LENGTH": "{{field}} debe tener al menos {{minLength}} caracteres",
+    "FIELD_INVALID_FORMAT": "{{field}} contiene caracteres no válidos",
+    "FIELD_INVALID": "{{field}} no es válido",
+    "EMAIL_INVALID": "Por favor, introduce una dirección de correo electrónico válida",
+    "NAME_INVALID": "Solo se permiten letras, espacios, guiones y apóstrofes",
+    "ADDRESS_INVALID": "Solo se permiten letras, números, espacios y puntuación básica",
+    "PHONE_INVALID": "Solo se permiten números, espacios, paréntesis, guiones y signo más",
+    "PHONE_INVALID_FORMAT": "{{field}} solo puede contener números, espacios, paréntesis, guiones y signo más",
+    "PHONE_MIN_LENGTH": "{{field}} debe contener al menos {{minLength}} dígitos (actualmente {{actualLength}})",
+    "PHONE_MAX_LENGTH": "{{field}} no debe exceder {{maxLength}} dígitos (actualmente {{actualLength}})",
+    "NUMBERS_ONLY": "Solo se permiten números",
+    "ALPHANUMERIC_SPACES": "Solo se permiten letras, números y espacios"
   }
 }

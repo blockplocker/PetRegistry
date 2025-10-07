@@ -153,7 +153,7 @@ export class ValidationPatterns {
             color: 'PETS_FORM.COLOR',
             gender: 'PETS_FORM.GENDER',
             isMicrochip: 'PETS_FORM.MICROCHIP_QUESTION',
-            isNeutered: 'PETS_FORM.NEUTERED_QUESTION'
+            isNeutered: 'PETS_FORM.NEUTERED_QUESTION',
         };
 
         const translationKey = fieldMapping[fieldKey];

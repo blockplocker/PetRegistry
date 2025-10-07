@@ -23,7 +23,7 @@
       <input #firstInput id="firstName" type="text" class="form-control" maxlength="15" formControlName="firstName"
         [class.is-invalid]="hasFieldError('firstName')" />
       @if (hasFieldError('firstName')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('firstName') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('firstName') }}</div>
       }
     </div>
 
@@ -32,16 +32,16 @@
       <input id="lastName" type="text" class="form-control" maxlength="20" formControlName="lastName"
         [class.is-invalid]="hasFieldError('lastName')" />
       @if (hasFieldError('lastName')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('lastName') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('lastName') }}</div>
       }
     </div>
 
     <div class="mb-3">
       <label for="address" class="form-label">{{ 'PERSONS_FORM.ADDRESS' | translate }}</label>
-      <input id="address" type="text" class="form-control" maxlength="25" formControlName="address" 
+      <input id="address" type="text" class="form-control" maxlength="25" formControlName="address"
         [class.is-invalid]="hasFieldError('address')" />
       @if (hasFieldError('address')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('address') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('address') }}</div>
       }
     </div>
 
@@ -50,7 +50,7 @@
       <input id="city" type="text" class="form-control" maxlength="25" formControlName="city"
         [class.is-invalid]="hasFieldError('city')" />
       @if (hasFieldError('city')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('city') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('city') }}</div>
       }
     </div>
 
@@ -59,7 +59,7 @@
       <input id="phoneNumber" type="tel" class="form-control" maxlength="15" formControlName="phoneNumber"
         [class.is-invalid]="hasFieldError('phoneNumber')" />
       @if (hasFieldError('phoneNumber')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('phoneNumber') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('phoneNumber') }}</div>
       }
     </div>
 
@@ -68,7 +68,7 @@
       <input id="email" type="email" class="form-control" maxlength="50" formControlName="email"
         [class.is-invalid]="hasFieldError('email')" />
       @if (hasFieldError('email')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('email') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('email') }}</div>
       }
     </div>
     <div class="mb-3">

@@ -1,4 +1,13 @@
-import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  signal,
+} from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -47,14 +56,14 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
       validators: this.validationPatterns.name(15),
       nonNullable: true,
     }),
-    breed: new FormControl('', { 
-      validators: this.validationPatterns.optionalName(15), 
-      nonNullable: true 
+    breed: new FormControl('', {
+      validators: this.validationPatterns.optionalName(15),
+      nonNullable: true,
     }),
     dateOfBirth: new FormControl('', { nonNullable: true }),
-    color: new FormControl('', { 
-      validators: this.validationPatterns.optionalName(15), 
-      nonNullable: true 
+    color: new FormControl('', {
+      validators: this.validationPatterns.optionalName(15),
+      nonNullable: true,
     }),
     gender: new FormControl('Female', { validators: [Validators.required], nonNullable: true }),
     isMicrochip: new FormControl(false, { validators: [Validators.required], nonNullable: true }),

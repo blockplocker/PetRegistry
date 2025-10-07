@@ -195,5 +195,22 @@
     "EMAIL": "Veuillez entrer une adresse email valide",
     "NUMBERS_ONLY": "Seuls les chiffres sont autorisés",
     "ALPHANUMERIC_SPACES": "Seules les lettres, les chiffres et les espaces sont autorisés"
+  },
+  "VALIDATION": {
+    "FIELD_REQUIRED": "{{field}} est obligatoire",
+    "FIELD_WHITESPACE_ONLY": "{{field}} ne peut pas être vide ou contenir uniquement des espaces",
+    "FIELD_MAX_LENGTH": "{{field}} ne doit pas dépasser {{maxLength}} caractères",
+    "FIELD_MIN_LENGTH": "{{field}} doit contenir au moins {{minLength}} caractères",
+    "FIELD_INVALID_FORMAT": "{{field}} contient des caractères non valides",
+    "FIELD_INVALID": "{{field}} n'est pas valide",
+    "EMAIL_INVALID": "Veuillez entrer une adresse email valide",
+    "NAME_INVALID": "Seules les lettres, les espaces, les tirets et les apostrophes sont autorisés",
+    "ADDRESS_INVALID": "Seules les lettres, les chiffres, les espaces et la ponctuation de base sont autorisés",
+    "PHONE_INVALID": "Seuls les chiffres, les espaces, les parenthèses, les tirets et le signe plus sont autorisés",
+    "PHONE_INVALID_FORMAT": "{{field}} ne peut contenir que des chiffres, des espaces, des parenthèses, des tirets et le signe plus",
+    "PHONE_MIN_LENGTH": "{{field}} doit contenir au moins {{minLength}} chiffres (actuellement {{actualLength}})",
+    "PHONE_MAX_LENGTH": "{{field}} ne doit pas dépasser {{maxLength}} chiffres (actuellement {{actualLength}})",
+    "NUMBERS_ONLY": "Seuls les chiffres sont autorisés",
+    "ALPHANUMERIC_SPACES": "Seules les lettres, les chiffres et les espaces sont autorisés"
   }
 }

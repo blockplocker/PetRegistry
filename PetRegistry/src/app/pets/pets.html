@@ -32,37 +32,34 @@
         [placeholder]="'PETS_FORM.ANIMAL_NAME_PLACEHOLDER' | translate" formControlName="name"
         [class.is-invalid]="hasFieldError('name')" />
       @if (hasFieldError('name')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('name') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('name') }}</div>
       }
     </div>
 
     <div class="mb-3">
       <label for="species" class="form-label">{{ 'PETS_FORM.SPECIES' | translate }}</label>
       <input id="species" type="text" class="form-control" maxlength="15" formControlName="species"
-        [placeholder]="'PETS_FORM.SPECIES_PLACEHOLDER' | translate"
-        [class.is-invalid]="hasFieldError('species')" />
+        [placeholder]="'PETS_FORM.SPECIES_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('species')" />
       @if (hasFieldError('species')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('species') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('species') }}</div>
       }
     </div>
 
     <div class="mb-3">
       <label for="breed" class="form-label">{{ 'PETS_FORM.BREED' | translate }}</label>
       <input id="breed" type="text" class="form-control" maxlength="15" formControlName="breed"
-        [placeholder]="'PETS_FORM.BREED_PLACEHOLDER' | translate" 
-        [class.is-invalid]="hasFieldError('breed')" />
+        [placeholder]="'PETS_FORM.BREED_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('breed')" />
       @if (hasFieldError('breed')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('breed') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('breed') }}</div>
       }
     </div>
 
     <div class="mb-3">
       <label for="color" class="form-label">{{ 'PETS_FORM.COLOR' | translate }}</label>
       <input id="color" type="text" class="form-control" maxlength="15" formControlName="color"
-        [placeholder]="'PETS_FORM.COLOR_PLACEHOLDER' | translate" 
-        [class.is-invalid]="hasFieldError('color')" />
+        [placeholder]="'PETS_FORM.COLOR_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('color')" />
       @if (hasFieldError('color')) {
-        <div class="invalid-feedback">{{ getFieldErrorMessage('color') }}</div>
+      <div class="invalid-feedback">{{ getFieldErrorMessage('color') }}</div>
       }
     </div>
 
