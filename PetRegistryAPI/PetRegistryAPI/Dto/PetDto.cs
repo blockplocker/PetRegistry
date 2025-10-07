@@ -13,7 +13,6 @@ namespace PetRegistryAPI.Dto
         public string Name { get; set; } 
 
         [Required]
-        [MaxLength(10, ErrorMessage = "Gender has a max lenght of 10")]
         public string Gender { get; set; }
 
         [Required]
