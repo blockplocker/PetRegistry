@@ -19,7 +19,7 @@ namespace PetRegistryAPI.Dto
         [MaxLength(15, ErrorMessage = "Species has a max lenght of 15")] 
         public string Species { get; set; }
 
-        [MaxLength(15, ErrorMessage = "Breed has a max lenght of 15")] 
+        [MaxLength(35, ErrorMessage = "Breed has a max length of 35")] 
         public string? Breed { get; set; }
         public string? DateOfBirth { get; set; }
         [MaxLength(15, ErrorMessage = "Color has a max lenght of 15")] 

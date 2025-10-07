@@ -50,8 +50,8 @@ namespace PetRegistryAPI.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Breed",
                 table: "Pet",
-                type: "nvarchar(15)",
-                maxLength: 15,
+                type: "nvarchar(35)",
+                maxLength: 35,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
@@ -148,8 +148,8 @@ namespace PetRegistryAPI.Migrations
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(15)",
-                oldMaxLength: 15,
+                oldType: "nvarchar(35)",
+                oldMaxLength: 35,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
