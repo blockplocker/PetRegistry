@@ -187,6 +187,30 @@
     "PERSON_UPDATE_ERROR": "Kunde inte updatera person. Försök igen senare.",
     "PERSON_DELETED": "Person har raderats",
     "PERSON_DELETE_ERROR": "Kunde inte radera person. Försök igen senare.",
-    "INVALID_ID": "Ogiltigt ID"
+    "INVALID_ID": "Ogiltigt ID",
+    "INVALID_INPUT_DATA": "Ogiltig indata. Kontrollera dina uppgifter och försök igen.",
+    "NAME": "Endast bokstäver, mellanslag, bindestreck och apostrofer är tillåtna",
+    "ADDRESS": "Endast bokstäver, siffror, mellanslag och grundläggande interpunktion är tillåtna",
+    "PHONE": "Endast siffror, mellanslag, parenteser, bindestreck och plustecken är tillåtna",
+    "EMAIL": "Vänligen ange en giltig e-postadress",
+    "NUMBERS_ONLY": "Endast siffror är tillåtna",
+    "ALPHANUMERIC_SPACES": "Endast bokstäver, siffror och mellanslag är tillåtna"
+  },
+  "VALIDATION": {
+    "FIELD_REQUIRED": "{{field}} är obligatoriskt",
+    "FIELD_WHITESPACE_ONLY": "{{field}} får inte vara tomt eller innehålla endast mellanslag",
+    "FIELD_MAX_LENGTH": "{{field}} får inte överstiga {{maxLength}} tecken",
+    "FIELD_MIN_LENGTH": "{{field}} måste innehålla minst {{minLength}} tecken",
+    "FIELD_INVALID_FORMAT": "{{field}} innehåller ogiltiga tecken",
+    "FIELD_INVALID": "{{field}} är ogiltigt",
+    "EMAIL_INVALID": "Vänligen ange en giltig e-postadress",
+    "NAME_INVALID": "Endast bokstäver, mellanslag, bindestreck och apostrofer är tillåtna",
+    "ADDRESS_INVALID": "Endast bokstäver, siffror, mellanslag och grundläggande interpunktion är tillåtna",
+    "PHONE_INVALID": "Endast siffror, mellanslag, parenteser, bindestreck och plustecken är tillåtna",
+    "PHONE_INVALID_FORMAT": "{{field}} får endast innehålla siffror, mellanslag, parenteser, bindestreck och plustecken",
+    "PHONE_MIN_LENGTH": "{{field}} måste innehålla minst {{minLength}} siffror (för närvarande {{actualLength}})",
+    "PHONE_MAX_LENGTH": "{{field}} får inte överstiga {{maxLength}} siffror (för närvarande {{actualLength}})",
+    "NUMBERS_ONLY": "Endast siffror är tillåtna",
+    "ALPHANUMERIC_SPACES": "Endast bokstäver, siffror och mellanslag är tillåtna"
   }
 }

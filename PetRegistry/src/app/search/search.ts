@@ -16,6 +16,7 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { PetDto, PersonDto } from '../domain/client';
 import { RouterLink } from '@angular/router';
 import { AgeService } from '../Services/Utils/age-service';
+import { StringUtils } from '../Services/Utils/string-utils';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -93,16 +94,22 @@ export class Search implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSearchChange(searchTerm: string): void {
-    this.searchTerm.set(searchTerm);
+    const sanitizedTerm = StringUtils.sanitizeInput(searchTerm);
+    
+    if (sanitizedTerm.length > 50) {
+      return;
+    }
+    
+    this.searchTerm.set(sanitizedTerm);
 
-    if (!searchTerm.trim()) {
+    if (!sanitizedTerm.trim()) {
       // If search is empty, show all data
       this.filteredPets.set(this.pets());
       this.filteredPersons.set(this.persons());
       return;
     }
 
-    const term = searchTerm.toLowerCase().trim();
+    const term = sanitizedTerm.toLowerCase().trim();
 
     // Filter pets by name, species or breed
     const filteredPets = this.pets().filter(

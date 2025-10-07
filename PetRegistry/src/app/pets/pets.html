@@ -5,7 +5,7 @@
   <div class="alert alert-danger" role="alert">{{ 'COMMON.ERROR' | translate }}: {{ error() }}</div>
   }
   @if(isLoading()) {
-    <form class="mx-auto w-50">
+  <form class="mx-auto w-50">
     @for (item of [1,2,3,4,5]; track item) {
     <div class="mb-3">
       <div class="skeleton mb-3 w-25" style="height: 1rem;"></div>
@@ -25,104 +25,70 @@
   </form>
   } @else {
 
-    <form class="mx-auto w-50" [formGroup]="petForm" (ngSubmit)="savePet()">
-      <div class="mb-3">
+  <form class="mx-auto w-50" [formGroup]="petForm" (ngSubmit)="savePet()">
+    <div class="mb-3">
       <label for="animalName" class="form-label">{{ 'PETS_FORM.ANIMAL_NAME' | translate }}</label>
-      <input
-        #firstInput
-        id="animalName"
-        type="text"
-        class="form-control"
-        maxlength="15"
-        [placeholder]="'PETS_FORM.ANIMAL_NAME_PLACEHOLDER' | translate"
-        formControlName="name"
-        [class.is-invalid]="petForm.get('name')?.invalid && petForm.get('name')?.touched"
-      />
-      <div class="invalid-feedback">{{ 'PETS_FORM.ANIMAL_NAME_REQUIRED' | translate }}</div>
+      <input #firstInput id="animalName" type="text" class="form-control" maxlength="15"
+        [placeholder]="'PETS_FORM.ANIMAL_NAME_PLACEHOLDER' | translate" formControlName="name"
+        [class.is-invalid]="hasFieldError('name')" />
+      @if (hasFieldError('name')) {
+      <div class="invalid-feedback">{{ getFieldErrorMessage('name') }}</div>
+      }
     </div>
 
     <div class="mb-3">
       <label for="species" class="form-label">{{ 'PETS_FORM.SPECIES' | translate }}</label>
-      <input
-        id="species"
-        type="text"
-        class="form-control"
-        maxlength="15"
-        formControlName="species"
-        [placeholder]="'PETS_FORM.SPECIES_PLACEHOLDER' | translate"
-        [class.is-invalid]="petForm.get('species')?.invalid && petForm.get('species')?.touched"
-      />
-      <div class="invalid-feedback">{{ 'PETS_FORM.SPECIES_REQUIRED' | translate }}</div>
+      <input id="species" type="text" class="form-control" maxlength="15" formControlName="species"
+        [placeholder]="'PETS_FORM.SPECIES_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('species')" />
+      @if (hasFieldError('species')) {
+      <div class="invalid-feedback">{{ getFieldErrorMessage('species') }}</div>
+      }
     </div>
 
     <div class="mb-3">
       <label for="breed" class="form-label">{{ 'PETS_FORM.BREED' | translate }}</label>
-      <input
-        id="breed"
-        type="text"
-        class="form-control"
-        maxlength="15"
-        formControlName="breed"
-        [placeholder]="'PETS_FORM.BREED_PLACEHOLDER' | translate"
-      />
+      <input id="breed" type="text" class="form-control" maxlength="15" formControlName="breed"
+        [placeholder]="'PETS_FORM.BREED_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('breed')" />
+      @if (hasFieldError('breed')) {
+      <div class="invalid-feedback">{{ getFieldErrorMessage('breed') }}</div>
+      }
     </div>
 
     <div class="mb-3">
       <label for="color" class="form-label">{{ 'PETS_FORM.COLOR' | translate }}</label>
-      <input
-        id="color"
-        type="text"
-        class="form-control"
-        maxlength="15"
-        formControlName="color"
-        [placeholder]="'PETS_FORM.COLOR_PLACEHOLDER' | translate"
-      />
+      <input id="color" type="text" class="form-control" maxlength="15" formControlName="color"
+        [placeholder]="'PETS_FORM.COLOR_PLACEHOLDER' | translate" [class.is-invalid]="hasFieldError('color')" />
+      @if (hasFieldError('color')) {
+      <div class="invalid-feedback">{{ getFieldErrorMessage('color') }}</div>
+      }
     </div>
 
     <div class="mb-3">
       <label for="dob" class="form-label">{{ 'PETS_FORM.DATE_OF_BIRTH' | translate }}</label>
-      <input
-        id="dob"
-        type="date"
-        class="form-control"
-        formControlName="dateOfBirth"
-        [attr.max]="today"
-      />
+      <input id="dob" type="date" class="form-control" formControlName="dateOfBirth" [attr.max]="today" />
     </div>
 
     <div class="mb-3">
       <label class="form-label d-block">{{ 'PETS_FORM.GENDER' | translate }}</label>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="genderFemale"
-          formControlName="gender"
-          [value]="'Female'"
-          [class.is-invalid]="petForm.get('gender')?.invalid && petForm.get('gender')?.touched"
-        />
+        <input class="form-check-input" type="radio" id="genderFemale" formControlName="gender" [value]="'Female'"
+          [class.is-invalid]="petForm.get('gender')?.invalid && petForm.get('gender')?.touched" />
         <label class="form-check-label" for="genderFemale">{{
           'PETS_FORM.GENDER_FEMALE' | translate
-        }}</label>
+          }}</label>
       </div>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="genderMale"
-          formControlName="gender"
-          [value]="'Male'"
-          [class.is-invalid]="petForm.get('gender')?.invalid && petForm.get('gender')?.touched"
-        />
+        <input class="form-check-input" type="radio" id="genderMale" formControlName="gender" [value]="'Male'"
+          [class.is-invalid]="petForm.get('gender')?.invalid && petForm.get('gender')?.touched" />
         <label class="form-check-label" for="genderMale">{{
           'PETS_FORM.GENDER_MALE' | translate
-        }}</label>
+          }}</label>
       </div>
 
-      @if(petForm.get('gender')?.invalid && petForm.get('gender')?.touched) {
-      <div class="invalid-feedback d-block">{{ 'PETS_FORM.GENDER_REQUIRED' | translate }}</div>
+      @if(hasFieldError('gender')) {
+      <div class="invalid-feedback d-block">{{ getFieldErrorMessage('gender') }}</div>
       }
     </div>
 
@@ -130,35 +96,23 @@
       <label class="form-label d-block">{{ 'PETS_FORM.MICROCHIP_QUESTION' | translate }}</label>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="chipYes"
-          formControlName="isMicrochip"
-          [value]="true"
+        <input class="form-check-input" type="radio" id="chipYes" formControlName="isMicrochip" [value]="true"
           [class.is-invalid]="
             petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched
-          "
-        />
+          " />
         <label class="form-check-label" for="chipYes">{{ 'PETS_FORM.YES' | translate }}</label>
       </div>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="chipNo"
-          formControlName="isMicrochip"
-          [value]="false"
+        <input class="form-check-input" type="radio" id="chipNo" formControlName="isMicrochip" [value]="false"
           [class.is-invalid]="
             petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched
-          "
-        />
+          " />
         <label class="form-check-label" for="chipNo">{{ 'PETS_FORM.NO' | translate }}</label>
       </div>
 
-      @if(petForm.get('isMicrochip')?.invalid && petForm.get('isMicrochip')?.touched) {
-      <div class="invalid-feedback d-block">{{ 'PETS_FORM.MICROCHIP_REQUIRED' | translate }}</div>
+      @if(hasFieldError('isMicrochip')) {
+      <div class="invalid-feedback d-block">{{ getFieldErrorMessage('isMicrochip') }}</div>
       }
     </div>
 
@@ -166,35 +120,23 @@
       <label class="form-label d-block">{{ 'PETS_FORM.NEUTERED_QUESTION' | translate }}</label>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="neuteredYes"
-          formControlName="isNeutered"
-          [value]="true"
+        <input class="form-check-input" type="radio" id="neuteredYes" formControlName="isNeutered" [value]="true"
           [class.is-invalid]="
             petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched
-          "
-        />
+          " />
         <label class="form-check-label" for="neuteredYes">{{ 'PETS_FORM.YES' | translate }}</label>
       </div>
 
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="neuteredNo"
-          formControlName="isNeutered"
-          [value]="false"
+        <input class="form-check-input" type="radio" id="neuteredNo" formControlName="isNeutered" [value]="false"
           [class.is-invalid]="
             petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched
-          "
-        />
+          " />
         <label class="form-check-label" for="neuteredNo">{{ 'PETS_FORM.NO' | translate }}</label>
       </div>
 
-      @if(petForm.get('isNeutered')?.invalid && petForm.get('isNeutered')?.touched) {
-      <div class="invalid-feedback d-block">{{ 'PETS_FORM.NEUTERED_REQUIRED' | translate }}</div>
+      @if(hasFieldError('isNeutered')) {
+      <div class="invalid-feedback d-block">{{ getFieldErrorMessage('isNeutered') }}</div>
       }
     </div>
 
@@ -204,5 +146,5 @@
       </button>
     </div>
   </form>
-}
+  }
 </div>
