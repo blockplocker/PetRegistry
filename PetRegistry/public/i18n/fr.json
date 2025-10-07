@@ -187,6 +187,13 @@
     "PERSON_UPDATE_ERROR": "Impossible de mettre à jour la personne. Veuillez réessayer plus tard.",
     "PERSON_DELETED": "Personne supprimée",
     "PERSON_DELETE_ERROR": "Impossible de supprimer la personne. Veuillez réessayer plus tard.",
-    "INVALID_ID": "ID invalide"
+    "INVALID_ID": "ID invalide",
+    "INVALID_INPUT_DATA": "Données d'entrée non valides. Veuillez vérifier vos saisies et réessayer.",
+    "NAME": "Seules les lettres, les espaces, les tirets et les apostrophes sont autorisés",
+    "ADDRESS": "Seules les lettres, les chiffres, les espaces et la ponctuation de base sont autorisés",
+    "PHONE": "Seuls les chiffres, les espaces, les parenthèses, les tirets et le signe plus sont autorisés",
+    "EMAIL": "Veuillez entrer une adresse email valide",
+    "NUMBERS_ONLY": "Seuls les chiffres sont autorisés",
+    "ALPHANUMERIC_SPACES": "Seules les lettres, les chiffres et les espaces sont autorisés"
   }
 }

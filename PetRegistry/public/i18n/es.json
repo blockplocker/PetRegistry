@@ -187,6 +187,13 @@
     "PERSON_UPDATE_ERROR": "No se pudo actualizar la persona. Por favor, inténtelo de nuevo más tarde.",
     "PERSON_DELETED": "La persona ha sido eliminada",
     "PERSON_DELETE_ERROR": "No se pudo eliminar la persona. Por favor, inténtelo de nuevo más tarde.",
-    "INVALID_ID": "ID inválido"
+    "INVALID_ID": "ID inválido",
+    "INVALID_INPUT_DATA": "Datos de entrada no válidos. Por favor, verifique sus entradas e intente nuevamente.",
+    "NAME": "Solo se permiten letras, espacios, guiones y apóstrofes",
+    "ADDRESS": "Solo se permiten letras, números, espacios y puntuación básica",
+    "PHONE": "Solo se permiten números, espacios, paréntesis, guiones y signo más",
+    "EMAIL": "Por favor, introduzca una dirección de correo electrónico válida",
+    "NUMBERS_ONLY": "Solo se permiten números",
+    "ALPHANUMERIC_SPACES": "Solo se permiten letras, números y espacios"
   }
 }

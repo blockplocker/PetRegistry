@@ -187,6 +187,13 @@
     "PERSON_UPDATE_ERROR": "Kunde inte updatera person. Försök igen senare.",
     "PERSON_DELETED": "Person har raderats",
     "PERSON_DELETE_ERROR": "Kunde inte radera person. Försök igen senare.",
-    "INVALID_ID": "Ogiltigt ID"
+    "INVALID_ID": "Ogiltigt ID",
+    "INVALID_INPUT_DATA": "Ogiltig indata. Kontrollera dina uppgifter och försök igen.",
+    "NAME": "Endast bokstäver, mellanslag, bindestreck och apostrofer är tillåtna",
+    "ADDRESS": "Endast bokstäver, siffror, mellanslag och grundläggande interpunktion är tillåtna",
+    "PHONE": "Endast siffror, mellanslag, parenteser, bindestreck och plustecken är tillåtna",
+    "EMAIL": "Vänligen ange en giltig e-postadress",
+    "NUMBERS_ONLY": "Endast siffror är tillåtna",
+    "ALPHANUMERIC_SPACES": "Endast bokstäver, siffror och mellanslag är tillåtna"
   }
 }
