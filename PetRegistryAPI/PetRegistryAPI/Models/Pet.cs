@@ -17,7 +17,7 @@ namespace PetRegistryAPI.Models
         [MaxLength(15)]
         public string Species { get; set; }
         
-        [MaxLength(15)]
+        [MaxLength(35)]
         public string? Breed { get; set; }
         
         public string? DateOfBirth { get; set; }
