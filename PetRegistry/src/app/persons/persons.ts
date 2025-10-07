@@ -5,16 +5,16 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
-  computed,
   inject,
   signal,
 } from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
-import { FormGroup, FormControl, Validators, MaxLengthValidator } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { StringUtils } from '../Services/Utils/string-utils';
+import { ValidationPatterns } from '../Services/Utils/validation-patterns-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
@@ -26,7 +26,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   selector: 'app-persons',
   imports: [ReactiveFormsModule, DialogModule, TranslateModule],
   templateUrl: './persons.html',
-  standalone: true,
   styleUrls: ['./persons.css'],
 })
 export class Persons implements OnInit, OnDestroy, AfterViewInit {
@@ -34,9 +33,10 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private routeParamService = inject(RouteParamService);
-  private destroy$ = new Subject<void>();
   private toastr = inject(ToastrService);
   private translateService = inject(TranslateService);
+  private validationPatterns = inject(ValidationPatterns);
+  private destroy$ = new Subject<void>();
 
   personId = signal<number>(0);
 
@@ -47,40 +47,41 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('firstInput') firstInput!: ElementRef;
 
-  personForm = new FormGroup({
-    firstName: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(15)],
-      nonNullable: true,
-    }),
-    lastName: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(20)],
-      nonNullable: true,
-    }),
-    address: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(25)],
-      nonNullable: true,
-    }),
-    city: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(25)],
-      nonNullable: true,
-    }),
-
-    phoneNumber: new FormControl('', {
-      validators: [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)],
-      nonNullable: true,
-    }),
-    email: new FormControl('', {
-      validators: [Validators.required, Validators.email],
-      nonNullable: true,
-    }),
-  });
+  personForm!: FormGroup;
 
   ngOnInit() {
+    this.personForm = new FormGroup({
+      firstName: new FormControl('', {
+        validators: this.validationPatterns.name(15),
+        nonNullable: true,
+      }),
+      lastName: new FormControl('', {
+        validators: this.validationPatterns.name(20),
+        nonNullable: true,
+      }),
+      address: new FormControl('', {
+        validators: this.validationPatterns.address(25),
+        nonNullable: true,
+      }),
+      city: new FormControl('', {
+        validators: this.validationPatterns.name(25),
+        nonNullable: true,
+      }),
+      phoneNumber: new FormControl('', {
+        validators: this.validationPatterns.phone(10, 15),
+        nonNullable: true,
+      }),
+      email: new FormControl('', {
+        validators: this.validationPatterns.email(),
+        nonNullable: true,
+      }),
+    });
+
     const personId = this.routeParamService.getIdParam(this.route);
     if (personId !== null) {
       this.personId.set(personId);
       this.isEditing.set(true);
-      this.loadPerson(Number(personId));
+      this.loadPerson(personId);
     }
   }
 
@@ -134,14 +135,36 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    const sanitizedFirstName = StringUtils.sanitizeInput(this.personForm.controls['firstName'].value);
+    const sanitizedLastName = StringUtils.sanitizeInput(this.personForm.controls['lastName'].value);
+    const sanitizedAddress = StringUtils.sanitizeInput(this.personForm.controls['address'].value);
+    const sanitizedCity = StringUtils.sanitizeInput(this.personForm.controls['city'].value);
+    const sanitizedPhoneNumber = StringUtils.sanitizeInput(this.personForm.controls['phoneNumber'].value);
+    const sanitizedEmail = StringUtils.sanitizeInput(this.personForm.controls['email'].value);
+
+    if (
+      !sanitizedFirstName ||
+      !sanitizedLastName ||
+      !sanitizedAddress ||
+      !sanitizedCity ||
+      !sanitizedPhoneNumber ||
+      !sanitizedEmail
+    ) {
+      this.toastr.error(
+        this.translateService.instant('COMMON.INVALID_INPUT_DATA'),
+        this.translateService.instant('COMMON.ERROR')
+      );
+      return;
+    }
+
     const person = new PersonDto({
-      id: this.isEditing() ? Number(this.personId()) : undefined,
-      firstName: StringUtils.capitalizeFirst(this.personForm.controls.firstName.value),
-      lastName: StringUtils.capitalizeFirst(this.personForm.controls.lastName.value),
-      address: StringUtils.capitalizeFirst(this.personForm.controls.address.value),
-      city: StringUtils.capitalizeFirst(this.personForm.controls.city.value),
-      phoneNumber: this.personForm.controls.phoneNumber.value,
-      email: this.personForm.controls.email.value,
+      id: this.isEditing() ? this.personId() : undefined,
+      firstName: StringUtils.capitalizeFirst(sanitizedFirstName),
+      lastName: StringUtils.capitalizeFirst(sanitizedLastName),
+      address: StringUtils.capitalizeFirst(sanitizedAddress),
+      city: StringUtils.capitalizeFirst(sanitizedCity),
+      phoneNumber: sanitizedPhoneNumber,
+      email: sanitizedEmail,
     });
 
     if (this.isEditing()) {
@@ -199,5 +222,19 @@ export class Persons implements OnInit, OnDestroy, AfterViewInit {
           );
         },
       });
+  }
+
+  getFieldErrorMessage(fieldName: string): string {
+    const control = this.personForm.get(fieldName);
+    if (control && control.errors && control.touched) {
+      const fieldDisplayName = this.validationPatterns.getFieldName(fieldName);
+      return this.validationPatterns.getValidationErrorMessage(fieldDisplayName, control.errors);
+    }
+    return '';
+  }
+
+  hasFieldError(fieldName: string): boolean {
+    const control = this.personForm.get(fieldName);
+    return !!(control && control.errors && control.touched);
   }
 }
