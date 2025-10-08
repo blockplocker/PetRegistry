@@ -3,7 +3,7 @@ import { Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@ang
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class ValidationPatterns {
     translateService = inject(TranslateService);
@@ -88,74 +88,76 @@ export class ValidationPatterns {
         }
         return validators;
     }
+    return validators;
+  }
 
-    getValidationErrorMessage(fieldName: string, error: any): string {
-        // Define error priority order (what to show first)
-        const errorPriority = [
-            'required',
-            'emptyAfterTrim',
-            'minlength',
-            'maxlength',
-            'email',
-            'pattern',
-        ];
+  getValidationErrorMessage(fieldName: string, error: any): string {
+    // Define error priority order (what to show first)
+    const errorPriority = [
+      'required',
+      'emptyAfterTrim',
+      'minlength',
+      'maxlength',
+      'email',
+      'pattern',
+    ];
 
-        const errorType = errorPriority.find((errorKey) => error[errorKey]);
+    const errorType = errorPriority.find((errorKey) => error[errorKey]);
 
-        switch (errorType) {
-            case 'required':
-                return this.translateService.instant('VALIDATION.FIELD_REQUIRED', { field: fieldName });
+    switch (errorType) {
+      case 'required':
+        return this.translateService.instant('VALIDATION.FIELD_REQUIRED', { field: fieldName });
 
-            case 'emptyAfterTrim':
-                return this.translateService.instant('VALIDATION.FIELD_WHITESPACE_ONLY', {
-                    field: fieldName,
-                });
+      case 'emptyAfterTrim':
+        return this.translateService.instant('VALIDATION.FIELD_WHITESPACE_ONLY', {
+          field: fieldName,
+        });
 
-            case 'minlength':
-                return this.translateService.instant('VALIDATION.FIELD_MIN_LENGTH', {
-                    field: fieldName,
-                    minLength: error.minlength.requiredLength,
-                });
+      case 'minlength':
+        return this.translateService.instant('VALIDATION.FIELD_MIN_LENGTH', {
+          field: fieldName,
+          minLength: error.minlength.requiredLength,
+        });
 
-            case 'maxlength':
-                return this.translateService.instant('VALIDATION.FIELD_MAX_LENGTH', {
-                    field: fieldName,
-                    maxLength: error.maxlength.requiredLength,
-                });
+      case 'maxlength':
+        return this.translateService.instant('VALIDATION.FIELD_MAX_LENGTH', {
+          field: fieldName,
+          maxLength: error.maxlength.requiredLength,
+        });
 
-            case 'email':
-                return this.translateService.instant('VALIDATION.EMAIL_INVALID');
+      case 'email':
+        return this.translateService.instant('VALIDATION.EMAIL_INVALID');
 
-            case 'pattern':
-                return this.translateService.instant('VALIDATION.FIELD_INVALID_FORMAT', {
-                    field: fieldName,
-                });
+      case 'pattern':
+        return this.translateService.instant('VALIDATION.FIELD_INVALID_FORMAT', {
+          field: fieldName,
+        });
 
-            default:
-                return this.translateService.instant('VALIDATION.FIELD_INVALID', { field: fieldName });
-        }
+      default:
+        return this.translateService.instant('VALIDATION.FIELD_INVALID', { field: fieldName });
     }
+  }
 
-    getFieldName(fieldKey: string): string {
-        const fieldMapping: Record<string, string> = {
-            // Person fields
-            firstName: 'PERSONS_FORM.FIRST_NAME',
-            lastName: 'PERSONS_FORM.LAST_NAME',
-            address: 'PERSONS_FORM.ADDRESS',
-            city: 'PERSONS_FORM.CITY',
-            phoneNumber: 'PERSONS_FORM.PHONE',
-            email: 'PERSONS_FORM.EMAIL',
-            // Pet fields
-            name: 'PETS_FORM.ANIMAL_NAME',
-            species: 'PETS_FORM.SPECIES',
-            breed: 'PETS_FORM.BREED',
-            color: 'PETS_FORM.COLOR',
-            gender: 'PETS_FORM.GENDER',
-            isMicrochip: 'PETS_FORM.MICROCHIP_QUESTION',
-            isNeutered: 'PETS_FORM.NEUTERED_QUESTION',
-        };
+  getFieldName(fieldKey: string): string {
+    const fieldMapping: Record<string, string> = {
+      // Person fields
+      firstName: 'PERSONS_FORM.FIRST_NAME',
+      lastName: 'PERSONS_FORM.LAST_NAME',
+      address: 'PERSONS_FORM.ADDRESS',
+      city: 'PERSONS_FORM.CITY',
+      phoneNumber: 'PERSONS_FORM.PHONE',
+      email: 'PERSONS_FORM.EMAIL',
+      // Pet fields
+      name: 'PETS_FORM.ANIMAL_NAME',
+      species: 'PETS_FORM.SPECIES',
+      breed: 'PETS_FORM.BREED',
+      color: 'PETS_FORM.COLOR',
+      gender: 'PETS_FORM.GENDER',
+      isMicrochip: 'PETS_FORM.MICROCHIP_QUESTION',
+      isNeutered: 'PETS_FORM.NEUTERED_QUESTION',
+    };
 
-        const translationKey = fieldMapping[fieldKey];
-        return translationKey ? this.translateService.instant(translationKey) : fieldKey;
-    }
+    const translationKey = fieldMapping[fieldKey];
+    return translationKey ? this.translateService.instant(translationKey) : fieldKey;
+  }
 }

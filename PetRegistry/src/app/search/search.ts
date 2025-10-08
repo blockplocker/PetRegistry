@@ -95,11 +95,11 @@ export class Search implements OnInit, OnDestroy, AfterViewInit {
 
   onSearchChange(searchTerm: string): void {
     const sanitizedTerm = StringUtils.sanitizeInput(searchTerm);
-    
+
     if (sanitizedTerm.length > 50) {
       return;
     }
-    
+
     this.searchTerm.set(sanitizedTerm);
 
     if (!sanitizedTerm.trim()) {
@@ -111,7 +111,6 @@ export class Search implements OnInit, OnDestroy, AfterViewInit {
 
     const term = sanitizedTerm.toLowerCase().trim();
 
-    // Filter pets by name, species or breed
     const filteredPets = this.pets().filter(
       (pet) =>
         pet.name.toLowerCase().includes(term) ||
@@ -119,7 +118,6 @@ export class Search implements OnInit, OnDestroy, AfterViewInit {
         (pet.species && pet.species.toLowerCase().includes(term))
     );
 
-    // Filter persons by first name or last name
     const filteredPersons = this.persons().filter(
       (person) =>
         person.firstName.toLowerCase().includes(term) ||

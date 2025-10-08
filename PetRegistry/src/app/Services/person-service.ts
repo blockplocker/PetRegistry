@@ -55,7 +55,6 @@ export class PersonService {
     return this.client.personDELETE(id);
   }
 
-  // Utility methods for data management
   clearLocalStorage(): void {
     this.localStorageService.clearStorage();
   }
