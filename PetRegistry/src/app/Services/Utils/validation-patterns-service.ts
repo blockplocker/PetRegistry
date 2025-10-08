@@ -86,8 +86,6 @@ export class ValidationPatterns {
     if (maxLength) {
       validators.push(Validators.maxLength(maxLength));
     }
-    return validators;
-  }
 
   getValidationErrorMessage(fieldName: string, error: any): string {
     // Define error priority order (what to show first)

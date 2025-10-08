@@ -1,11 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  OnDestroy,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy} from '@angular/core';
 import { PersonDto, PetDto } from '../domain/client';
 import { Subject } from 'rxjs/internal/Subject';
 import { PersonService } from '../Services/person-service';
