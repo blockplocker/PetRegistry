@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,9 +13,9 @@ export type ConfirmData = {
 
 @Component({
   selector: 'app-confirm-dialog',
-  standalone: true,
   imports: [CommonModule, DialogModule, Modal, TranslateModule],
   templateUrl: './confirm-dialog.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDialogComponent {
   constructor(public ref: DialogRef<boolean>, @Inject(DIALOG_DATA) public data: ConfirmData) {}

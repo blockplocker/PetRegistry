@@ -7,6 +7,7 @@ import {
   ElementRef,
   inject,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { PersonService } from '../Services/person-service';
 import { PersonDto } from '../domain/client';
@@ -27,6 +28,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [ReactiveFormsModule, DialogModule, TranslateModule],
   templateUrl: './persons.html',
   styleUrls: ['./persons.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Persons implements OnInit, OnDestroy, AfterViewInit {
   private personService = inject(PersonService);

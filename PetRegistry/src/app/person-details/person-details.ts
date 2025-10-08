@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { PersonDto, PetDto } from '../domain/client';
 import { Subject } from 'rxjs/internal/Subject';
 import { PersonService } from '../Services/person-service';
@@ -18,6 +25,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [RouterLink, TranslateModule],
   templateUrl: './person-details.html',
   styleUrl: './person-details.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonDetails implements OnInit, OnDestroy {
   private ageService = inject(AgeService);

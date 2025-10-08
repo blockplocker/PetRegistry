@@ -7,6 +7,7 @@ import {
   ViewChild,
   ElementRef,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -27,6 +28,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [CommonModule, ReactiveFormsModule, DialogModule, TranslateModule],
   templateUrl: './pets.html',
   styleUrl: './pets.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Pets implements OnInit, OnDestroy, AfterViewInit {
   private petService = inject(PetService);
@@ -172,11 +174,11 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
     // Sanitize all string inputs
     const sanitizedName = StringUtils.sanitizeInput(this.petForm.controls.name.value);
     const sanitizedSpecies = StringUtils.sanitizeInput(this.petForm.controls.species.value);
-    const sanitizedBreed = this.petForm.controls.breed.value 
-      ? StringUtils.sanitizeInput(this.petForm.controls.breed.value) 
+    const sanitizedBreed = this.petForm.controls.breed.value
+      ? StringUtils.sanitizeInput(this.petForm.controls.breed.value)
       : undefined;
-    const sanitizedColor = this.petForm.controls.color.value 
-      ? StringUtils.sanitizeInput(this.petForm.controls.color.value) 
+    const sanitizedColor = this.petForm.controls.color.value
+      ? StringUtils.sanitizeInput(this.petForm.controls.color.value)
       : undefined;
 
     // Validate sanitized inputs
