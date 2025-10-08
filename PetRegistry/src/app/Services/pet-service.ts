@@ -65,7 +65,6 @@ export class PetService {
     return this.client.petDELETE(id);
   }
 
-  // Utility methods for data management
   clearLocalStorage(): void {
     this.localStorageService.clearStorage();
   }
