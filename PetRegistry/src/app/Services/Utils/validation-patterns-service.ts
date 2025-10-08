@@ -6,87 +6,85 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class ValidationPatterns {
-    translateService = inject(TranslateService);
+  translateService = inject(TranslateService);
 
-    static readonly PATTERNS = {
-        // Names: letters (including international), spaces, hyphens, apostrophes
-        NAME: /^[a-zA-Z\u00c0-\u00ff\s'-]+$/,
+  static readonly PATTERNS = {
+    // Names: letters (including international), spaces, hyphens, apostrophes
+    NAME: /^[a-zA-Z\u00c0-\u00ff\s'-]+$/,
 
-        // Address: alphanumeric, spaces, dots, commas, hyphens
-        ADDRESS: /^[a-zA-Z\u00c0-\u00ff0-9\s.,-]+$/,
+    // Address: alphanumeric, spaces, dots, commas, hyphens
+    ADDRESS: /^[a-zA-Z\u00c0-\u00ff0-9\s.,-]+$/,
 
-        // Phone: strict format with length validation (10-15 digits)
-        PHONE: /^[0-9]{10,15}$/,
+    // Phone: strict format with length validation (10-15 digits)
+    PHONE: /^[0-9]{10,15}$/,
 
-        // Email: basic email pattern (used alongside Validators.email)
-        EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    // Email: basic email pattern (used alongside Validators.email)
+    EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  };
+
+  name(maxLength?: number): ValidatorFn[] {
+    const validators = [
+      Validators.required,
+      this.notEmptyAfterTrimValidator(),
+      Validators.pattern(ValidationPatterns.PATTERNS.NAME),
+    ];
+    if (maxLength) {
+      validators.push(Validators.maxLength(maxLength));
+    }
+    return validators;
+  }
+
+  address(maxLength?: number): ValidatorFn[] {
+    const validators = [
+      Validators.required,
+      this.notEmptyAfterTrimValidator(),
+      Validators.pattern(ValidationPatterns.PATTERNS.ADDRESS),
+    ];
+    if (maxLength) {
+      validators.push(Validators.maxLength(maxLength));
+    }
+    return validators;
+  }
+
+  phone(minLength: number = 10, maxLength: number = 15): ValidatorFn[] {
+    return [
+      Validators.required,
+      this.notEmptyAfterTrimValidator(),
+      Validators.minLength(minLength),
+      Validators.maxLength(maxLength),
+      Validators.pattern(ValidationPatterns.PATTERNS.PHONE),
+    ];
+  }
+
+  private notEmptyAfterTrimValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      const trimmedValue = control.value.toString().trim();
+      if (trimmedValue.length === 0) {
+        return { emptyAfterTrim: true };
+      }
+      return null;
     };
+  }
 
-    name(maxLength?: number): ValidatorFn[] {
-        const validators = [
-            Validators.required,
-            this.notEmptyAfterTrimValidator(),
-            Validators.pattern(ValidationPatterns.PATTERNS.NAME),
-        ];
-        if (maxLength) {
-            validators.push(Validators.maxLength(maxLength));
-        }
-        return validators;
-    }
+  email(): ValidatorFn[] {
+    return [
+      Validators.required,
+      this.notEmptyAfterTrimValidator(),
+      Validators.email,
+      Validators.pattern(ValidationPatterns.PATTERNS.EMAIL),
+    ];
+  }
 
-    address(maxLength?: number): ValidatorFn[] {
-        const validators = [
-            Validators.required,
-            this.notEmptyAfterTrimValidator(),
-            Validators.pattern(ValidationPatterns.PATTERNS.ADDRESS),
-        ];
-        if (maxLength) {
-            validators.push(Validators.maxLength(maxLength));
-        }
-        return validators;
-    }
-
-    phone(minLength: number = 10, maxLength: number = 15): ValidatorFn[] {
-        return [
-            Validators.required,
-            this.notEmptyAfterTrimValidator(),
-            Validators.minLength(minLength),
-            Validators.maxLength(maxLength),
-            Validators.pattern(ValidationPatterns.PATTERNS.PHONE),
-        ];
-    }
-
-    private notEmptyAfterTrimValidator(): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
-            if (!control.value) {
-                return null; 
-            }
-            const trimmedValue = control.value.toString().trim();
-            if (trimmedValue.length === 0) {
-                return { emptyAfterTrim: true };
-            }
-            return null;
-        };
-    }
-
-    email(): ValidatorFn[] {
-        return [
-            Validators.required,
-            this.notEmptyAfterTrimValidator(),
-            Validators.email,
-            Validators.pattern(ValidationPatterns.PATTERNS.EMAIL),
-        ];
-    }
-
-    optionalName(maxLength?: number): ValidatorFn[] {
-        const validators = [
-            this.notEmptyAfterTrimValidator(),
-            Validators.pattern(ValidationPatterns.PATTERNS.NAME),
-        ];
-        if (maxLength) {
-            validators.push(Validators.maxLength(maxLength));
-        }
-        return validators;
+  optionalName(maxLength?: number): ValidatorFn[] {
+    const validators = [
+      this.notEmptyAfterTrimValidator(),
+      Validators.pattern(ValidationPatterns.PATTERNS.NAME),
+    ];
+    if (maxLength) {
+      validators.push(Validators.maxLength(maxLength));
     }
 
   getValidationErrorMessage(fieldName: string, error: any): string {

@@ -2,7 +2,7 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { Modal } from '../../Modal/Modal';
+import { Modal } from '../../modal/Modal';
 
 export type ConfirmData = {
   title?: string;
