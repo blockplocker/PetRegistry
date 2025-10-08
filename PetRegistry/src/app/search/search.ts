@@ -1,14 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../Services/pet-service';
 import { PersonService } from '../Services/person-service';
