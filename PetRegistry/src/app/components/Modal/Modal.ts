@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modal',
-  standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './modal.html',
   styleUrl: './modal.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Modal {}

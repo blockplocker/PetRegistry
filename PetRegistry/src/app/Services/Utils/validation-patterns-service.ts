@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
     providedIn: 'root',
 })
 export class ValidationPatterns {
-    constructor(private translateService: TranslateService) { }
+    translateService = inject(TranslateService);
 
     static readonly PATTERNS = {
         // Names: letters (including international), spaces, hyphens, apostrophes
@@ -59,7 +59,7 @@ export class ValidationPatterns {
     private notEmptyAfterTrimValidator(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.value) {
-                return null; // Don't validate null/undefined values, let required handle that
+                return null; 
             }
             const trimmedValue = control.value.toString().trim();
             if (trimmedValue.length === 0) {
@@ -78,7 +78,6 @@ export class ValidationPatterns {
         ];
     }
 
-    // Optional name field (for breed, color, etc.)
     optionalName(maxLength?: number): ValidatorFn[] {
         const validators = [
             this.notEmptyAfterTrimValidator(),
