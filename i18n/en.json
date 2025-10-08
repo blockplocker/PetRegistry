@@ -3,7 +3,7 @@
     "TITLE": "Pet Registry",
     "HOME": "Home",
     "PETS": "Pets",
-    "PERSONS": "Persons",
+    "PERSONS": "Add person",
     "SEARCH": "Search"
   },
   "HOME": {
@@ -187,6 +187,30 @@
     "PERSON_UPDATE_ERROR": "Could not update person. Please try again later.",
     "PERSON_DELETED": "Person has been deleted",
     "PERSON_DELETE_ERROR": "Could not delete person. Please try again later.",
-    "INVALID_ID": "Invalid ID"
+    "INVALID_ID": "Invalid ID",
+    "INVALID_INPUT_DATA": "Invalid input data. Please check your entries and try again.",
+    "NAME": "Only letters, spaces, hyphens, and apostrophes are allowed",
+    "ADDRESS": "Only letters, numbers, spaces, and basic punctuation are allowed",
+    "PHONE": "Only numbers, spaces, parentheses, hyphens, and plus sign are allowed",
+    "EMAIL": "Please enter a valid email address",
+    "NUMBERS_ONLY": "Only numbers are allowed",
+    "ALPHANUMERIC_SPACES": "Only letters, numbers, and spaces are allowed"
+  },
+  "VALIDATION": {
+    "FIELD_REQUIRED": "{{field}} is required",
+    "FIELD_WHITESPACE_ONLY": "{{field}} cannot be empty or contain only spaces",
+    "FIELD_MAX_LENGTH": "{{field}} must not exceed {{maxLength}} characters",
+    "FIELD_MIN_LENGTH": "{{field}} must be at least {{minLength}} characters",
+    "FIELD_INVALID_FORMAT": "{{field}} contains invalid characters",
+    "FIELD_INVALID": "{{field}} is invalid",
+    "EMAIL_INVALID": "Please enter a valid email address",
+    "NAME_INVALID": "Only letters, spaces, hyphens, and apostrophes are allowed",
+    "ADDRESS_INVALID": "Only letters, numbers, spaces, and basic punctuation are allowed",
+    "PHONE_INVALID": "Only numbers, spaces, parentheses, hyphens, and plus sign are allowed",
+    "PHONE_INVALID_FORMAT": "{{field}} can only contain numbers, spaces, parentheses, hyphens, and plus sign",
+    "PHONE_MIN_LENGTH": "{{field}} must contain at least {{minLength}} digits (currently {{actualLength}})",
+    "PHONE_MAX_LENGTH": "{{field}} must not exceed {{maxLength}} digits (currently {{actualLength}})",
+    "NUMBERS_ONLY": "Only numbers are allowed",
+    "ALPHANUMERIC_SPACES": "Only letters, numbers, and spaces are allowed"
   }
 }

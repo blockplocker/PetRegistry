@@ -3,7 +3,7 @@
     "TITLE": "Haustierregister",
     "HOME": "Startseite",
     "PETS": "Haustiere",
-    "PERSONS": "Personen",
+    "PERSONS": "Person hinzufügen",
     "SEARCH": "Suchen"
   },
   "HOME": {
@@ -187,6 +187,30 @@
     "PERSON_UPDATE_ERROR": "Person konnte nicht aktualisiert werden. Bitte versuchen Sie es später erneut.",
     "PERSON_DELETED": "Person wurde gelöscht",
     "PERSON_DELETE_ERROR": "Person konnte nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
-    "INVALID_ID": "Ungültige ID"
+    "INVALID_ID": "Ungültige ID",
+    "INVALID_INPUT_DATA": "Ungültige Eingabedaten. Bitte überprüfen Sie Ihre Eingaben und versuchen Sie es erneut.",
+    "NAME": "Nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe sind erlaubt",
+    "ADDRESS": "Nur Buchstaben, Zahlen, Leerzeichen und grundlegende Interpunktion sind erlaubt",
+    "PHONE": "Nur Zahlen, Leerzeichen, Klammern, Bindestriche und Pluszeichen sind erlaubt",
+    "EMAIL": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "NUMBERS_ONLY": "Es sind nur Zahlen erlaubt",
+    "ALPHANUMERIC_SPACES": "Es sind nur Buchstaben, Zahlen und Leerzeichen erlaubt"
+  },
+  "VALIDATION": {
+    "FIELD_REQUIRED": "{{field}} ist erforderlich",
+    "FIELD_WHITESPACE_ONLY": "{{field}} darf nicht leer sein oder nur Leerzeichen enthalten",
+    "FIELD_MAX_LENGTH": "{{field}} darf nicht mehr als {{maxLength}} Zeichen enthalten",
+    "FIELD_MIN_LENGTH": "{{field}} muss mindestens {{minLength}} Zeichen enthalten",
+    "FIELD_INVALID_FORMAT": "{{field}} enthält ungültige Zeichen",
+    "FIELD_INVALID": "{{field}} ist ungültig",
+    "EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "NAME_INVALID": "Nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe sind erlaubt",
+    "ADDRESS_INVALID": "Nur Buchstaben, Zahlen, Leerzeichen und grundlegende Interpunktion sind erlaubt",
+    "PHONE_INVALID": "Nur Zahlen, Leerzeichen, Klammern, Bindestriche und Pluszeichen sind erlaubt",
+    "PHONE_INVALID_FORMAT": "{{field}} darf nur Zahlen, Leerzeichen, Klammern, Bindestriche und Pluszeichen enthalten",
+    "PHONE_MIN_LENGTH": "{{field}} muss mindestens {{minLength}} Ziffern enthalten (aktuell {{actualLength}})",
+    "PHONE_MAX_LENGTH": "{{field}} darf nicht mehr als {{maxLength}} Ziffern enthalten (aktuell {{actualLength}})",
+    "NUMBERS_ONLY": "Nur Zahlen sind erlaubt",
+    "ALPHANUMERIC_SPACES": "Nur Buchstaben, Zahlen und Leerzeichen sind erlaubt"
   }
 }
