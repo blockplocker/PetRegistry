@@ -50,7 +50,7 @@ export class Pets implements OnInit, OnDestroy, AfterViewInit {
       nonNullable: true,
     }),
     breed: new FormControl('', {
-      validators: this.validationPatterns.optionalName(15),
+      validators: this.validationPatterns.optionalName(35),
       nonNullable: true,
     }),
     dateOfBirth: new FormControl('', { nonNullable: true }),
