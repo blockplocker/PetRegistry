@@ -1,4 +1,14 @@
-import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef, signal, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { PetService } from '../Services/pet-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
