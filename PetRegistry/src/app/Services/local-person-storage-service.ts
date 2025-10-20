@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { PersonDto } from '../domain/client';
 import { BaseStorageService, EntityFactory } from './base-storage-service';
+import { LocalPetStorageService } from './local-pet-storage-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalPersonStorageService extends BaseStorageService<PersonDto> {
+  petsStorageService: LocalPetStorageService = inject(LocalPetStorageService);
   protected readonly storageKey = 'persons_data';
   protected readonly entityFactory: EntityFactory<PersonDto> = PersonDto;
 
@@ -27,6 +30,8 @@ export class LocalPersonStorageService extends BaseStorageService<PersonDto> {
   }
 
   deletePerson(id: number): Observable<void> {
-    return this.deleteEntity(id);
+    return this.petsStorageService.deletePetsByOwnerId(id).pipe(
+      switchMap(() => this.deleteEntity(id))
+    );
   }
 }
