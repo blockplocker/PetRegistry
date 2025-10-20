@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { PetDto } from '../domain/client';
 import { BaseStorageService, EntityFactory } from './base-storage-service';
 
@@ -35,5 +35,19 @@ export class LocalPetStorageService extends BaseStorageService<PetDto> {
 
   deletePet(id: number): Observable<void> {
     return this.deleteEntity(id);
+  }
+
+  deletePetsByOwnerId(ownerId: number): Observable<void> {
+    return this.getStorageData().pipe(
+      map((pets) => pets.filter((pet) => pet.personId === ownerId && pet.id !== undefined)),
+      switchMap((petsToDelete) => {
+        if (!petsToDelete.length) return of(void 0);
+
+        const deletes: Observable<void>[] = petsToDelete
+          .map((p) => p.id as number)
+          .map((id) => this.deleteEntity(id));
+        return forkJoin(deletes).pipe(map(() => void 0));
+      })
+    );
   }
 }
